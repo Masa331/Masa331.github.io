@@ -6,9 +6,72 @@
 </description>
     <link>https://masa331.github.io/</link>
     <atom:link href="https://masa331.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 18 Jul 2015 11:33:36 +0200</pubDate>
-    <lastBuildDate>Sat, 18 Jul 2015 11:33:36 +0200</lastBuildDate>
+    <pubDate>Tue, 21 Jul 2015 19:27:52 +0200</pubDate>
+    <lastBuildDate>Tue, 21 Jul 2015 19:27:52 +0200</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
+    
+      <item>
+        <title>Keyboard shortcuts</title>
+        <description>&lt;h1 id=&quot;define-keyboard-shortcuts&quot;&gt;Define keyboard shortcuts&lt;/h1&gt;
+
+&lt;p&gt;Defining keyboard shortutcs in linux can be tricky. At least for me.&lt;/p&gt;
+
+&lt;h2 id=&quot;xbindkeys&quot;&gt;Xbindkeys&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Install ‘xbindkeys’. For me it’s &lt;code&gt;pacman -S xbindkeys&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Create sample configuration file with &lt;code&gt;xbindkeys -d &amp;gt; ~/.xbindkeysrc&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Inspect it. The syntax is really simple. It consist of two line units&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Examples of volume control:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&quot;amixer set Master toggle&quot;
+  m:0x0 + c:121
+
+&quot;amixer set Master 5%+&quot;
+  m:0x0 + c:123
+
+&quot;amixer set Master 5%-&quot;
+  m:0x0 + c:122
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To-be-called &lt;strong&gt;command is on first line&lt;/strong&gt;. Invoking &lt;strong&gt;key combination on second line&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;To get the right keycodes(the weird &lt;code&gt;m:0x0 + c&quot;121&lt;/code&gt;) use &lt;code&gt;xbindkeys -k&lt;/code&gt; from terminal.&lt;/p&gt;
+
+&lt;p&gt;White window pops up and when you press some key combination proper codes are printed to terminal.&lt;/p&gt;
+
+&lt;p&gt;You can either use cryptic codes like me or nice readable ones. The nice readable ones weren’t working for me.&lt;/p&gt;
+
+&lt;p&gt;Shortcuts will work after reboot.&lt;/p&gt;
+
+&lt;h2 id=&quot;if-you-have-lxde-and-openboxlike-there-is-better-windows-manager-right&quot;&gt;If you have lxde and openbox(like there is better windows manager right..)&lt;/h2&gt;
+
+&lt;p&gt;Then you can define keyboard shortcuts in openbox config.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Open &lt;code&gt;~/.config/openbox/lxde-rc.xml&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Grep for ‘Keyboard’. There are multiple types of shortcuts&lt;/li&gt;
+  &lt;li&gt;It’s relatively easy to grasp&lt;/li&gt;
+  &lt;li&gt;Most easy way is to copy existing commands and substitue your actions and shortcuts&lt;/li&gt;
+  &lt;li&gt;Again they should be active after reboot&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Well actually openbox got a good documentation where you can read it all:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://openbox.org/wiki/Help:Bindings&quot;&gt;http://openbox.org/wiki/Help:Bindings&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;and&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://openbox.org/wiki/Help:Actions&quot;&gt;http://openbox.org/wiki/Help:Actions&lt;/a&gt;&lt;/p&gt;
+</description>
+        <pubDate>Tue, 21 Jul 2015 23:22:49 +0200</pubDate>
+        <link>https://masa331.github.io/2015/07/21/keyboard-shortcuts.html</link>
+        <guid isPermaLink="true">https://masa331.github.io/2015/07/21/keyboard-shortcuts.html</guid>
+        
+        
+      </item>
     
       <item>
         <title>Configuring XTerm fonts</title>
