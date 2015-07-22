@@ -6,9 +6,42 @@
 </description>
     <link>https://masa331.github.io/</link>
     <atom:link href="https://masa331.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 21 Jul 2015 19:35:10 +0200</pubDate>
-    <lastBuildDate>Tue, 21 Jul 2015 19:35:10 +0200</lastBuildDate>
+    <pubDate>Wed, 22 Jul 2015 17:28:23 +0200</pubDate>
+    <lastBuildDate>Wed, 22 Jul 2015 17:28:23 +0200</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
+    
+      <item>
+        <title>How many symbols?</title>
+        <description>&lt;h1 id=&quot;how-many-symbols-can-you-do&quot;&gt;How many symbols can you do?&lt;/h1&gt;
+
+&lt;p&gt;So i’v been reading through Ruby 2.2 release notes and notice the new GC which also collects symbols.&lt;/p&gt;
+
+&lt;p&gt;This is long time known problem in Rails world. Prior to Ruby 2.2 symbols weren’t garbage collected. So if you did somewhere create symbols from request params your app was vulnerable to DoS attacks. Google it if you want to know more.&lt;/p&gt;
+
+&lt;p&gt;I found one of my app vulnerable… :) so i wanted to try it of course. I wanted to see how does it look if your server crashes because of that.&lt;/p&gt;
+
+&lt;p&gt;It didn’t work out for some reason. I created simple script which was doing requests with different param from which symbols were created. But the server was just fine. I guess the request-response cycle is really slow or something.&lt;/p&gt;
+
+&lt;p&gt;Well… it got me thinking. Do i really need to test it on Rails app? No! So i created simple ruby script:&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/9da2e21c708a5fe2512b.js&quot;&gt; &lt;/script&gt;
+
+&lt;p&gt;Of course you have to run this on Ruby &amp;lt; 2.2.&lt;/p&gt;
+
+&lt;p&gt;After some time i realized it is really crappy metric because it depends on other processes using memory.&lt;/p&gt;
+
+&lt;p&gt;But it was really fun with this excersise. Learned a few things…&lt;/p&gt;
+
+&lt;p&gt;Note that at the end as your computer depletes all the memory and starts swapping the death by creating new symbols is really really slow. You can watch that in htop.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;But still… i can do about 27 000 000 symbols. What about you?&lt;/strong&gt;&lt;/p&gt;
+</description>
+        <pubDate>Wed, 22 Jul 2015 23:22:49 +0200</pubDate>
+        <link>https://masa331.github.io/2015/07/22/how-many-symbols.html</link>
+        <guid isPermaLink="true">https://masa331.github.io/2015/07/22/how-many-symbols.html</guid>
+        
+        
+      </item>
     
       <item>
         <title>Keyboard shortcuts</title>

@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title> How many symbols? | Leap Day in Jekyll</title>
+    <link rel="stylesheet" href="https://masa331.github.io/assets/stylesheets/styles.css">
+    <link rel="stylesheet" href="https://masa331.github.io/assets/stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="https://masa331.github.io/assets/javascripts/main.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  </head>
+  <body>
+
+  <header>
+    <a href="https://masa331.github.io">
+      <h1>I finally have a blog</h1>
+      <p>IT & stuff</p>
+    </a>
+  </header>
+
+
+  <div class="wrapper">
+
+    <nav>
+  <ul>
+    
+        <li class='tag-h2'>
+          <a href="/2015/07/22/how-many-symbols.html">
+            How many symbols?
+          </a>
+        </li>
+    
+        <li class='tag-h2'>
+          <a href="/2015/07/21/keyboard-shortcuts.html">
+            Keyboard shortcuts
+          </a>
+        </li>
+    
+        <li class='tag-h2'>
+          <a href="/2015/07/17/configuring-xterm-fonts.html">
+            Configuring XTerm fonts
+          </a>
+        </li>
+    
+        <li class='tag-h2'>
+          <a href="/2015/07/17/hello-world.html">
+            Hello world!
+          </a>
+        </li>
+    
+  </ul>
+</nav>
+
+
+  <section>
+    <h1 id="how-many-symbols-can-you-do">How many symbols can you do?</h1>
+
+<p>So i’v been reading through Ruby 2.2 release notes and notice the new GC which also collects symbols.</p>
+
+<p>This is long time known problem in Rails world. Prior to Ruby 2.2 symbols weren’t garbage collected. So if you did somewhere create symbols from request params your app was vulnerable to DoS attacks. Google it if you want to know more.</p>
+
+<p>I found one of my app vulnerable… :) so i wanted to try it of course. I wanted to see how does it look if your server crashes because of that.</p>
+
+<p>It didn’t work out for some reason. I created simple script which was doing requests with different param from which symbols were created. But the server was just fine. I guess the request-response cycle is really slow or something.</p>
+
+<p>Well… it got me thinking. Do i really need to test it on Rails app? No! So i created simple ruby script:</p>
+
+<script src="https://gist.github.com/9da2e21c708a5fe2512b.js"> </script>
+
+<p>Of course you have to run this on Ruby &lt; 2.2.</p>
+
+<p>After some time i realized it is really crappy metric because it depends on other processes using memory.</p>
+
+<p>But it was really fun with this excersise. Learned a few things…</p>
+
+<p>Note that at the end as your computer depletes all the memory and starts swapping the death by creating new symbols is really really slow. You can watch that in htop.</p>
+
+<p><strong>But still… i can do about 27 000 000 symbols. What about you?</strong></p>
+
+  </section>
+
+
+    <footer>
+    </footer>
+    </div>
+  </body>
+</html>
+
