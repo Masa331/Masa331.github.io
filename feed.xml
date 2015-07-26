@@ -6,9 +6,70 @@
 </description>
     <link>https://masa331.github.io/</link>
     <atom:link href="https://masa331.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 22 Jul 2015 17:28:23 +0200</pubDate>
-    <lastBuildDate>Wed, 22 Jul 2015 17:28:23 +0200</lastBuildDate>
+    <pubDate>Sun, 26 Jul 2015 17:32:04 +0200</pubDate>
+    <lastBuildDate>Sun, 26 Jul 2015 17:32:04 +0200</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
+    
+      <item>
+        <title>What is Enumerator?</title>
+        <description>&lt;h1 id=&quot;what-is-enumerator&quot;&gt;What is Enumerator?&lt;/h1&gt;
+
+&lt;p&gt;I started programming 2 years ago and i didn’t yet come to a situation when i would really need to know. But i was always curious because words like ‘Enumerator’ and ‘Enumerable’ were present from the very beggining. So let’s find out!&lt;/p&gt;
+
+&lt;p&gt;Long story short:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Instances of &lt;code&gt;Enumerator&lt;/code&gt; class are used to wrap iterations and let’s you control the whole process.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;common-usage&quot;&gt;Common usage&lt;/h2&gt;
+&lt;p&gt;You can get an Enumerator like this:&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/73e58c3aabc14e235883.js&quot;&gt; &lt;/script&gt;
+
+&lt;p&gt;This Enumerator instance wraps iteration over &lt;code&gt;[1, 2, 3]&lt;/code&gt;. We can start the actuall iteration with &lt;code&gt;#each&lt;/code&gt; method. It yields all items to given block:&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/5ad7525544205ea5203a.js&quot;&gt; &lt;/script&gt;
+
+&lt;p&gt;It behaves exactly same as &lt;code&gt;[1, 2, 3].each { |number| puts number }&lt;/code&gt; call.&lt;/p&gt;
+
+&lt;p&gt;But you can also do this:&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/4e405cd44d3adf0ffd0a.js&quot;&gt; &lt;/script&gt;
+
+&lt;p&gt;Like this you can manually iterate over the collection one item after another. &lt;code&gt;StopIteration&lt;/code&gt; is raised when there are no more items. During the iteration, you can use &lt;code&gt;enum#peek&lt;/code&gt;, &lt;code&gt;enum#rewind&lt;/code&gt;, &lt;code&gt;enum#feed&lt;/code&gt; or others, which greatly improves controllability. &lt;strong&gt;With all these you can create your own iterators with custom logic.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;enumeratornew&quot;&gt;Enumerator.new&lt;/h2&gt;
+
+&lt;p&gt;You can also create Enumerator with &lt;code&gt;Enumerator.new { |yielder| ... }&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Most simple example:&lt;/p&gt;
+
+&lt;script src=&quot;https://gist.github.com/dbe29eeb87de8d82a798.js&quot;&gt; &lt;/script&gt;
+
+&lt;p&gt;This time enum doesn’t iterate over anything, but yields to given block &lt;strong&gt;all values you explicitly yield with &lt;code&gt;yielder.yield something&lt;/code&gt;&lt;/strong&gt;. In this example, only one value is yielded and it’s integer 1.&lt;/p&gt;
+
+&lt;p&gt;To yield 1 ten times to given block so &lt;code&gt;enum.each { |item| puts item }&lt;/code&gt; will print 1 ten times on screen:
+&lt;script src=&quot;https://gist.github.com/0800bd3f36c6c7c04b31.js&quot;&gt; &lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;And to yield infinetely:
+&lt;script src=&quot;https://gist.github.com/64f06bd6c61245c723e0.js&quot;&gt; &lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;If you call &lt;code&gt;#each&lt;/code&gt; on this enum, it will never stop yielding and printing. But if you call &lt;code&gt;#next&lt;/code&gt;, it will yield only once and then stop.&lt;/p&gt;
+
+&lt;p&gt;It’s only the implementation of &lt;code&gt;#each&lt;/code&gt; which calls &lt;code&gt;#next&lt;/code&gt; in loop and goes on forever because &lt;code&gt;StopIteration&lt;/code&gt;, is never raised.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Internally enum stops execution every time &lt;code&gt;#yield&lt;/code&gt; is called on yielder&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Try it with putting print statements before and after yield:
+&lt;script src=&quot;https://gist.github.com/a8353c161157f626717c.js&quot;&gt; &lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;This technique is also used in example from official &lt;a href=&quot;http://ruby-doc.org/core-2.2.0/Enumerator.html&quot;&gt;documentation&lt;/a&gt;, where infinite fibonacci sequence is generated.&lt;/p&gt;
+</description>
+        <pubDate>Sun, 26 Jul 2015 23:22:49 +0200</pubDate>
+        <link>https://masa331.github.io/2015/07/26/ruby-enumerator.html</link>
+        <guid isPermaLink="true">https://masa331.github.io/2015/07/26/ruby-enumerator.html</guid>
+        
+        
+      </item>
     
       <item>
         <title>How many symbols?</title>
