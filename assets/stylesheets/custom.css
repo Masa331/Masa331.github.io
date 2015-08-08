@@ -5,3 +5,11 @@
 .signature {
   font-style: italic;
 }
+
+header {
+  position: static !important;
+}
+
+section {
+  margin: 45px 0px 20px !important;
+}
