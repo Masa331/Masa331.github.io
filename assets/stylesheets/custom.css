@@ -15,11 +15,7 @@ section {
   margin: 45px 0px 20px !important;
 }
 
-.gist {
-  code {
-    color: #333 !important;
-    text-shadow: none !important;
-  }
+code {
+  color: #333 !important;
+  text-shadow: none !important;
 }
-
-
