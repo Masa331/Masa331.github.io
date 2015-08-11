@@ -19,3 +19,7 @@ code {
   color: #333 !important;
   text-shadow: none !important;
 }
+
+code ul li::before {
+  content: none !important;
+}
