@@ -17,8 +17,8 @@ section {
 
 .gist {
   code {
-    color: #333;
-    text-shadow: none;
+    color: #333 !important;
+    text-shadow: none !important;
   }
 }
 
