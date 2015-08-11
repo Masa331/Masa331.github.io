@@ -6,6 +6,7 @@
   font-style: italic;
 }
 
+/* ugly hacks but i don't have time */
 header {
   position: static !important;
 }
@@ -13,3 +14,25 @@ header {
 section {
   margin: 45px 0px 20px !important;
 }
+
+.gist {
+  code {
+    padding: 0.2em 0px;
+    margin: 0px;
+    font-size: 85%;
+    background-color: rgba(0, 0, 0, 0.04);
+    border-radius: 3px;
+  }
+
+  code::before {
+    letter-spacing: -0.2em;
+    content: " ";
+  }
+
+  code::before {
+    letter-spacing: -0.2em;
+    content: " ";
+  }
+}
+
+
