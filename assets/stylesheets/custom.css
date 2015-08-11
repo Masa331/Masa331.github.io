@@ -17,21 +17,8 @@ section {
 
 .gist {
   code {
-    padding: 0.2em 0px;
-    margin: 0px;
-    font-size: 85%;
-    background-color: rgba(0, 0, 0, 0.04);
-    border-radius: 3px;
-  }
-
-  code::before {
-    letter-spacing: -0.2em;
-    content: " ";
-  }
-
-  code::before {
-    letter-spacing: -0.2em;
-    content: " ";
+    color: #333;
+    text-shadow: none;
   }
 }
 
