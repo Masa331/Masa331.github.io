@@ -6,9 +6,23 @@
 </description>
     <link>https://masa331.github.io/</link>
     <atom:link href="https://masa331.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 14 Aug 2015 11:57:24 +0200</pubDate>
-    <lastBuildDate>Fri, 14 Aug 2015 11:57:24 +0200</lastBuildDate>
+    <pubDate>Fri, 21 Aug 2015 13:05:44 +0200</pubDate>
+    <lastBuildDate>Fri, 21 Aug 2015 13:05:44 +0200</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
+    
+      <item>
+        <title>Terminate PG connection</title>
+        <description>&lt;h1 id=&quot;for-my-future-self&quot;&gt;For my future self&lt;/h1&gt;
+
+&lt;script src=&quot;https://gist.github.com/cf521e02b29f2a22a49c.js&quot;&gt; &lt;/script&gt;
+
+</description>
+        <pubDate>Fri, 21 Aug 2015 23:22:49 +0200</pubDate>
+        <link>https://masa331.github.io/2015/08/21/terminate_postgres_connections.html</link>
+        <guid isPermaLink="true">https://masa331.github.io/2015/08/21/terminate_postgres_connections.html</guid>
+        
+        
+      </item>
     
       <item>
         <title>PHP vs. Ruby XML-RPC call</title>
