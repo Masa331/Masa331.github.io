@@ -29,3 +29,7 @@ li::before {
   content: none !important;
 }
 
+nav {
+  width: 240px !important;
+  margin-left: -600px !important;
+}
