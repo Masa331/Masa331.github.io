@@ -33,3 +33,7 @@ nav {
   width: 240px !important;
   margin-left: -600px !important;
 }
+
+.wrapper {
+  width: 700px !important;
+}

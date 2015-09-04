@@ -6,9 +6,117 @@
 </description>
     <link>https://masa331.github.io/</link>
     <atom:link href="https://masa331.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 21 Aug 2015 22:57:07 +0200</pubDate>
-    <lastBuildDate>Fri, 21 Aug 2015 22:57:07 +0200</lastBuildDate>
+    <pubDate>Fri, 04 Sep 2015 23:38:27 +0200</pubDate>
+    <lastBuildDate>Fri, 04 Sep 2015 23:38:27 +0200</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
+    
+      <item>
+        <title>Make gem using csv database faster</title>
+        <description>&lt;h1 id=&quot;gem-using-csv-database-made-faster&quot;&gt;Gem using CSV database made faster&lt;/h1&gt;
+
+&lt;h2 id=&quot;rationale&quot;&gt;Rationale&lt;/h2&gt;
+
+&lt;p&gt;I’m author of &lt;a href=&quot;https://github.com/Masa331/czech_name&quot;&gt;Czech name&lt;/a&gt; gem. Simply put it’s a database with more than 200k names. Names are stored in 4 CSV files, with the biggest having 100k items. Right now it’s terribly slow to get any name from it and it’s making the gem unusable.&lt;/p&gt;
+
+&lt;p&gt;So i was thinking how to make it faster…  These are some ideas with benchmarks:&lt;/p&gt;
+
+&lt;h2 id=&quot;code&quot;&gt;Code&lt;/h2&gt;
+
+&lt;script src=&quot;https://gist.github.com/af4b8b0f8597d9f0bc43.js&quot;&gt; &lt;/script&gt;
+
+&lt;h2 id=&quot;benchmarks&quot;&gt;Benchmarks&lt;/h2&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;method&lt;/th&gt;
+      &lt;th&gt;real&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Simple db, first name&lt;/td&gt;
+      &lt;td&gt;(  0.000426)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Simple db, name in the middle&lt;/td&gt;
+      &lt;td&gt;(  0.421385)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Simple db, last name&lt;/td&gt;
+      &lt;td&gt;(  0.764998)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Hash db, first name&lt;/td&gt;
+      &lt;td&gt;(  0.955345)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Hash db, name in the middle&lt;/td&gt;
+      &lt;td&gt;(  0.000005)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Hash db, last name&lt;/td&gt;
+      &lt;td&gt;(  0.000003)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Split db, first name in first part&lt;/td&gt;
+      &lt;td&gt;(  0.000561)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Split db, last name in first part&lt;/td&gt;
+      &lt;td&gt;(  0.435632)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Split db, first name in second part&lt;/td&gt;
+      &lt;td&gt;(  0.819255)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Split db, last name in second part&lt;/td&gt;
+      &lt;td&gt;(  0.835236)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Alphabet db, first name&lt;/td&gt;
+      &lt;td&gt;(  0.000501)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Alphabet db, name in the middle&lt;/td&gt;
+      &lt;td&gt;(  0.084445)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Alphabet db, last name&lt;/td&gt;
+      &lt;td&gt;(  0.034563)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;YAML db, first name&lt;/td&gt;
+      &lt;td&gt;(  1.707125)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;YAML db, last name&lt;/td&gt;
+      &lt;td&gt;(  1.671748)&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h2 id=&quot;result&quot;&gt;Result&lt;/h2&gt;
+
+&lt;p&gt;Important thing to know is that the names are ordered from most to least used. Ok! Let’s get started.&lt;/p&gt;
+
+&lt;p&gt;First of all &lt;strong&gt;Simple vs. Split&lt;/strong&gt; database. Initially i thought that if i split names in two files it will get faster but that’s not true at all. &lt;strong&gt;The speed is same&lt;/strong&gt;. What does it means? Well.. I guess the file is beeing read lazily? Nice! So it doesn’t matter how many files i have if i have to go through them all for the least used name. Also if i look at how long it takes to get middle name and last name, the speed is constant. Ok, that sounds logicall.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Hash db&lt;/strong&gt; is blazingly fast. Once it’s in memory it beats everything. But the first access is slow. Unfortunatelly i think most of the time users will search only one name so they won’t profit from subsequent cache at all.. :(&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;YAML&lt;/strong&gt; is slow. And, for such simple data structure, the readability isn’t better than CSV.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Alphabet db&lt;/strong&gt; has some nice access times mostly the same for each item. Way better than one big file and the code is really simple yet powerful. It comes with a price of dependency on ActiveSupport and dozen of separate files  but that’s not so bad. I know it isn’t anything big and i’v probably seen it somewhere before but honestly, i’m proud of it :)&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Do you know about some other way access time could be improved over one big file?&lt;/strong&gt;&lt;/p&gt;
+</description>
+        <pubDate>Tue, 01 Sep 2015 23:22:49 +0200</pubDate>
+        <link>https://masa331.github.io/2015/09/01/faster-czech-name.html</link>
+        <guid isPermaLink="true">https://masa331.github.io/2015/09/01/faster-czech-name.html</guid>
+        
+        
+      </item>
     
       <item>
         <title>Terminate PG connection</title>
