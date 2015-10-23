@@ -6,9 +6,53 @@
 </description>
     <link>https://masa331.github.io/</link>
     <atom:link href="https://masa331.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 04 Sep 2015 23:45:18 +0200</pubDate>
-    <lastBuildDate>Fri, 04 Sep 2015 23:45:18 +0200</lastBuildDate>
+    <pubDate>Fri, 23 Oct 2015 21:30:52 +0200</pubDate>
+    <lastBuildDate>Fri, 23 Oct 2015 21:30:52 +0200</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
+    
+      <item>
+        <title>SupTasks: Intro</title>
+        <description>&lt;h1 id=&quot;suptasks-intro&quot;&gt;Suptasks: Intro&lt;/h1&gt;
+
+&lt;p&gt;I always felt like if i would somehow measure time i spent on various work tasks i could then analyze it and eventually improve efficiency. In company i work for we manage our tasks through Redmine and our internall CRM. In both of them it’s possible to track spent time.&lt;/p&gt;
+
+&lt;p&gt;The problem is it’s very very important to make this as much seamless as possible. Well that is important for all apps and tools in general but here it’s really big thing.&lt;/p&gt;
+
+&lt;p&gt;Somethimes my morning looks like this. Following things happen in ten minutes together:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Me working on some deadline feature&lt;/li&gt;
+  &lt;li&gt;New colleague of mine asks for another task&lt;/li&gt;
+  &lt;li&gt;Bug report from production comes in&lt;/li&gt;
+  &lt;li&gt;Another colleague asks someting about some part of system&lt;/li&gt;
+  &lt;li&gt;Client calls for some help&lt;/li&gt;
+  &lt;li&gt;And of course i’m late with 10 other things i promised to someone&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;So now i need to fast switch between very different contexts. I don’t have time to track my time really. And i don’t remember it retrospectivelly.&lt;/p&gt;
+
+&lt;p&gt;Neither of Redmine or our CRM offers this really. They are designated or optimized for something else.&lt;/p&gt;
+
+&lt;h2 id=&quot;why-reinvent-the-wheel&quot;&gt;Why reinvent the wheel&lt;/h2&gt;
+
+&lt;p&gt;There is a ton of these apps. But when it comes to web apps i’m often unhappy how they work. It might be some small thing in fact but as i’m a developer myself it’f kind of professional deformation and i just can’t get it out of my head. And when it’s such crucial to work it properly i decided to write it myself. After all i can be upset only on myself if it doesn’t work.&lt;/p&gt;
+
+&lt;p&gt;And another reason - it will serve as a place where i can test all technology things which interests me.&lt;/p&gt;
+
+&lt;p&gt;I released the code under MIT license.&lt;/p&gt;
+
+&lt;p&gt;I Might blog about it here :)&lt;/p&gt;
+
+&lt;p&gt;It’s here: &lt;a href=&quot;https://suptasks.com/&quot;&gt;https://suptasks.com/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;And here: &lt;a href=&quot;https://github.com/Masa331/suptasks&quot;&gt;https://github.com/Masa331/suptasks&lt;/a&gt;&lt;/p&gt;
+</description>
+        <pubDate>Fri, 23 Oct 2015 23:22:49 +0200</pubDate>
+        <link>https://masa331.github.io/2015/10/23/suptasks-intro.html</link>
+        <guid isPermaLink="true">https://masa331.github.io/2015/10/23/suptasks-intro.html</guid>
+        
+        
+      </item>
     
       <item>
         <title>Make your CSV database faster</title>
@@ -22,6 +66,8 @@
 
 &lt;h2 id=&quot;code&quot;&gt;Code&lt;/h2&gt;
 
+&lt;noscript&gt;&lt;pre&gt;400: Invalid request
+&lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/af4b8b0f8597d9f0bc43.js&quot;&gt; &lt;/script&gt;
 
 &lt;h2 id=&quot;benchmarks&quot;&gt;Benchmarks&lt;/h2&gt;
@@ -122,6 +168,8 @@
         <title>Terminate PG connection</title>
         <description>&lt;h1 id=&quot;for-my-future-self&quot;&gt;For my future self&lt;/h1&gt;
 
+&lt;noscript&gt;&lt;pre&gt;400: Invalid request
+&lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/cf521e02b29f2a22a49c.js&quot;&gt; &lt;/script&gt;
 
 </description>
@@ -136,8 +184,12 @@
         <title>PHP vs. Ruby XML-RPC call</title>
         <description>&lt;h1 id=&quot;php-vs-ruby-xml-rpc-call&quot;&gt;PHP vs. Ruby XML-RPC call&lt;/h1&gt;
 
+&lt;noscript&gt;&lt;pre&gt;400: Invalid request
+&lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/3015ea1e332d81900ecc.js&quot;&gt; &lt;/script&gt;
 
+&lt;noscript&gt;&lt;pre&gt;400: Invalid request
+&lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/128ac4933f64086423b3.js&quot;&gt; &lt;/script&gt;
 
 </description>
@@ -152,6 +204,8 @@
         <title>Basic Redis commands</title>
         <description>&lt;h1 id=&quot;for-my-future-self&quot;&gt;For my future self&lt;/h1&gt;
 
+&lt;noscript&gt;&lt;pre&gt;400: Invalid request
+&lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/fa9efa580647fbefa59f.js&quot;&gt; &lt;/script&gt;
 
 </description>
@@ -170,6 +224,8 @@
 
 &lt;p&gt;One day i accidentally wrote semicolon at the end of my PRY statement. What happend?:&lt;/p&gt;
 
+&lt;noscript&gt;&lt;pre&gt;400: Invalid request
+&lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/2c7eaef08b3039579de1.js&quot;&gt; &lt;/script&gt;
 
 &lt;p&gt;Noticed how nothing was printed after second line? Normally you would get another &lt;code&gt;=&amp;gt; &quot;Fred&quot;&lt;/code&gt; line. With semicolon at the end no printing happens.&lt;/p&gt;
@@ -210,16 +266,22 @@ conn.execute(&#39;select 1;&#39;)
 &lt;h2 id=&quot;common-usage&quot;&gt;Common usage&lt;/h2&gt;
 &lt;p&gt;You can get an Enumerator like this:&lt;/p&gt;
 
+&lt;noscript&gt;&lt;pre&gt;400: Invalid request
+&lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/73e58c3aabc14e235883.js&quot;&gt; &lt;/script&gt;
 
 &lt;p&gt;This Enumerator instance wraps iteration over &lt;code&gt;[1, 2, 3]&lt;/code&gt;. We can start the actuall iteration with &lt;code&gt;#each&lt;/code&gt; method. It yields all items to given block:&lt;/p&gt;
 
+&lt;noscript&gt;&lt;pre&gt;400: Invalid request
+&lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/5ad7525544205ea5203a.js&quot;&gt; &lt;/script&gt;
 
 &lt;p&gt;It behaves exactly same as &lt;code&gt;[1, 2, 3].each { |number| puts number }&lt;/code&gt; call.&lt;/p&gt;
 
 &lt;p&gt;But you can also do this:&lt;/p&gt;
 
+&lt;noscript&gt;&lt;pre&gt;400: Invalid request
+&lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/4e405cd44d3adf0ffd0a.js&quot;&gt; &lt;/script&gt;
 
 &lt;p&gt;Like this you can manually iterate over the collection one item after another. &lt;code&gt;StopIteration&lt;/code&gt; is raised when there are no more items. During the iteration, you can use &lt;code&gt;enum#peek&lt;/code&gt;, &lt;code&gt;enum#rewind&lt;/code&gt;, &lt;code&gt;enum#feed&lt;/code&gt; or others, which greatly improves controllability. &lt;strong&gt;With all these you can create your own iterators with custom logic.&lt;/strong&gt;&lt;/p&gt;
@@ -230,15 +292,21 @@ conn.execute(&#39;select 1;&#39;)
 
 &lt;p&gt;Most simple example:&lt;/p&gt;
 
+&lt;noscript&gt;&lt;pre&gt;400: Invalid request
+&lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/dbe29eeb87de8d82a798.js&quot;&gt; &lt;/script&gt;
 
 &lt;p&gt;This time enum doesn’t iterate over anything, but yields to given block &lt;strong&gt;all values you explicitly yield with &lt;code&gt;yielder.yield something&lt;/code&gt;&lt;/strong&gt;. In this example, only one value is yielded and it’s integer 1.&lt;/p&gt;
 
-&lt;p&gt;To yield 1 ten times to given block so &lt;code&gt;enum.each { |item| puts item }&lt;/code&gt; will print 1 ten times on screen:
-&lt;script src=&quot;https://gist.github.com/0800bd3f36c6c7c04b31.js&quot;&gt; &lt;/script&gt;&lt;/p&gt;
+&lt;p&gt;To yield 1 ten times to given block so &lt;code&gt;enum.each { |item| puts item }&lt;/code&gt; will print 1 ten times on screen:&lt;/p&gt;
+&lt;noscript&gt;&lt;pre&gt;400: Invalid request
+&lt;/pre&gt;&lt;/noscript&gt;
+&lt;script src=&quot;https://gist.github.com/0800bd3f36c6c7c04b31.js&quot;&gt; &lt;/script&gt;
 
-&lt;p&gt;And to yield infinetely:
-&lt;script src=&quot;https://gist.github.com/64f06bd6c61245c723e0.js&quot;&gt; &lt;/script&gt;&lt;/p&gt;
+&lt;p&gt;And to yield infinetely:&lt;/p&gt;
+&lt;noscript&gt;&lt;pre&gt;400: Invalid request
+&lt;/pre&gt;&lt;/noscript&gt;
+&lt;script src=&quot;https://gist.github.com/64f06bd6c61245c723e0.js&quot;&gt; &lt;/script&gt;
 
 &lt;p&gt;If you call &lt;code&gt;#each&lt;/code&gt; on this enum, it will never stop yielding and printing. But if you call &lt;code&gt;#next&lt;/code&gt;, it will yield only once and then stop.&lt;/p&gt;
 
@@ -246,8 +314,10 @@ conn.execute(&#39;select 1;&#39;)
 
 &lt;p&gt;&lt;strong&gt;Internally enum stops execution every time &lt;code&gt;#yield&lt;/code&gt; is called on yielder&lt;/strong&gt;.&lt;/p&gt;
 
-&lt;p&gt;Try it with putting print statements before and after yield:
-&lt;script src=&quot;https://gist.github.com/a8353c161157f626717c.js&quot;&gt; &lt;/script&gt;&lt;/p&gt;
+&lt;p&gt;Try it with putting print statements before and after yield:&lt;/p&gt;
+&lt;noscript&gt;&lt;pre&gt;400: Invalid request
+&lt;/pre&gt;&lt;/noscript&gt;
+&lt;script src=&quot;https://gist.github.com/a8353c161157f626717c.js&quot;&gt; &lt;/script&gt;
 
 &lt;p&gt;This technique is also used in example from official &lt;a href=&quot;http://ruby-doc.org/core-2.2.0/Enumerator.html&quot;&gt;documentation&lt;/a&gt;, where infinite fibonacci sequence is generated.&lt;/p&gt;
 </description>
@@ -272,6 +342,8 @@ conn.execute(&#39;select 1;&#39;)
 
 &lt;p&gt;Well… it got me thinking. Do i really need to test it on Rails app? No! So i created simple ruby script:&lt;/p&gt;
 
+&lt;noscript&gt;&lt;pre&gt;400: Invalid request
+&lt;/pre&gt;&lt;/noscript&gt;
 &lt;script src=&quot;https://gist.github.com/9da2e21c708a5fe2512b.js&quot;&gt; &lt;/script&gt;
 
 &lt;p&gt;Of course you have to run this on Ruby &amp;lt; 2.2.&lt;/p&gt;
@@ -382,18 +454,6 @@ The change will appear after reboot or if you call &lt;code&gt;$xrdb -load ~/.Xr
         <pubDate>Fri, 17 Jul 2015 23:22:49 +0200</pubDate>
         <link>https://masa331.github.io/2015/07/17/configuring-xterm-fonts.html</link>
         <guid isPermaLink="true">https://masa331.github.io/2015/07/17/configuring-xterm-fonts.html</guid>
-        
-        
-      </item>
-    
-      <item>
-        <title>Hello world!</title>
-        <description>&lt;h1 id=&quot;hello-world&quot;&gt;Hello World!&lt;/h1&gt;
-&lt;p&gt;Hellow World&lt;/p&gt;
-</description>
-        <pubDate>Fri, 17 Jul 2015 23:22:48 +0200</pubDate>
-        <link>https://masa331.github.io/2015/07/17/hello-world.html</link>
-        <guid isPermaLink="true">https://masa331.github.io/2015/07/17/hello-world.html</guid>
         
         
       </item>

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title> What is Enumerator? |  Masa331 blog</title>
+    <title> SupTasks: Intro |  Masa331 blog</title>
     <link rel="stylesheet" href="https://masa331.github.io/assets/stylesheets/styles.css">
     <link rel="stylesheet" href="https://masa331.github.io/assets/stylesheets/pygment_trac.css">
     <link rel="stylesheet" href="https://masa331.github.io/assets/stylesheets/custom.css">
@@ -119,77 +119,46 @@
 
 
   <section>
-    <h1 id="what-is-enumerator">What is Enumerator?</h1>
+    <h1 id="suptasks-intro">Suptasks: Intro</h1>
 
-<p>I started programming 2 years ago and i didn’t yet come to a situation when i would really need to know. But i was always curious because words like ‘Enumerator’ and ‘Enumerable’ were present from the very beggining. So let’s find out!</p>
+<p>I always felt like if i would somehow measure time i spent on various work tasks i could then analyze it and eventually improve efficiency. In company i work for we manage our tasks through Redmine and our internall CRM. In both of them it’s possible to track spent time.</p>
 
-<p>Long story short:</p>
+<p>The problem is it’s very very important to make this as much seamless as possible. Well that is important for all apps and tools in general but here it’s really big thing.</p>
 
-<p><strong>Instances of <code>Enumerator</code> class are used to wrap iterations and let’s you control the whole process.</strong></p>
+<p>Somethimes my morning looks like this. Following things happen in ten minutes together:</p>
 
-<h2 id="common-usage">Common usage</h2>
-<p>You can get an Enumerator like this:</p>
+<ul>
+  <li>Me working on some deadline feature</li>
+  <li>New colleague of mine asks for another task</li>
+  <li>Bug report from production comes in</li>
+  <li>Another colleague asks someting about some part of system</li>
+  <li>Client calls for some help</li>
+  <li>And of course i’m late with 10 other things i promised to someone</li>
+</ul>
 
-<noscript><pre>400: Invalid request
-</pre></noscript>
-<script src="https://gist.github.com/73e58c3aabc14e235883.js"> </script>
+<p>So now i need to fast switch between very different contexts. I don’t have time to track my time really. And i don’t remember it retrospectivelly.</p>
 
-<p>This Enumerator instance wraps iteration over <code>[1, 2, 3]</code>. We can start the actuall iteration with <code>#each</code> method. It yields all items to given block:</p>
+<p>Neither of Redmine or our CRM offers this really. They are designated or optimized for something else.</p>
 
-<noscript><pre>400: Invalid request
-</pre></noscript>
-<script src="https://gist.github.com/5ad7525544205ea5203a.js"> </script>
+<h2 id="why-reinvent-the-wheel">Why reinvent the wheel</h2>
 
-<p>It behaves exactly same as <code>[1, 2, 3].each { |number| puts number }</code> call.</p>
+<p>There is a ton of these apps. But when it comes to web apps i’m often unhappy how they work. It might be some small thing in fact but as i’m a developer myself it’f kind of professional deformation and i just can’t get it out of my head. And when it’s such crucial to work it properly i decided to write it myself. After all i can be upset only on myself if it doesn’t work.</p>
 
-<p>But you can also do this:</p>
+<p>And another reason - it will serve as a place where i can test all technology things which interests me.</p>
 
-<noscript><pre>400: Invalid request
-</pre></noscript>
-<script src="https://gist.github.com/4e405cd44d3adf0ffd0a.js"> </script>
+<p>I released the code under MIT license.</p>
 
-<p>Like this you can manually iterate over the collection one item after another. <code>StopIteration</code> is raised when there are no more items. During the iteration, you can use <code>enum#peek</code>, <code>enum#rewind</code>, <code>enum#feed</code> or others, which greatly improves controllability. <strong>With all these you can create your own iterators with custom logic.</strong></p>
+<p>I Might blog about it here :)</p>
 
-<h2 id="enumeratornew">Enumerator.new</h2>
+<p>It’s here: <a href="https://suptasks.com/">https://suptasks.com/</a></p>
 
-<p>You can also create Enumerator with <code>Enumerator.new { |yielder| ... }</code>.</p>
-
-<p>Most simple example:</p>
-
-<noscript><pre>400: Invalid request
-</pre></noscript>
-<script src="https://gist.github.com/dbe29eeb87de8d82a798.js"> </script>
-
-<p>This time enum doesn’t iterate over anything, but yields to given block <strong>all values you explicitly yield with <code>yielder.yield something</code></strong>. In this example, only one value is yielded and it’s integer 1.</p>
-
-<p>To yield 1 ten times to given block so <code>enum.each { |item| puts item }</code> will print 1 ten times on screen:</p>
-<noscript><pre>400: Invalid request
-</pre></noscript>
-<script src="https://gist.github.com/0800bd3f36c6c7c04b31.js"> </script>
-
-<p>And to yield infinetely:</p>
-<noscript><pre>400: Invalid request
-</pre></noscript>
-<script src="https://gist.github.com/64f06bd6c61245c723e0.js"> </script>
-
-<p>If you call <code>#each</code> on this enum, it will never stop yielding and printing. But if you call <code>#next</code>, it will yield only once and then stop.</p>
-
-<p>It’s only the implementation of <code>#each</code> which calls <code>#next</code> in loop and goes on forever because <code>StopIteration</code>, is never raised.</p>
-
-<p><strong>Internally enum stops execution every time <code>#yield</code> is called on yielder</strong>.</p>
-
-<p>Try it with putting print statements before and after yield:</p>
-<noscript><pre>400: Invalid request
-</pre></noscript>
-<script src="https://gist.github.com/a8353c161157f626717c.js"> </script>
-
-<p>This technique is also used in example from official <a href="http://ruby-doc.org/core-2.2.0/Enumerator.html">documentation</a>, where infinite fibonacci sequence is generated.</p>
+<p>And here: <a href="https://github.com/Masa331/suptasks">https://github.com/Masa331/suptasks</a></p>
 
 
     <div class="signature">
       
       <span>Premysl Donat</span>
-      <span class='pull-right'>26 July 2015</span>
+      <span class='pull-right'>23 October 2015</span>
     </div>
   </section>
 
