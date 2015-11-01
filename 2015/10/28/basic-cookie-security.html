@@ -115,7 +115,7 @@
 
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">use</span> <span class="no">Rack</span><span class="o">::</span><span class="no">Session</span><span class="o">::</span><span class="no">Cookie</span></code></pre></div>
 
-<p>What’s actually stored in cookie is base64 encoded Marshaled hash:</p>
+<p>What’s actually stored in cookie is base64 encoded marshalled hash:</p>
 
 <p><img src="https://masa331.github.io/assets/images/cookie1.png" alt="base64 marshalled hash" /></p>
 
@@ -159,11 +159,13 @@
 
 <p><img src="https://masa331.github.io/assets/images/cookie4.png" alt="base64 marshalled hash with appended digest" /></p>
 
-<p>Now the cookie has two parts - first is our base64 encoded marshalled hash and second is it’s SHA1 digest created with our new secret. Everytime session is loaded back from cookie, rack takes the first part and creates new digest from it. Then it’s compared to the one stored in second part of cookie. If they match it means that noone manipulated with the cookie. If someone did, our new digest would be different from the saved one.</p>
+<p>This new cookie has two parts - first is our base64 encoded marshalled hash and second is it’s SHA1 digest created with our new secret. Everytime session is loaded back from cookie, rack takes the first part and creates new digest from it. Then it’s compared to the one stored in second part of cookie. If they match it means that noone manipulated with the cookie. If someone did, our new digest would be different from the saved one.</p>
 
-<p>The most important thing now is to save the secret somewhere safe, so nobody can read it. Otherwise attacker could easily create digest which would match the rack check. You can keep your secret in server environment or load it from some yaml file for example but <strong>never keep it in your version control</strong>.</p>
+<p>The most important thing now is to <strong>save the secret somewhere safe</strong>, so nobody can read it. Otherwise attacker could easily create digest which would match the rack check. You can keep your secret in server environment or load it from some yaml file but <strong>never keep it in your version control</strong>.</p>
 
-<p>By the way in future versions of Rack it won’t even be possible to use cookie session without secret.</p>
+<p>By the way in future versions of Rack it won’t even be possible to use cookie session without secret. :)</p>
+
+<p>Have a good one</p>
 
 
     <div class="signature">
