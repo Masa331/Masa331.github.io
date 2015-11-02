@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title> Hello world! |  Masa331 blog</title>
+    <title> Preconnect for performance |  Masa331 blog</title>
     <link rel="stylesheet" href="https://masa331.github.io/assets/stylesheets/styles.css">
     <link rel="stylesheet" href="https://masa331.github.io/assets/stylesheets/pygment_trac.css">
     <link rel="stylesheet" href="https://masa331.github.io/assets/stylesheets/custom.css">
@@ -109,14 +109,37 @@
 
 
   <section>
-    <h1 id="hello-world">Hello World!</h1>
-<p>Hellow World</p>
+    <h1 id="preconnect-and-reap-the-low-hanging-performance-fruit">Preconnect and reap the low hanging performance fruit</h1>
+
+<p>Guys all credits to this post <a href="https://www.igvita.com/2015/08/17/eliminating-roundtrips-with-preconnect/">Eliminating Roundtrips with Preconnect</a> but this preconnect thing is really cool!!</p>
+
+<p>Ok, this is how a fresh request to my homepage looks in terms of performance:</p>
+
+<p><img src="https://masa331.github.io/assets/images/homepage-performance-without-preconnect.png" alt="homepage performance without preconnect" /></p>
+
+<p>See these 93ms? That’s time it takes my browser to initiate connection with font awesome CDN.</p>
+
+<p>And look at this:</p>
+
+<p><img src="https://masa331.github.io/assets/images/homepage-performance-with-preconnect.png" alt="homepage performance with preconnect" /></p>
+
+<p>No 93ms for connection initiation! <strong>One fifth of the total time saved</strong>. And only thing you need to do is this:</p>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;preconnect&quot;</span> <span class="na">href=</span><span class="s">&quot;https://maxcdn.bootstrapcdn.com&quot;</span> <span class="na">crossorigin</span><span class="nt">&gt;</span></code></pre></div>
+
+<p>With this link you are telling browser you might pull something from bootstrapcdn.com. As soon as browser gets this link it will initiate a new connection instead of doing it after some CSS requests it. Once CSS requests it, connection is already prepared and that saves a lot of time.</p>
+
+<p><strong>Read the original article and it’s own sources for more in-depth explanation:</strong>
+<a href="https://www.igvita.com/2015/08/17/eliminating-roundtrips-with-preconnect/">Eliminating Roundtrips with Preconnect</a></p>
+
+<p>On SupTasks implemented in commit:
+<a href="https://github.com/Masa331/suptasks/commit/d4ddf3223395a78706042074f5788666f9c8d5b8">d4ddf32</a></p>
 
 
     <div class="signature">
       
       <span>Premysl Donat</span>
-      <span class='pull-right'>17 July 2015</span>
+      <span class='pull-right'>02 November 2015</span>
     </div>
   </section>
 
