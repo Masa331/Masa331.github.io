@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title> How many symbols? |  Masa331 blog</title>
+    <title> Zivy dum |  Masa331 blog</title>
     <link rel="stylesheet" href="https://masa331.github.io/assets/stylesheets/styles.css">
     <link rel="stylesheet" href="https://masa331.github.io/assets/stylesheets/pygment_trac.css">
     <link rel="stylesheet" href="https://masa331.github.io/assets/stylesheets/custom.css">
@@ -115,37 +115,29 @@
 
 
   <section>
-    <h1 id="how-many-symbols-can-you-do">How many symbols can you do?</h1>
+    <h1 id="iv-dm">Živý dům</h1>
 
-<p>So i’v been reading through Ruby 2.2 release notes and notice the new GC which also collects symbols.</p>
+<p>Cca 90km od Prahy stojí v jedné vesnici středočeského kraje oranžový dům s modrou střechou. V tom domě nikdo nebydlí a tak tam stojí sám, zarostlý nesekanou trávou.</p>
 
-<p>This is long time known problem in Rails world. Prior to Ruby 2.2 symbols weren’t garbage collected. So if you did somewhere create symbols from request params your app was vulnerable to DoS attacks. Google it if you want to know more.</p>
+<p>V tom domě jsem vyrostl a teď mi z části patří. Stojí na kraji vesnice a má krásnou velkou terasu porostlou vistárií, kde mně, teď pražákovi, často skoro ukápne slza, když se ponořím do místního ticha, klidu a čistého vzduchu.</p>
 
-<p>I found one of my app vulnerable… :) so i wanted to try it of course. I wanted to see how does it look if your server crashes because of that.</p>
+<p>Protože tam nikdo nebydlí, tak dům i zahrada chátrá. A je mi kvůli tomu smutno, ale teď jsem se rozhodl věnovat čas jiný věcem, než starání se o něj. A když tam občas přijedu, tak to samozřejmě cítím nejvíc.</p>
 
-<p>It didn’t work out for some reason. I created simple script which was doing requests with different param from which symbols were created. But the server was just fine. I guess the request-response cycle is really slow or something.</p>
+<p>I proto mě doslova ohromilo, co jsem naposledy našel v prvním patře, které bylo teprve před nedávnem v hrubé stavbě dodělané.</p>
 
-<p>Well… it got me thinking. Do i really need to test it on Rails app? No! So i created simple ruby script:</p>
+<p>A moc mě to potěšilo, protože i když se možná kroutí parketová podlaha, a vlhkem v garáži rezaví nářadí, tak ten dům rozhodně neumírá, ale právě naopak, je plný života:</p>
 
-<noscript><pre>400: Invalid request
-</pre></noscript>
-<script src="https://gist.github.com/9da2e21c708a5fe2512b.js"> </script>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/dxQXugj7M00" frameborder="0" allowfullscreen=""></iframe>
 
-<p>Of course you have to run this on Ruby &lt; 2.2.</p>
+<p>Video zachytí celou tu věc jen z části a vůbec to není tak působivé jako na místě. Ale tam je to opravdu silný. A opravdu hrozně mi to zvedlo náladu.</p>
 
-<p>After some time i realized it is really crappy metric because it depends on other processes using memory.</p>
-
-<p>But it was really fun with this excersise. Learned a few things…</p>
-
-<p>Note that at the end as your computer depletes all the memory and starts swapping the death by creating new symbols is really really slow. You can watch that in htop.</p>
-
-<p><strong>But still… i can do about 27 000 000 symbols. What about you?</strong></p>
+<p>P.S.: Neměl jsem to srdce vystárii posekat, takže minimálně do jara tam roste dál. ;)</p>
 
 
     <div class="signature">
       
       <span>Premysl Donat</span>
-      <span class='pull-right'>22 July 2015</span>
+      <span class='pull-right'>05 November 2015</span>
     </div>
   </section>
 
