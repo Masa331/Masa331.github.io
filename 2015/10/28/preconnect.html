@@ -4,124 +4,39 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <title> Basic cookies security in rack |  Masa331 blog</title>
-    <link rel="stylesheet" href="https://masa331.github.io/assets/stylesheets/styles.css">
-    <link rel="stylesheet" href="https://masa331.github.io/assets/stylesheets/pygment_trac.css">
-    <link rel="stylesheet" href="https://masa331.github.io/assets/stylesheets/custom.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script src="https://masa331.github.io/assets/javascripts/main.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <link rel="stylesheet" href="/assets/stylesheets/styles.css">
+    <link rel="stylesheet" href="/assets/stylesheets/pygment_trac.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <meta name="viewport" content="width=device-width">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
   </head>
   <body>
+    <div class="wrapper">
+      <header>
+        <h1>Masa331 blogging</h1>
+        <p>Hi, i'm Premysl Donat and this is my blog about IT, programming, and my life in generall.</p>
+        <p>Have a good one!</p>
 
-  <header>
-    <a href="https://masa331.github.io">
-      <h1>I finally have a blog</h1>
-    </a>
-    <p>IT & stuff - by <a class="header-link" href="https://github.com/Masa331">Masa331</a></p>
-  </header>
+        <h2>Menu</h2>
+        <ul>
+          <li><a href="/index.html">Home</a></li>
+          <li><a href="/index.html">Goodreads</a></li>
+        </ul>
 
+        <div class="social-icons">
+          <a href="https://github.com/Masa331"><i class="fa fa-github-square"></i></a>
+          <a href="https://twitter.com/DonatP"><i class="fa fa-twitter-square"></i></a>
+        </div>
 
-<div class="wrapper">
-
-  <nav>
-  <ul>
-    
-        <li class='tag-h2'>
-          <a href="/2015/11/16/hide-complexnes-from-view.html">
-            Separate presentation and interface from logic
-          </a>
-        </li>
-    
-        <li class='tag-h2'>
-          <a href="/2015/11/05/living-house.html">
-            Zivy dum
-          </a>
-        </li>
-    
-        <li class='tag-h2'>
-          <a href="/2015/11/02/basic-cookie-security.html">
-            Preconnect for performance
-          </a>
-        </li>
-    
-        <li class='tag-h2'>
-          <a href="/2015/10/28/preconnect.html">
-            Basic cookies security in rack
-          </a>
-        </li>
-    
-        <li class='tag-h2'>
-          <a href="/2015/10/23/suptasks-intro.html">
-            SupTasks: Intro
-          </a>
-        </li>
-    
-        <li class='tag-h2'>
-          <a href="/2015/09/01/csv-database-faster.html">
-            Make your CSV database faster
-          </a>
-        </li>
-    
-        <li class='tag-h2'>
-          <a href="/2015/08/21/terminate_postgres_connections.html">
-            Terminate PG connection
-          </a>
-        </li>
-    
-        <li class='tag-h2'>
-          <a href="/2015/08/13/php-vs-ruby.html">
-            PHP vs. Ruby XML-RPC call
-          </a>
-        </li>
-    
-        <li class='tag-h2'>
-          <a href="/2015/08/11/redis-basic.html">
-            Basic Redis commands
-          </a>
-        </li>
-    
-        <li class='tag-h2'>
-          <a href="/2015/08/08/end-ruby-commands-with-colon.html">
-            Use semicolon in IRB
-          </a>
-        </li>
-    
-        <li class='tag-h2'>
-          <a href="/2015/07/26/ruby-enumerator.html">
-            What is Enumerator?
-          </a>
-        </li>
-    
-        <li class='tag-h2'>
-          <a href="/2015/07/22/how-many-symbols.html">
-            How many symbols?
-          </a>
-        </li>
-    
-        <li class='tag-h2'>
-          <a href="/2015/07/21/keyboard-shortcuts.html">
-            Keyboard shortcuts
-          </a>
-        </li>
-    
-        <li class='tag-h2'>
-          <a href="/2015/07/17/configuring-xterm-fonts.html">
-            Configuring XTerm fonts
-          </a>
-        </li>
-    
-        <li class='tag-h2'>
-          <a href="/2015/07/17/hello-world.html">
-            Hello world!
-          </a>
-        </li>
-    
-  </ul>
-</nav>
+        <hr />
+      </header>
 
 
-  <section>
-    <h1 id="basic-cookies-security-in-rack">Basic cookies security in rack</h1>
+<section>
+  <h1 id="basic-cookies-security-in-rack">Basic cookies security in rack</h1>
 
 <p>I run my own Task &amp; Time tracking app <a href="https://suptasks.com">SupTasks</a>. It’s build on tiny ruby web framework <a href="http://roda.jeremyevans.net/">Roda</a> which itself is build on rack. I was curious how sessions and cookies are handled in rack and in general so i’v been investigating it a bit lately.</p>
 
@@ -186,32 +101,23 @@
 <p>Have a good one</p>
 
 
-    <div class="signature">
-      
-      <span>Premysl Donat</span>
-      <span class='pull-right'>28 October 2015</span>
-    </div>
-  </section>
-
   
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      /* * * CONFIGURATION VARIABLES * * */
+      var disqus_shortname = 'masa331';
 
-  <div id="disqus_thread"></div>
-  <script type="text/javascript">
-    /* * * CONFIGURATION VARIABLES * * */
-    var disqus_shortname = 'masa331';
-
-    /* * * DON'T EDIT BELOW THIS LINE * * */
-    (function() {
-      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-  </script>
-  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+      /* * * DON'T EDIT BELOW THIS LINE * * */
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
   
+</section>
 
-      <footer>
-    </footer>
     </div>
   </body>
 </html>
