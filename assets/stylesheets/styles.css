@@ -25,6 +25,14 @@ h1 {
   font-size:28px;
 }
 
+h1 a {
+  color: black;
+}
+
+h1 a:hover {
+  color: black;
+}
+
 h2 {
   color:#393939;
 }
