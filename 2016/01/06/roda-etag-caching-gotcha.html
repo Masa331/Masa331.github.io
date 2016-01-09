@@ -58,11 +58,9 @@
   <li><a href="http://nginx.org/en/CHANGES">Nginx changelog</a> - look for verison 1.7.3</li>
 </ul>
 
-<p>TLDR: esponse is gzipped it doesn’t have to be byte-to-byte comparable after restore. And that’s what strong ETag suggests. Weak ETag on other hand suggests that response might not be byte-to-byte comparable but the semantics are same. And Nginx does it’s best to support caching by modifiing the strong ETag to be a weak one.</p>
-
 <p>TLDR: Response before gzip and response after restore from gzip doesn’t have to be byte-to-byte comparable. And that’s what strong ETag suggests. Weak ETag on other hand suggests that response might not be byte-to-byte comparable but the semantics are same.</p>
 
-<p>So Nginx does it’s best to support caching by modifiing the strong ETag to weak one.</p>
+<p>Nginx does it’s best to support caching by modifiing the strong ETag to weak one.</p>
 
 <p>The problem is that Roda waits for “hello” ETag. But after Nginx’s gzip it’s “W/hello”. So when compared, ETags aren’t same and 200 response with full content is returned.</p>
 
