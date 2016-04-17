@@ -1,0 +1,247 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title> Setup and deploy Roda app from scratch |  Masa331 blog</title>
+
+    <link rel="stylesheet" href="/assets/stylesheets/styles.css">
+    <link rel="stylesheet" href="/assets/stylesheets/pygment_trac.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <meta name="viewport" content="width=device-width">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1><a href="http://masa331.github.io">Masa331 blogging</a></h1>
+        <img src="http://masa331.github.io/assets/images/my-picture.png" alt="my-photo" />
+        <p>Hi, i'm Premysl Donat and this is my blog about IT and my life in generall. I work at <a href="http://uol.cz">UOL</a> and in my free time i develop <a href="https://suptasks.com">Suptasks</a>.</p>
+        <p>Have a good one!</p>
+
+        <h2>Menu</h2>
+        <ul>
+          <li><a href="http://masa331.github.io">Home</a></li>
+          <li><a href="http://masa331.github.io/goodreads.html">Goodreads</a></li>
+        </ul>
+
+        <div class="social-icons">
+          <a href="https://github.com/Masa331"><i class="fa fa-github-square"></i></a>
+          <a href="https://twitter.com/DonatP"><i class="fa fa-twitter-square"></i></a>
+        </div>
+
+        <hr />
+      </header>
+
+
+<section>
+  <h1 id="setup-and-deploy-roda-app-from-scratch">Setup and deploy Roda app from scratch</h1>
+
+<p>I’v decided to migrate my projects exclusivelly to AWS. It’s been a great experience so far. Before i was using some local hosting provider which was good but it can’t beat the AWS’s ease of use and endless posibilities.</p>
+
+<p>Here in this post i’m gonna describe how to deploy simple Roda app on new EC2 instance from scratch.</p>
+
+<p>My stack:</p>
+
+<ul>
+  <li>Ubuntu 14.04 basic EC2 image</li>
+  <li>Ruby 2.3</li>
+  <li>Roda application framework</li>
+  <li>SQLite3</li>
+  <li>Nginx as a web server</li>
+  <li>Puma as an application server</li>
+  <li>Capistrano for deployment</li>
+  <li>HTTPS</li>
+</ul>
+
+<h2 id="setting-up-the-server">1) Setting up the server</h2>
+
+<p>This part of the setup is pretty easy and involves just installation of basic packages we are gonna need:</p>
+
+<pre><code>$ sudo apt-get update
+$ sudo apt-get upgrade
+
+# Ubuntu itself doesn't have up to date ruby packages
+# the option i prefer is to get ruby from Brightbox PPA: https://www.brightbox.com/docs/ruby/ubuntu/
+$ sudo apt-get install software-properties-common
+$ sudo apt-add-repository ppa:brightbox/ruby-ng
+$ sudo apt-get update
+$ sudo apt-get install ruby2.3 ruby2.3-dev
+
+# This is my database of choice but installing PostgreSQL or MySQL should be same
+$ sudo apt-get install sqlite3 libsqlite3-dev
+# Git will be needed for our deployment
+$ sudo apt-get install git
+# Web server
+$ sudo apt-get install nginx
+
+# Basic packages needed for compilation of Ruby gems native extensions
+$ sudo apt-get install make g++ gcc libssl-dev
+# Basic monitoring tool
+$ sudo apt-get install htop
+</code></pre>
+
+<h2 id="configurign-nginx">2) Configurign nginx</h2>
+
+<p>Nginx on this box won’t serve anything other than this one app. So because of this i’m not using it’s base setup with sites-enabled and sites-available directories. I configure the server right inside the nginx.conf file.</p>
+
+<p>This is how the server block in my <code>nginx.conf</code> file looks like:</p>
+
+<pre><code>##
+# Virtual Host Configs
+##
+
+index index.html;
+
+# Redirect all http trafic to https
+server {
+  listen         80;
+  server_name    suptasks.com www.suptasks.com;
+  return         301 https://$server_name$request_uri;
+}
+
+upstream puma {
+  server unix:///var/www/suptasks/shared/tmp/sockets/puma.sock;
+}
+server {
+  # If you don't need HTTPS just remove the redirect above, change ports
+  # here and remove the directives for ssl.
+  listen 443 ssl default_server;
+  server_name suptasks.com www.suptasks.com;
+  ssl_certificate &lt;path_to_certificate&gt;;
+  ssl_certificate_key &lt;path_to_key&gt;;
+  # Don't use SSLv3 because of Poodle
+  ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+
+  root /var/www/suptasks/current/public;
+
+  location ^~ /assets/ {
+    gzip_static on;
+    expires max;
+    add_header Cache-Control public;
+  }
+
+  try_files $uri/index.html $uri @puma;
+  location @puma {
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header Host $http_host;
+    proxy_redirect off;
+
+    proxy_pass http://puma;
+  }
+
+  error_page 500 502 503 504 /500.html;
+  client_max_body_size 10M;
+  keepalive_timeout 10;
+}
+</code></pre>
+
+<p>Also my nginx.conf file is missing these 2 lines because as i said, i configure everything in nginx.conf:</p>
+
+<pre><code>include /etc/nginx/conf.d/*.conf;
+include /etc/nginx/sites-enabled/*;
+</code></pre>
+
+<h1 id="deploy-with-capistrano">3) Deploy with Capistrano</h1>
+<p>I’ll deploy into /var/www directory. Capistrano and my deploy user needs to be able to create subdirectiories:</p>
+
+<pre><code>$ sudo chown ubuntu:ubuntu /var/www/
+</code></pre>
+
+<p>In order to fetch new versions of your app from remote repository(Gtihub in my case) you need to generate ssh key and upload it to Github.</p>
+
+<pre><code>$ ssh-keygen -t rsa -b 4096
+</code></pre>
+
+<p>Then we can prepare Capistrano config files:</p>
+
+<pre><code>$ cap install
+</code></pre>
+
+<p>this will create necessary <code>Capfile</code> and <code>config/deploy.rb</code> and <code>config/deploy/production.rb</code> which you need to manually customize:</p>
+
+<p>My Capfile:</p>
+
+<pre><code>require 'capistrano/setup'
+require 'capistrano/deploy'
+require 'capistrano/puma'
+require 'capistrano/bundler'
+
+Dir.glob('lib/capistrano/tasks/*.rake').each { |r| import r }
+</code></pre>
+
+<p>This is enough for our Roda app now. Additionally to ‘capistrano’ gem you only need ‘capistrano-puma’ and ‘capistrano-bundler’ in your Gemfile.</p>
+
+<p>config/deploy.rb:</p>
+
+<pre><code>set :application, 'suptasks'
+set :repo_url, 'git@github.com:Masa331/suptasks.git'
+set :deploy_to,   '/var/www/suptasks'
+set :pty, true
+
+# This is something which will be different for your app probably
+set :linked_dirs,  %w{bin log tmp/pids tmp/cache tmp/sockets db/task_databases/databases}
+set :linked_files, %w{.production suptasks.log db/user_database/user_database}
+
+namespace :deploy do
+end
+</code></pre>
+
+<p>and config/deploy/production.rb:</p>
+
+<pre><code>server '52.58.103.140', user: 'ubuntu', roles: %w{web app db}
+set :ssh_options, {
+ keys: %w(&lt;path_to_your_ssh_key&gt;)
+}
+</code></pre>
+
+<p>Now before deploy you need to upload all linked files and directories you listed in <code>config/deploy.rb</code>.</p>
+
+<p>When you’r done you can do <code>cap production deploy</code> and your app should be up and running.</p>
+
+<p>This was pretty much everything to set up  my small app in production :)</p>
+
+<h2 id="problems-troubleshooting">Problems troubleshooting</h2>
+<p>If you encounter any problem during deploy i suggest you to try to ssh into the box and try to fire up the exact command Capistrano failed on. Often there can be problems with deploy user permissions etc.</p>
+
+<p>When the deploy doens’t fail but the app isn’t running either you can check nginx log files and you migth find some clues there:</p>
+
+<ul>
+  <li><code>/var/log/nginx/access.log</code></li>
+  <li><code>/var/log/nginx/error.log</code></li>
+</ul>
+
+<p>SSL certificate problems will be logged there for example.</p>
+
+<p>I also had a few problems with starting Puma. It was due to missing linked files but the biggest problem is that the deploy won’t fail when Puma doesn’t start properly. However when this happens and you suspect Puma i suggest ssh into the box, cd inside the app root and try to start puma manually the same way the Capistrano tries it but strip off the <code>--daemon</code> parameter. When you do this the Puma should fail with some error message explaining the problem.</p>
+
+<p>In the time of writing the command was:</p>
+
+<pre><code>$ /usr/bin/env bundle exec puma -C /var/www/suptasks/shared/puma.rb
+</code></pre>
+
+
+
+  
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      /* * * CONFIGURATION VARIABLES * * */
+      var disqus_shortname = 'masa331';
+
+      /* * * DON'T EDIT BELOW THIS LINE * * */
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+</section>
+
+    </div>
+  </body>
+</html>
+
