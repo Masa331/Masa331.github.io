@@ -1,0 +1,107 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title> Bootstrap 4 is coming and it's in SASS! |  Masa331 blog</title>
+
+    <link rel="stylesheet" href="/assets/stylesheets/styles.css">
+    <link rel="stylesheet" href="/assets/stylesheets/pygment_trac.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <meta name="viewport" content="width=device-width">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1><a href="http://masa331.github.io">Masa331 blogging</a></h1>
+        <img src="http://masa331.github.io/assets/images/my-picture.png" alt="my-photo" />
+        <p>Hi, i'm Premysl Donat and this is my blog about IT and my life in generall. I work at <a href="http://uol.cz">UOL</a> and in my free time i develop <a href="https://suptasks.com">Suptasks</a>.</p>
+        <p>Have a good one!</p>
+
+        <h2>Menu</h2>
+        <ul>
+          <li><a href="http://masa331.github.io">Home</a></li>
+          <li><a href="http://masa331.github.io/goodreads.html">Goodreads</a></li>
+        </ul>
+
+        <div class="social-icons">
+          <a href="https://github.com/Masa331"><i class="fa fa-github-square"></i></a>
+          <a href="https://twitter.com/DonatP"><i class="fa fa-twitter-square"></i></a>
+        </div>
+
+        <hr />
+      </header>
+
+
+<section>
+  <p>Did you know that Twitter Bootstrap 4 will be in SASS and not LESS anymore? That means we can directly use it inside Rails projects with official <a href="https://rubygems.org/gems/bootstrap">bootstrap</a> gem.</p>
+
+<p>No need to use <a href="https://github.com/twbs/bootstrap-sass">bootstrap-sass</a> or even LESS version <a href="https://github.com/seyhunak/twitter-bootstrap-rails">twitter-bootstrap-rails</a>.</p>
+
+<h1 id="how-to-integrate-into-rails">How to integrate into Rails</h1>
+
+<p>It’s super easy. Barely needs a post but anyways:</p>
+
+<p>Gemfile:</p>
+
+<pre><code>gem 'bootstrap', '&gt;=4.0.0.alpha3'
+</code></pre>
+
+<p>application.css.scss:</p>
+
+<pre><code>/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ */
+
+@import "variables";
+@import "bootstrap";
+@import "my_styles";
+</code></pre>
+
+<p>Note that we don’t use Sprockets requires anymore, just normal SASS imports. But practically it’s similar. <code>variables.css.scss</code> and <code>my_styles.css.scss</code> are just another files in same folder as <code>application.css.scss</code>.</p>
+
+<p>And that’s really all! :) Now head to the <a href="http://v4-alpha.getbootstrap.com/">Bootstrap 4 docs</a> to see what other things are new in Bootstrap.</p>
+
+
+  
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      /* * * CONFIGURATION VARIABLES * * */
+      var disqus_shortname = 'masa331';
+
+      /* * * DON'T EDIT BELOW THIS LINE * * */
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+</section>
+
+    </div>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-76614059-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+  </body>
+</html>
+
