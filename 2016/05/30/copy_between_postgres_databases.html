@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title> Copy data between 2 postgres dbs |  Masa331 blog</title>
+
+    <link rel="stylesheet" href="/assets/stylesheets/styles.css">
+    <link rel="stylesheet" href="/assets/stylesheets/pygment_trac.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <meta name="viewport" content="width=device-width">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1><a href="http://masa331.github.io">Masa331 blogging</a></h1>
+        <img src="http://masa331.github.io/assets/images/my-picture.png" alt="my-photo" />
+        <p>Hi, i'm Premysl Donat and this is my blog about IT and my life in generall. I work at <a href="http://uol.cz">UOL</a> and in my free time i develop <a href="https://suptasks.com">Suptasks</a>.</p>
+        <p>Have a good one!</p>
+
+        <h2>Menu</h2>
+        <ul>
+          <li><a href="http://masa331.github.io">Home</a></li>
+          <li><a href="http://masa331.github.io/goodreads.html">Goodreads</a></li>
+        </ul>
+
+        <div class="social-icons">
+          <a href="https://github.com/Masa331"><i class="fa fa-github-square"></i></a>
+          <a href="https://twitter.com/DonatP"><i class="fa fa-twitter-square"></i></a>
+        </div>
+
+        <hr />
+      </header>
+
+
+<section>
+  <h1 id="copy-data-between-2-postgres-dbs">Copy data between 2 postgres dbs</h1>
+
+<pre><code># turns on/off tuples only =&gt; means no printing of headers/footers etc, just rows
+psql=# \t
+# turns on/off aligned output =&gt; basically pretty tables or not
+psql=# \a
+# sets output to some file. Turn off with another "\o"
+psql=# \o FILE
+
+# Load dump into currently connected database. Delimiter can be omitted if it's defaut one but i don't know which one is it and dump is delimited with '|'
+\COPY table_name (columns) FROM dump_file DELIMITER '|';
+
+</code></pre>
+
+<p><a href="https://wiki.postgresql.org/wiki/COPY">psql copy docu</a></p>
+
+<p><a href="https://www.postgresql.org/docs/current/static/sql-copy.html">postgres sql copy docu</a></p>
+
+
+  
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      /* * * CONFIGURATION VARIABLES * * */
+      var disqus_shortname = 'masa331';
+
+      /* * * DON'T EDIT BELOW THIS LINE * * */
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+</section>
+
+    </div>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-76614059-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+  </body>
+</html>
+
