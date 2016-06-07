@@ -1,0 +1,109 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title> Are you getting production error page in development? |  Masa331 blog</title>
+
+    <link rel="stylesheet" href="/assets/stylesheets/styles.css">
+    <link rel="stylesheet" href="/assets/stylesheets/pygment_trac.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <meta name="viewport" content="width=device-width">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1><a href="http://masa331.github.io">Masa331 blogging</a></h1>
+        <img src="http://masa331.github.io/assets/images/my-picture.png" alt="my-photo" />
+        <p>Hi, i'm Premysl Donat and this is my blog about IT and my life in generall. I work at <a href="http://uol.cz">UOL</a> and in my free time i develop <a href="https://suptasks.com">Suptasks</a>.</p>
+        <p>Have a good one!</p>
+
+        <h2>Menu</h2>
+        <ul>
+          <li><a href="http://masa331.github.io">Home</a></li>
+          <li><a href="http://masa331.github.io/goodreads.html">Goodreads</a></li>
+        </ul>
+
+        <div class="social-icons">
+          <a href="https://github.com/Masa331"><i class="fa fa-github-square"></i></a>
+          <a href="https://twitter.com/DonatP"><i class="fa fa-twitter-square"></i></a>
+        </div>
+
+        <hr />
+      </header>
+
+
+<section>
+  <h1 id="are-you-getting-production-error-page-in-development">Are you getting production error page in development?</h1>
+
+<p>I decided to internationalize one of my apps. Because i don’t remember the structure in which i should add view translations(the ones starting with dots, eg.: <code>t('.greeting')</code>) i wanted to take advantage of rails internationalize errors which always tell you in which structure you should add the new translation:</p>
+
+<p><img src="https://masa331.github.io/assets/images/translation_error.png" alt="translation error" />
+<img src="https://masa331.github.io/assets/images/translation_error.png" alt="translation error" /></p>
+
+<p>But instead of the one above i got this:</p>
+
+<p><img src="https://masa331.github.io/assets/images/server_error.png" alt="server error" /></p>
+
+<p>WTF?! This should be shown only in production.</p>
+
+<p>Then i did the following:</p>
+
+<ol>
+  <li>Quick check of environment config files. Nothing</li>
+  <li>Compared app config to other app behaving correctly. Nothign</li>
+  <li>Googled.. Nothing</li>
+  <li>Read Rails Guides. Nothing</li>
+</ol>
+
+<p>And spend around 40 minutes on these.. :(</p>
+
+<p>Ok, maybe time to read the error backtrace? :D</p>
+
+<p><img src="https://masa331.github.io/assets/images/backtrace.png" alt="backtrace" /></p>
+
+<p>Oh god, really?!:</p>
+
+<p><img src="https://masa331.github.io/assets/images/backtrace_detail.png" alt="backtrace detail" /></p>
+
+<p>Right there on top of it all. It’s just i didn’t read it</p>
+
+<p>After i decided to internationalize, i created <strong>empty</strong> yaml <code>config/locales/cs.yml</code> file. Turns out it takes down whole Rails :)</p>
+
+<p>Lesson learned? <strong>Always read the fucking error message</strong>. If only this didn’t happen to me so many times already. And it isn’t just me. I wonder why we always take the more frustrating way of googling instead of step back, read the error message and think about it a bit.</p>
+
+
+  
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      /* * * CONFIGURATION VARIABLES * * */
+      var disqus_shortname = 'masa331';
+
+      /* * * DON'T EDIT BELOW THIS LINE * * */
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+</section>
+
+    </div>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-76614059-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+  </body>
+</html>
+
