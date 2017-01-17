@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title> Are you getting production error page in development? |  Masa331 blog</title>
+    <title> Writing Sprockets plugin |  Masa331 blog</title>
 
     <link rel="stylesheet" href="/assets/stylesheets/styles.css">
     <link rel="stylesheet" href="/assets/stylesheets/pygment_trac.css">
@@ -38,28 +38,36 @@
 <section>
   <h1>Writing a Sprockets plugin</h1>
 
-  <p>Sprockets is the thing behing Rails Asset Pipeline. It's a powerful asset processor with many already built-in goodies. It's the thing which takes your assets(be it sass, coffee, etc..) and does all the boring compiling, concatenating, minifiing and compressing. It's also designed to be easily extensible in case you need to integrate something Sprockets doesn't support out of the box.</p>
+  <p>Sprockets is the thing behing Rails Asset Pipeline. It's a powerful asset processor with many already built-in goodies. It's the thing which takes your assets(be it sass, coffee, etc..) and does all the boring compiling, concatenating, minifiing and compressing. It's also designed to be easily extensible in case you need to integrate something Sprockets don't support out of the box.</p>
 
-  <p>Ok, so imagine you'v just discovered some new and shiny frontend thing you want to try. Let's say it's Elm. Now wouldn't it be nice if you could just drop Elm files in you `app/assets`, let the Asset Pipeline handle the heavy lifting and just focus on new realtime search with Elm on your side project(which is gonna be the next big thing)?</p>
+  <p>Ok, so imagine you'v just discovered some new and shiny frontend thing you want to try. Let's say it's Elm. Now wouldn't it be nice if you could just drop Elm files in you <code>app/assets</code>, let the Asset Pipeline handle the heavy lifting, and just focus on new realtime search in your side project(which is gonna be the next big thing)?</p>
 
   <p>I know it would. And it doesn't take more than 10 minutes. Let's do it from top to bottom:</p>
 
   <h2>1) The Initializer</h2>
   <pre><code>
 # config/initializers/elm_sprockets_plugin.rb
+
+require 'elm_transformer'
+
 Rails.application.config.after_initialize do |config|
   config.assets.register_mime_type 'text/x-elm', extensions: ['.elm']
   config.assets.register_transformer 'text/x-elm', 'application/javascript', Transformer.new
 end
   </code></pre>
 
-  <p>On the first line we tell Sprockets how to reckognize Elm files - by theirs '.elm' file extension. On the second line we say what Sprockets should do with them. It should transform them with our custom ElmTransformer.</p>
+  <p>On the first line we tell Sprockets how to recognize Elm files - by theirs '.elm' file extension. On the second line we say what Sprockets should do with them - transform with our custom ElmTransformer processor.</p>
 
   <h2>2) The Transformer</h2>
-  <p>The things which process various source files in Sprockets are called simply 'processors'. There are few types of them. The type we need now is `Transformer` - it takes source code in one language(Elm) and outputs it in another language(JS). And processor is anything which responds to `#call` method with one argument. Like this for Elm:</p>
+  <p>The things which process various source files in Sprockets are called simply 'processors'. There are few types of them. The type we need now is 'transformer' - it takes source code in one language(Elm) and outputs it in another(JS).</p>
+
+  <p>Processor is anything which responds to `#call` method with one argument. Like this for Elm:</p>
 
   <pre><code>
 # lib/elm_transformer.rb
+
+require 'elm/compiler'
+
 class ElmTransformer
   def call(input)
     input_file = input[:filename]
@@ -74,12 +82,15 @@ class ElmTransformer
 end
   </code></pre>
 
+  <p>The compiling itself is done through this <a href="https://github.com/fbonetti/ruby-elm-compiler">gem</a> which you need to include in your Gemfile. You also have to have <a href="http://elm-lang.org/">Elm</a> installed on your system.</p>
+
   <h3>3) The View</h3>
 
   <p>Now to test it in action, install new Elm package in you Rails root with `elm package install` and create following Elm file:</p>
 
   <pre><code>
 -- app/assets/javascripts/Main.elm
+
 module Main exposing (..)
 
 import Html exposing (..)
@@ -99,7 +110,7 @@ main =
 </script>
   </code></pre>
 
-  <p>And this is it! This is all it takes to integrate completelly different language into Rails. Go visit the page and see yourself. Pretty cool for 20 LOC isn't it?</p>
+  <p>And this is it! This is all it takes to integrate completelly different language into Rails. Go visit the page and see yourself. Pretty cool for about 20 LOC isn't it?</p>
 
   <p>I build this example app with which you can experiment if you want: <a href="https://github.com/Masa331/sprockets_plugin_example_app">https://github.com/Masa331/sprockets_plugin_example_app</a></p>
 
