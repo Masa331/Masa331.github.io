@@ -57,8 +57,7 @@ require 'elm_transformer'
 Rails.application.config.after_initialize do |config|
   config.assets.register_mime_type 'text/x-elm', extensions: ['.elm']
   config.assets.register_transformer 'text/x-elm', 'application/javascript', Transformer.new
-end
-  </code></pre>
+end</code></pre>
 
   <p>On the first line we tell Sprockets how to recognize Elm files - by theirs '.elm' file extension. On the second line we say what Sprockets should do with them - transform with our custom ElmTransformer processor.</p>
 
@@ -83,8 +82,7 @@ class ElmTransformer
 
     compiled_elm
   end
-end
-  </code></pre>
+end</code></pre>
 
   <p>The compiling itself is done through this <a href="https://github.com/fbonetti/ruby-elm-compiler">gem</a> which you need to include in your Gemfile. You also have to have <a href="http://elm-lang.org/">Elm</a> installed on your system.</p>
 
@@ -100,21 +98,17 @@ module Main exposing (..)
 import Html exposing (..)
 
 main =
-  text "Hi from Elm!"
-  </code></pre>
+  text "Hi from Elm!"</code></pre>
 
   <p>And lastly in some Rails view:</p>
   <pre>
-    <code>
-&lt;div id="elm-container"&gt;
+    <code>&lt;div id="elm-container"&gt;
 &lt;/div&gt;
 
 &lt;script type="text/javascript" charset="utf-8"&gt;
   var node = document.getElementById('elm-container');
   var app = Elm.Main.embed(node)
-&lt;/script&gt;
-    </code>
-  </pre>
+&lt;/script&gt;</code></pre>
 
   <p>And this is it! This is all it takes to integrate completelly different language into Rails. Go visit the page and see yourself. Pretty cool for about 20 LOC isn't it?</p>
 
