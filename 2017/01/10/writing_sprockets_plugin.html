@@ -1,0 +1,135 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title> Are you getting production error page in development? |  Masa331 blog</title>
+
+    <link rel="stylesheet" href="/assets/stylesheets/styles.css">
+    <link rel="stylesheet" href="/assets/stylesheets/pygment_trac.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <meta name="viewport" content="width=device-width">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1><a href="http://masa331.github.io">Masa331 blogging</a></h1>
+        <img src="http://masa331.github.io/assets/images/my-picture.png" alt="my-photo" />
+        <p>Hi, i'm Premysl Donat and this is my blog about IT and my life in generall. I work at <a href="http://uol.cz">UOL</a> and in my free time.. well, look at my Github.</p>
+        <p>Have a good one!</p>
+
+        <h2>Menu</h2>
+        <ul>
+          <li><a href="http://masa331.github.io">Home</a></li>
+        </ul>
+
+        <div class="social-icons">
+          <a href="https://github.com/Masa331"><i class="fa fa-github-square"></i></a>
+          <a href="https://twitter.com/DonatP"><i class="fa fa-twitter-square"></i></a>
+        </div>
+
+        <hr />
+      </header>
+
+
+<section>
+  <h1>Writing a Sprockets plugin</h1>
+
+  <p>Sprockets is the thing behing Rails Asset Pipeline. It's a powerful asset processor with many already built-in goodies. It's the thing which takes your assets(be it sass, coffee, etc..) and does all the boring compiling, concatenating, minifiing and compressing. It's also designed to be easily extensible in case you need to integrate something Sprockets doesn't support out of the box.</p>
+
+  <p>Ok, so imagine you'v just discovered some new and shiny frontend thing you want to try. Let's say it's Elm. Now wouldn't it be nice if you could just drop Elm files in you `app/assets`, let the Asset Pipeline handle the heavy lifting and just focus on new realtime search with Elm on your side project(which is gonna be the next big thing)?</p>
+
+  <p>I know it would. And it doesn't take more than 10 minutes. Let's do it from top to bottom:</p>
+
+  <h2>1) The Initializer</h2>
+  <pre><code>
+# config/initializers/elm_sprockets_plugin.rb
+Rails.application.config.after_initialize do |config|
+  config.assets.register_mime_type 'text/x-elm', extensions: ['.elm']
+  config.assets.register_transformer 'text/x-elm', 'application/javascript', Transformer.new
+end
+  </code></pre>
+
+  <p>On the first line we tell Sprockets how to reckognize Elm files - by theirs '.elm' file extension. On the second line we say what Sprockets should do with them. It should transform them with our custom ElmTransformer.</p>
+
+  <h2>2) The Transformer</h2>
+  <p>The things which process various source files in Sprockets are called simply 'processors'. There are few types of them. The type we need now is `Transformer` - it takes source code in one language(Elm) and outputs it in another language(JS). And processor is anything which responds to `#call` method with one argument. Like this for Elm:</p>
+
+  <pre><code>
+# lib/elm_transformer.rb
+class ElmTransformer
+  def call(input)
+    input_file = input[:filename]
+
+    compiled_elm =
+      Dir.chdir(Rails.root) do
+        ::Elm::Compiler.compile(input_file)
+      end
+
+    compiled_elm
+  end
+end
+  </code></pre>
+
+  <h3>3) The View</h3>
+
+  <p>Now to test it in action, install new Elm package in you Rails root with `elm package install` and create following Elm file:</p>
+
+  <pre><code>
+-- app/assets/javascripts/Main.elm
+module Main exposing (..)
+
+import Html exposing (..)
+
+main =
+  text "Hi from Elm!"
+  </code></pre>
+
+  <p>And lastly in some Rails view:</p>
+  <pre><code>
+<div id="elm-container">
+</div>
+
+<script type="text/javascript" charset="utf-8">
+  var node = document.getElementById('elm-container');
+  var app = Elm.Main.embed(node)
+</script>
+  </code></pre>
+
+  <p>And this is it! This is all it takes to integrate completelly different language into Rails. Go visit the page and see yourself. Pretty cool for 20 LOC isn't it?</p>
+
+  <p>I build this example app with which you can experiment if you want: <a href="https://github.com/Masa331/sprockets_plugin_example_app">https://github.com/Masa331/sprockets_plugin_example_app</a></p>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      /* * * CONFIGURATION VARIABLES * * */
+      var disqus_shortname = 'masa331';
+
+      /* * * DON'T EDIT BELOW THIS LINE * * */
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+</section>
+
+    </div>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-76614059-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+  </body>
+</html>
+
