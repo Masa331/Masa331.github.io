@@ -50,16 +50,16 @@
         </div>
 
         <div class="col-sm-9">
-        <h1>Writing a Sprockets plugin</h1>
+          <h1>Writing a Sprockets plugin</h1>
 
-        <p>Sprockets is the thing behing Rails Asset Pipeline. It's a powerful asset processor with many already built-in goodies. It's the thing which takes your assets(be it sass, coffee, etc..) and does all the boring compiling, concatenating, minifiing and compressing. It's also designed to be easily extensible in case you need to integrate something Sprockets don't support out of the box.</p>
+          <p>Sprockets is the thing behing Rails Asset Pipeline. It's a powerful asset processor with many already built-in goodies. It's the thing which takes your assets(be it sass, coffee, etc..) and does all the boring compiling, concatenating, minifiing and compressing. It's also designed to be easily extensible in case you need to integrate something Sprockets don't support out of the box.</p>
 
-        <p>Ok, so imagine you'v just discovered some new and shiny frontend thing you want to try. Let's say it's Elm. Now wouldn't it be nice if you could just drop Elm files in you <code>app/assets</code>, let the Asset Pipeline handle the heavy lifting, and just focus on new realtime search in your side project(which is gonna be the next big thing)?</p>
+          <p>Ok, so imagine you'v just discovered some new and shiny frontend thing you want to try. Let's say it's Elm. Now wouldn't it be nice if you could just drop Elm files in you <code>app/assets</code>, let the Asset Pipeline handle the heavy lifting, and just focus on new realtime search in your side project(which is gonna be the next big thing)?</p>
 
-        <p>I know it would. And it doesn't take more than 10 minutes. Let's do it from top to bottom:</p>
+          <p>I know it would. And it doesn't take more than 10 minutes. Let's do it from top to bottom:</p>
 
-        <h2>1) The Initializer</h2>
-        <pre><code>
+          <h2>1) The Initializer</h2>
+          <pre><code>
 # config/initializers/elm_sprockets_plugin.rb
 
 require 'elm_transformer'
@@ -69,14 +69,14 @@ Rails.application.config.after_initialize do |config|
   config.assets.register_transformer 'text/x-elm', 'application/javascript', Transformer.new
 end</code></pre>
 
-        <p>On the first line we tell Sprockets how to recognize Elm files - by theirs '.elm' file extension. On the second line we say what Sprockets should do with them - transform with our custom ElmTransformer processor.</p>
+          <p>On the first line we tell Sprockets how to recognize Elm files - by theirs '.elm' file extension. On the second line we say what Sprockets should do with them - transform with our custom ElmTransformer processor.</p>
 
-        <h2>2) The Transformer</h2>
-        <p>The things which process various source files in Sprockets are called simply 'processors'. There are few types of them. The type we need now is 'transformer' - it takes source code in one language(Elm) and outputs it in another(JS).</p>
+          <h2>2) The Transformer</h2>
+          <p>The things which process various source files in Sprockets are called simply 'processors'. There are few types of them. The type we need now is 'transformer' - it takes source code in one language(Elm) and outputs it in another(JS).</p>
 
-        <p>Processor is anything which responds to `#call` method with one argument. Like this for Elm:</p>
+          <p>Processor is anything which responds to `#call` method with one argument. Like this for Elm:</p>
 
-        <pre><code>
+          <pre><code>
 # lib/elm_transformer.rb
 
 require 'elm/compiler'
@@ -94,13 +94,13 @@ class ElmTransformer
   end
 end</code></pre>
 
-        <p>The compiling itself is done through this <a href="https://github.com/fbonetti/ruby-elm-compiler">gem</a> which you need to include in your Gemfile. You also have to have <a href="http://elm-lang.org/">Elm</a> installed on your system.</p>
+          <p>The compiling itself is done through this <a href="https://github.com/fbonetti/ruby-elm-compiler">gem</a> which you need to include in your Gemfile. You also have to have <a href="http://elm-lang.org/">Elm</a> installed on your system.</p>
 
-        <h3>3) The View</h3>
+          <h3>3) The View</h3>
 
-        <p>Now to test it in action, install new Elm package in you Rails root with `elm package install` and create following Elm file:</p>
+          <p>Now to test it in action, install new Elm package in you Rails root with `elm package install` and create following Elm file:</p>
 
-        <pre><code>
+          <pre><code>
 -- app/assets/javascripts/Main.elm
 
 module Main exposing (..)
@@ -110,8 +110,8 @@ import Html exposing (..)
 main =
   text "Hi from Elm!"</code></pre>
 
-        <p>And lastly in some Rails view:</p>
-        <pre>
+          <p>And lastly in some Rails view:</p>
+          <pre>
     <code>&lt;div id="elm-container"&gt;
 &lt;/div&gt;
 
@@ -120,13 +120,13 @@ main =
   var app = Elm.Main.embed(node)
 &lt;/script&gt;</code></pre>
 
-        <p>And this is it! This is all it takes to integrate completelly different language into Rails. Go visit the page and see yourself. Pretty cool for about 20 LOC isn't it?</p>
+          <p>And this is it! This is all it takes to integrate completelly different language into Rails. Go visit the page and see yourself. Pretty cool for about 20 LOC isn't it?</p>
 
-        <p>I build this example app with which you can experiment if you want: <a href="https://github.com/Masa331/sprockets_plugin_example_app">https://github.com/Masa331/sprockets_plugin_example_app</a></p>
+          <p>I build this example app with which you can experiment if you want: <a href="https://github.com/Masa331/sprockets_plugin_example_app">https://github.com/Masa331/sprockets_plugin_example_app</a></p>
 
-        <div id="disqus_thread"></div>
-        <script type="text/javascript">
-          /* * * CONFIGURATION VARIABLES * * */
+          <div id="disqus_thread"></div>
+          <script type="text/javascript">
+            /* * * CONFIGURATION VARIABLES * * */
   var disqus_shortname = 'masa331';
 
 /* * * DON'T EDIT BELOW THIS LINE * * */
@@ -135,9 +135,10 @@ main =
   dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
 })();
-        </script>
-        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+          </script>
+          <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
 
+        </div>
       </div>
     </div>
   </body>

@@ -3,134 +3,136 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title> What is Enumerator? |  Masa331 blog</title>
+    <title>What is Enumerator? | Masa331 blog</title>
 
-    <link rel="stylesheet" href="/assets/stylesheets/styles.css">
-    <link rel="stylesheet" href="/assets/stylesheets/pygment_trac.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://masa331.github.io/assets/stylesheets/bootstrap-grid.css">
+    <link rel="stylesheet" href="http://masa331.github.io/assets/stylesheets/styles.css">
+    <link rel="stylesheet" href="http://masa331.github.io/assets/stylesheets/pygment_trac.css">
+
+    <script>
+      window.twttr = (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0],
+          t = window.twttr || {};
+        if (d.getElementById(id)) return t;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://platform.twitter.com/widgets.js";
+        fjs.parentNode.insertBefore(js, fjs);
+
+        t._e = [];
+        t.ready = function(f) {
+          t._e.push(f);
+        };
+
+        return t;
+      }(document, "script", "twitter-wjs"));
+    </script>
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
     <meta name="viewport" content="width=device-width">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
   </head>
+
   <body>
-    <div class="wrapper">
-      <header>
-        <h1><a href="http://masa331.github.io">Masa331 blogging</a></h1>
-        <img src="http://masa331.github.io/assets/images/my-picture.png" alt="my-photo" />
-        <p>Hi, i'm Premysl Donat and this is my blog about IT and my life in generall. I work at <a href="http://uol.cz">UOL</a> and in my free time.. well, look at my <a href="https://github.com/Masa331">Github</a>.</p>
-        <p>Have a good one!</p>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3">
+          <h1><a href="http://masa331.github.io">Masa331 blogging</a></h1>
+          <img src="http://masa331.github.io/assets/images/my-picture.png" alt="my-photo" />
+          <p>Hi, i'm Premysl Donat and this is my blog about IT and my life in generall. I work at <a href="http://uol.cz">UOL</a> and in my free time.. well, look at my <a href="https://github.com/Masa331">Github</a>.</p>
+          <p>Have a good one!</p>
 
-        <h2>Menu</h2>
-        <ul>
-          <li><a href="http://masa331.github.io">Home</a></li>
-        </ul>
-
-        <div class="social-icons">
-          <a href="https://github.com/Masa331"><i class="fa fa-github-square"></i></a>
-          <a href="https://twitter.com/DonatP"><i class="fa fa-twitter-square"></i></a>
+          <h2>Menu</h2>
+          <ul>
+            <li><a href="http://masa331.github.io">Home</a></li>
+            <li><a class="twitter-follow-button" href="https://twitter.com/DonatP" data-show-count="false">Follow @DonatP</a></li>
+            <li><a class="github-button" href="https://github.com/Masa331" aria-label="Follow @Masa331 on GitHub">Follow @Masa331</a></li>
+          </ul>
         </div>
 
-        <hr />
-      </header>
+        <div class="col-sm-9">
+          <h1 id="what-is-enumerator">What is Enumerator?</h1>
 
+          <p>I started programming 2 years ago and i didn’t yet come to a situation when i would really need to know. But i was always curious because words like ‘Enumerator’ and ‘Enumerable’ were present from the very beggining. So let’s find out!</p>
 
-<section>
-  <h1 id="what-is-enumerator">What is Enumerator?</h1>
+          <p>Long story short:</p>
 
-<p>I started programming 2 years ago and i didn’t yet come to a situation when i would really need to know. But i was always curious because words like ‘Enumerator’ and ‘Enumerable’ were present from the very beggining. So let’s find out!</p>
+          <p><strong>Instances of <code>Enumerator</code> class are used to wrap iterations and let’s you control the whole process.</strong></p>
 
-<p>Long story short:</p>
+          <h2 id="common-usage">Common usage</h2>
+          <p>You can get an Enumerator like this:</p>
 
-<p><strong>Instances of <code>Enumerator</code> class are used to wrap iterations and let’s you control the whole process.</strong></p>
-
-<h2 id="common-usage">Common usage</h2>
-<p>You can get an Enumerator like this:</p>
-
-<noscript><pre>400: Invalid request
+          <noscript><pre>400: Invalid request
 </pre></noscript>
-<script src="https://gist.github.com/73e58c3aabc14e235883.js"> </script>
+          <script src="https://gist.github.com/73e58c3aabc14e235883.js"> </script>
 
-<p>This Enumerator instance wraps iteration over <code>[1, 2, 3]</code>. We can start the actuall iteration with <code>#each</code> method. It yields all items to given block:</p>
+          <p>This Enumerator instance wraps iteration over <code>[1, 2, 3]</code>. We can start the actuall iteration with <code>#each</code> method. It yields all items to given block:</p>
 
-<noscript><pre>400: Invalid request
+          <noscript><pre>400: Invalid request
 </pre></noscript>
-<script src="https://gist.github.com/5ad7525544205ea5203a.js"> </script>
+          <script src="https://gist.github.com/5ad7525544205ea5203a.js"> </script>
 
-<p>It behaves exactly same as <code>[1, 2, 3].each { |number| puts number }</code> call.</p>
+          <p>It behaves exactly same as <code>[1, 2, 3].each { |number| puts number }</code> call.</p>
 
-<p>But you can also do this:</p>
+          <p>But you can also do this:</p>
 
-<noscript><pre>400: Invalid request
+          <noscript><pre>400: Invalid request
 </pre></noscript>
-<script src="https://gist.github.com/4e405cd44d3adf0ffd0a.js"> </script>
+          <script src="https://gist.github.com/4e405cd44d3adf0ffd0a.js"> </script>
 
-<p>Like this you can manually iterate over the collection one item after another. <code>StopIteration</code> is raised when there are no more items. During the iteration, you can use <code>enum#peek</code>, <code>enum#rewind</code>, <code>enum#feed</code> or others, which greatly improves controllability. <strong>With all these you can create your own iterators with custom logic.</strong></p>
+          <p>Like this you can manually iterate over the collection one item after another. <code>StopIteration</code> is raised when there are no more items. During the iteration, you can use <code>enum#peek</code>, <code>enum#rewind</code>, <code>enum#feed</code> or others, which greatly improves controllability. <strong>With all these you can create your own iterators with custom logic.</strong></p>
 
-<h2 id="enumeratornew">Enumerator.new</h2>
+          <h2 id="enumeratornew">Enumerator.new</h2>
 
-<p>You can also create Enumerator with <code>Enumerator.new { |yielder| ... }</code>.</p>
+          <p>You can also create Enumerator with <code>Enumerator.new { |yielder| ... }</code>.</p>
 
-<p>Most simple example:</p>
+          <p>Most simple example:</p>
 
-<noscript><pre>400: Invalid request
+          <noscript><pre>400: Invalid request
 </pre></noscript>
-<script src="https://gist.github.com/dbe29eeb87de8d82a798.js"> </script>
+          <script src="https://gist.github.com/dbe29eeb87de8d82a798.js"> </script>
 
-<p>This time enum doesn’t iterate over anything, but yields to given block <strong>all values you explicitly yield with <code>yielder.yield something</code></strong>. In this example, only one value is yielded and it’s integer 1.</p>
+          <p>This time enum doesn’t iterate over anything, but yields to given block <strong>all values you explicitly yield with <code>yielder.yield something</code></strong>. In this example, only one value is yielded and it’s integer 1.</p>
 
-<p>To yield 1 ten times to given block so <code>enum.each { |item| puts item }</code> will print 1 ten times on screen:</p>
-<noscript><pre>400: Invalid request
+          <p>To yield 1 ten times to given block so <code>enum.each { |item| puts item }</code> will print 1 ten times on screen:</p>
+          <noscript><pre>400: Invalid request
 </pre></noscript>
-<script src="https://gist.github.com/0800bd3f36c6c7c04b31.js"> </script>
+          <script src="https://gist.github.com/0800bd3f36c6c7c04b31.js"> </script>
 
-<p>And to yield infinetely:</p>
-<noscript><pre>400: Invalid request
+          <p>And to yield infinetely:</p>
+          <noscript><pre>400: Invalid request
 </pre></noscript>
-<script src="https://gist.github.com/64f06bd6c61245c723e0.js"> </script>
+          <script src="https://gist.github.com/64f06bd6c61245c723e0.js"> </script>
 
-<p>If you call <code>#each</code> on this enum, it will never stop yielding and printing. But if you call <code>#next</code>, it will yield only once and then stop.</p>
+          <p>If you call <code>#each</code> on this enum, it will never stop yielding and printing. But if you call <code>#next</code>, it will yield only once and then stop.</p>
 
-<p>It’s only the implementation of <code>#each</code> which calls <code>#next</code> in loop and goes on forever because <code>StopIteration</code>, is never raised.</p>
+          <p>It’s only the implementation of <code>#each</code> which calls <code>#next</code> in loop and goes on forever because <code>StopIteration</code>, is never raised.</p>
 
-<p><strong>Internally enum stops execution every time <code>#yield</code> is called on yielder</strong>.</p>
+          <p><strong>Internally enum stops execution every time <code>#yield</code> is called on yielder</strong>.</p>
 
-<p>Try it with putting print statements before and after yield:</p>
-<noscript><pre>400: Invalid request
+          <p>Try it with putting print statements before and after yield:</p>
+          <noscript><pre>400: Invalid request
 </pre></noscript>
-<script src="https://gist.github.com/a8353c161157f626717c.js"> </script>
+          <script src="https://gist.github.com/a8353c161157f626717c.js"> </script>
 
-<p>This technique is also used in example from official <a href="http://ruby-doc.org/core-2.2.0/Enumerator.html">documentation</a>, where infinite fibonacci sequence is generated.</p>
+          <p>This technique is also used in example from official <a href="http://ruby-doc.org/core-2.2.0/Enumerator.html">documentation</a>, where infinite fibonacci sequence is generated.</p>
 
 
-  
-    <div id="disqus_thread"></div>
-    <script type="text/javascript">
-      /* * * CONFIGURATION VARIABLES * * */
-      var disqus_shortname = 'masa331';
 
-      /* * * DON'T EDIT BELOW THIS LINE * * */
-      (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-      })();
-    </script>
-    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-  
-</section>
+          <div id="disqus_thread"></div>
+          <script type="text/javascript">
+            /* * * CONFIGURATION VARIABLES * * */
+  var disqus_shortname = 'masa331';
 
+/* * * DON'T EDIT BELOW THIS LINE * * */
+(function() {
+  var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+          </script>
+          <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+        </div>
+      </div>
     </div>
-    <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-      ga('create', 'UA-76614059-1', 'auto');
-      ga('send', 'pageview');
-
-    </script>
   </body>
 </html>
-

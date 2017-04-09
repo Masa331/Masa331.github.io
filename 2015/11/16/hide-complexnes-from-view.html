@@ -3,48 +3,62 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title> Separate presentation and interface from logic |  Masa331 blog</title>
+    <title>Separate logic from view | Masa331 blog</title>
 
-    <link rel="stylesheet" href="/assets/stylesheets/styles.css">
-    <link rel="stylesheet" href="/assets/stylesheets/pygment_trac.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://masa331.github.io/assets/stylesheets/bootstrap-grid.css">
+    <link rel="stylesheet" href="http://masa331.github.io/assets/stylesheets/styles.css">
+    <link rel="stylesheet" href="http://masa331.github.io/assets/stylesheets/pygment_trac.css">
+
+    <script>
+      window.twttr = (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0],
+          t = window.twttr || {};
+        if (d.getElementById(id)) return t;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://platform.twitter.com/widgets.js";
+        fjs.parentNode.insertBefore(js, fjs);
+
+        t._e = [];
+        t.ready = function(f) {
+          t._e.push(f);
+        };
+
+        return t;
+      }(document, "script", "twitter-wjs"));
+    </script>
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
     <meta name="viewport" content="width=device-width">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
   </head>
+
   <body>
-    <div class="wrapper">
-      <header>
-        <h1><a href="http://masa331.github.io">Masa331 blogging</a></h1>
-        <img src="http://masa331.github.io/assets/images/my-picture.png" alt="my-photo" />
-        <p>Hi, i'm Premysl Donat and this is my blog about IT and my life in generall. I work at <a href="http://uol.cz">UOL</a> and in my free time.. well, look at my <a href="https://github.com/Masa331">Github</a>.</p>
-        <p>Have a good one!</p>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3">
+          <h1><a href="http://masa331.github.io">Masa331 blogging</a></h1>
+          <img src="http://masa331.github.io/assets/images/my-picture.png" alt="my-photo" />
+          <p>Hi, i'm Premysl Donat and this is my blog about IT and my life in generall. I work at <a href="http://uol.cz">UOL</a> and in my free time.. well, look at my <a href="https://github.com/Masa331">Github</a>.</p>
+          <p>Have a good one!</p>
 
-        <h2>Menu</h2>
-        <ul>
-          <li><a href="http://masa331.github.io">Home</a></li>
-        </ul>
-
-        <div class="social-icons">
-          <a href="https://github.com/Masa331"><i class="fa fa-github-square"></i></a>
-          <a href="https://twitter.com/DonatP"><i class="fa fa-twitter-square"></i></a>
+          <h2>Menu</h2>
+          <ul>
+            <li><a href="http://masa331.github.io">Home</a></li>
+            <li><a class="twitter-follow-button" href="https://twitter.com/DonatP" data-show-count="false">Follow @DonatP</a></li>
+            <li><a class="github-button" href="https://github.com/Masa331" aria-label="Follow @Masa331 on GitHub">Follow @Masa331</a></li>
+          </ul>
         </div>
 
-        <hr />
-      </header>
+        <div class="col-sm-9">
+          <h1 id="separate-logic-from-view">Separate logic from view</h1>
 
+          <p>I decided i want to change some internal logic in <a href="https://github.com/Masa331/suptasks">SupTasks</a>. Right now tasks are completed when they have true in ‘completed’ column in database. I want them to be completed when they have tag ‘completed’.</p>
 
-<section>
-  <h1 id="separate-logic-from-view">Separate logic from view</h1>
+          <p>I’v been thinking what i will have to do in order to implement this. Well, one thing will be dropping the ‘completed’ column. The bad thing is i use automatically generated getter for this column in views to determine if the task is completed or not.</p>
 
-<p>I decided i want to change some internal logic in <a href="https://github.com/Masa331/suptasks">SupTasks</a>. Right now tasks are completed when they have true in ‘completed’ column in database. I want them to be completed when they have tag ‘completed’.</p>
+          <h2 id="current-situation">Current situation</h2>
 
-<p>I’v been thinking what i will have to do in order to implement this. Well, one thing will be dropping the ‘completed’ column. The bad thing is i use automatically generated getter for this column in views to determine if the task is completed or not.</p>
-
-<h2 id="current-situation">Current situation</h2>
-
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">Task</span> <span class="o">&lt;</span> <span class="no">Sequel</span><span class="o">::</span><span class="no">Model</span>
+          <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">Task</span> <span class="o">&lt;</span> <span class="no">Sequel</span><span class="o">::</span><span class="no">Model</span>
   <span class="c1"># nothing in here, only autogenerated getter #completed</span>
 <span class="k">end</span>
 
@@ -54,13 +68,13 @@
 <span class="sx">  &lt;span&gt;</span><span class="no">Completed</span><span class="o">!&lt;</span><span class="sr">/span&gt;</span>
 <span class="sr">&lt;% end %&gt;</span></code></pre></div>
 
-<p>Now when i drop the column the getter disappears and without modification the view will break.</p>
+          <p>Now when i drop the column the getter disappears and without modification the view will break.</p>
 
-<h2 id="better-version">Better version</h2>
+          <h2 id="better-version">Better version</h2>
 
-<p>This is how it should look like:</p>
+          <p>This is how it should look like:</p>
 
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">Task</span> <span class="o">&lt;</span> <span class="no">Sequel</span><span class="o">::</span><span class="no">Model</span>
+          <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">class</span> <span class="nc">Task</span> <span class="o">&lt;</span> <span class="no">Sequel</span><span class="o">::</span><span class="no">Model</span>
   <span class="c1"># custom written method</span>
   <span class="k">def</span> <span class="nf">completed?</span>
     <span class="n">completed</span>
@@ -73,47 +87,35 @@
 <span class="sx">  &lt;span&gt;</span><span class="no">Completed</span><span class="o">!&lt;</span><span class="sr">/span&gt;</span>
 <span class="sr">&lt;% end %&gt;</span></code></pre></div>
 
-<p>Now when i drop the column <strong>i only have to change code at one place</strong> in model. No changes in views at all.</p>
+          <p>Now when i drop the column <strong>i only have to change code at one place</strong> in model. No changes in views at all.</p>
 
-<p>So i refactored it here in this commit: <a href="https://github.com/Masa331/suptasks/commit/b762ee91e35b6137bf0a195f4acc35156711e597">b762ee9</a></p>
+          <p>So i refactored it here in this commit: <a href="https://github.com/Masa331/suptasks/commit/b762ee91e35b6137bf0a195f4acc35156711e597">b762ee9</a></p>
 
-<p>It might look like not that much necessarry in such small project(only 2 changes now). But when you work on bigger projects this approach can save you some real production trouble when you overlook that 20nth place it’s used somewhere in view.</p>
+          <p>It might look like not that much necessarry in such small project(only 2 changes now). But when you work on bigger projects this approach can save you some real production trouble when you overlook that 20nth place it’s used somewhere in view.</p>
 
-<h2 id="changing-the-logic-now-doesnt-affect-any-view">Changing the logic now doesn’t affect any view</h2>
+          <h2 id="changing-the-logic-now-doesnt-affect-any-view">Changing the logic now doesn’t affect any view</h2>
 
-<p>And now when changing the logic i didn’t need to touch that view with <code>task.completed?</code> inside. It’s here in this commit: <a href="https://github.com/Masa331/suptasks/commit/07e8a4d09ee24bc609e54c48fcf7eaae3a75b794">07e8a4d</a></p>
+          <p>And now when changing the logic i didn’t need to touch that view with <code>task.completed?</code> inside. It’s here in this commit: <a href="https://github.com/Masa331/suptasks/commit/07e8a4d09ee24bc609e54c48fcf7eaae3a75b794">07e8a4d</a></p>
 
-<p>If you looked into the commit, i actually had to touch html form for making the task completed. And it makes me wonder, should i also change it to only point to action which knows how to make task complete instead of updating task attributes directly? What do you think?</p>
+          <p>If you looked into the commit, i actually had to touch html form for making the task completed. And it makes me wonder, should i also change it to only point to action which knows how to make task complete instead of updating task attributes directly? What do you think?</p>
 
 
-  
-    <div id="disqus_thread"></div>
-    <script type="text/javascript">
-      /* * * CONFIGURATION VARIABLES * * */
-      var disqus_shortname = 'masa331';
 
-      /* * * DON'T EDIT BELOW THIS LINE * * */
-      (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-      })();
-    </script>
-    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-  
-</section>
+          <div id="disqus_thread"></div>
+          <script type="text/javascript">
+            /* * * CONFIGURATION VARIABLES * * */
+  var disqus_shortname = 'masa331';
 
+/* * * DON'T EDIT BELOW THIS LINE * * */
+(function() {
+  var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+          </script>
+          <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+        </div>
+      </div>
     </div>
-    <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-      ga('create', 'UA-76614059-1', 'auto');
-      ga('send', 'pageview');
-
-    </script>
   </body>
 </html>
-

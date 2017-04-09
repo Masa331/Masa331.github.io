@@ -3,95 +3,99 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title> Abbrev from ruby Standard lib |  Masa331 blog</title>
+    <title>Abbrev from ruby standard lib | Masa331 blog</title>
 
-    <link rel="stylesheet" href="/assets/stylesheets/styles.css">
-    <link rel="stylesheet" href="/assets/stylesheets/pygment_trac.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://masa331.github.io/assets/stylesheets/bootstrap-grid.css">
+    <link rel="stylesheet" href="http://masa331.github.io/assets/stylesheets/styles.css">
+    <link rel="stylesheet" href="http://masa331.github.io/assets/stylesheets/pygment_trac.css">
+
+    <script>
+      window.twttr = (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0],
+          t = window.twttr || {};
+        if (d.getElementById(id)) return t;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://platform.twitter.com/widgets.js";
+        fjs.parentNode.insertBefore(js, fjs);
+
+        t._e = [];
+        t.ready = function(f) {
+          t._e.push(f);
+        };
+
+        return t;
+      }(document, "script", "twitter-wjs"));
+    </script>
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
     <meta name="viewport" content="width=device-width">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
   </head>
+
   <body>
-    <div class="wrapper">
-      <header>
-        <h1><a href="http://masa331.github.io">Masa331 blogging</a></h1>
-        <img src="http://masa331.github.io/assets/images/my-picture.png" alt="my-photo" />
-        <p>Hi, i'm Premysl Donat and this is my blog about IT and my life in generall. I work at <a href="http://uol.cz">UOL</a> and in my free time.. well, look at my <a href="https://github.com/Masa331">Github</a>.</p>
-        <p>Have a good one!</p>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3">
+          <h1><a href="http://masa331.github.io">Masa331 blogging</a></h1>
+          <img src="http://masa331.github.io/assets/images/my-picture.png" alt="my-photo" />
+          <p>Hi, i'm Premysl Donat and this is my blog about IT and my life in generall. I work at <a href="http://uol.cz">UOL</a> and in my free time.. well, look at my <a href="https://github.com/Masa331">Github</a>.</p>
+          <p>Have a good one!</p>
 
-        <h2>Menu</h2>
-        <ul>
-          <li><a href="http://masa331.github.io">Home</a></li>
-        </ul>
-
-        <div class="social-icons">
-          <a href="https://github.com/Masa331"><i class="fa fa-github-square"></i></a>
-          <a href="https://twitter.com/DonatP"><i class="fa fa-twitter-square"></i></a>
+          <h2>Menu</h2>
+          <ul>
+            <li><a href="http://masa331.github.io">Home</a></li>
+            <li><a class="twitter-follow-button" href="https://twitter.com/DonatP" data-show-count="false">Follow @DonatP</a></li>
+            <li><a class="github-button" href="https://github.com/Masa331" aria-label="Follow @Masa331 on GitHub">Follow @Masa331</a></li>
+          </ul>
         </div>
 
-        <hr />
-      </header>
+        <div class="col-sm-9">
+          <h1 id="abbrev-from-ruby-standard-lib">Abbrev from ruby standard lib</h1>
 
+          <p>Did you know about Ruby’s standard lib <a href="http://ruby-doc.org/stdlib-2.3.0/libdoc/abbrev/rdoc/Abbrev.html">Abbrev</a>? No? Well then let’s take a look!</p>
 
-<section>
-  <h1 id="abbrev-from-ruby-standard-lib">Abbrev from ruby standard lib</h1>
+          <h2 id="what-abbrev-does">What Abbrev does</h2>
 
-<p>Did you know about Ruby’s standard lib <a href="http://ruby-doc.org/stdlib-2.3.0/libdoc/abbrev/rdoc/Abbrev.html">Abbrev</a>? No? Well then let’s take a look!</p>
+          <p>For each string in an array <code>Abbrev</code> gives you all possible uniq abbreviations:</p>
 
-<h2 id="what-abbrev-does">What Abbrev does</h2>
-
-<p>For each string in an array <code>Abbrev</code> gives you all possible uniq abbreviations:</p>
-
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="nb">require</span> <span class="s1">&#39;abbrev&#39;</span>
+          <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="nb">require</span> <span class="s1">&#39;abbrev&#39;</span>
 
 <span class="o">[</span><span class="s1">&#39;table&#39;</span><span class="p">,</span> <span class="s1">&#39;wall&#39;</span><span class="o">].</span><span class="n">abbrev</span>
 <span class="o">=&gt;</span> <span class="p">{</span><span class="s2">&quot;table&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;table&quot;</span><span class="p">,</span> <span class="s2">&quot;tabl&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;table&quot;</span><span class="p">,</span> <span class="s2">&quot;tab&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;table&quot;</span><span class="p">,</span> <span class="s2">&quot;ta&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;table&quot;</span><span class="p">,</span> <span class="s2">&quot;t&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;table&quot;</span><span class="p">,</span> <span class="s2">&quot;wall&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;wall&quot;</span><span class="p">,</span> <span class="s2">&quot;wal&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;wall&quot;</span><span class="p">,</span> <span class="s2">&quot;wa&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;wall&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;wall&quot;</span><span class="p">}</span></code></pre></div>
 
-<p>The <a href="https://github.com/ruby/ruby/blob/trunk/lib/abbrev.rb">Implementation</a> is really simple and gives you 2 possibilities how to get your abbreviations. Either by <code>Abbrev::abbrev(words, pattern = nil)</code> or by calling <code>#abbrev</code> directly on any <code>Array</code>.</p>
+          <p>The <a href="https://github.com/ruby/ruby/blob/trunk/lib/abbrev.rb">Implementation</a> is really simple and gives you 2 possibilities how to get your abbreviations. Either by <code>Abbrev::abbrev(words, pattern = nil)</code> or by calling <code>#abbrev</code> directly on any <code>Array</code>.</p>
 
-<h2 id="whats-it-good-for">What’s it good for?</h2>
+          <h2 id="whats-it-good-for">What’s it good for?</h2>
 
-<p>I think CLI’s could use it. For example with Git’s cli you can just call shortest possible abbreviation instead of original full command. And it saves a lot of keystrokes.</p>
+          <p>I think CLI’s could use it. For example with Git’s cli you can just call shortest possible abbreviation instead of original full command. And it saves a lot of keystrokes.</p>
 
-<p>I can’t find any other valid case yet. But for some reason i really like the library. So i was just playing a bit for now and created this gem <a href="https://github.com/Masa331/abbreviated_methods">AbbreviatedMethods</a>. With it you can call all your’s objects methods by their’s shortest possible abbreviations:</p>
+          <p>I can’t find any other valid case yet. But for some reason i really like the library. So i was just playing a bit for now and created this gem <a href="https://github.com/Masa331/abbreviated_methods">AbbreviatedMethods</a>. With it you can call all your’s objects methods by their’s shortest possible abbreviations:</p>
 
-<script type="text/javascript" src="https://asciinema.org/a/35311.js" id="asciicast-35311" async=""></script>
+          <script type="text/javascript" src="https://asciinema.org/a/35311.js" id="asciicast-35311" async=""></script>
 
-<p>I don’t think it’s really useful in production but definitelly interesting thing to play with. Have fun!</p>
+          <p>I don’t think it’s really useful in production but definitelly interesting thing to play with. Have fun!</p>
 
-<p>P.S.: If you find any use-case please let me know</p>
+          <p>P.S.: If you find any use-case please let me know</p>
 
 
-  
-    <div id="disqus_thread"></div>
-    <script type="text/javascript">
-      /* * * CONFIGURATION VARIABLES * * */
-      var disqus_shortname = 'masa331';
 
-      /* * * DON'T EDIT BELOW THIS LINE * * */
-      (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-      })();
-    </script>
-    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-  
-</section>
+          <div id="disqus_thread"></div>
+          <script type="text/javascript">
+            /* * * CONFIGURATION VARIABLES * * */
+  var disqus_shortname = 'masa331';
 
+/* * * DON'T EDIT BELOW THIS LINE * * */
+(function() {
+  var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+          </script>
+          <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+        </div>
+
+      </div>
     </div>
-    <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-      ga('create', 'UA-76614059-1', 'auto');
-      ga('send', 'pageview');
-
-    </script>
   </body>
 </html>
-

@@ -3,125 +3,72 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title> Basic cookies security in rack |  Masa331 blog</title>
-    <link rel="stylesheet" href="https://masa331.github.io/assets/stylesheets/styles.css">
-    <link rel="stylesheet" href="https://masa331.github.io/assets/stylesheets/pygment_trac.css">
-    <link rel="stylesheet" href="https://masa331.github.io/assets/stylesheets/custom.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script src="https://masa331.github.io/assets/javascripts/main.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <title>Basic cookies security in rack | Masa331 blog</title>
+
+    <link rel="stylesheet" href="http://masa331.github.io/assets/stylesheets/bootstrap-grid.css">
+    <link rel="stylesheet" href="http://masa331.github.io/assets/stylesheets/styles.css">
+    <link rel="stylesheet" href="http://masa331.github.io/assets/stylesheets/pygment_trac.css">
+
+    <script>
+      window.twttr = (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0],
+          t = window.twttr || {};
+        if (d.getElementById(id)) return t;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://platform.twitter.com/widgets.js";
+        fjs.parentNode.insertBefore(js, fjs);
+
+        t._e = [];
+        t.ready = function(f) {
+          t._e.push(f);
+        };
+
+        return t;
+      }(document, "script", "twitter-wjs"));
+    </script>
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    <meta name="viewport" content="width=device-width">
   </head>
+
   <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3">
+          <h1><a href="http://masa331.github.io">Masa331 blogging</a></h1>
+          <img src="http://masa331.github.io/assets/images/my-picture.png" alt="my-photo" />
+          <p>Hi, i'm Premysl Donat and this is my blog about IT and my life in generall. I work at <a href="http://uol.cz">UOL</a> and in my free time.. well, look at my <a href="https://github.com/Masa331">Github</a>.</p>
+          <p>Have a good one!</p>
 
-  <header>
-    <a href="https://masa331.github.io">
-      <h1>I finally have a blog</h1>
-    </a>
-    <p>IT & stuff - by <a class="header-link" href="https://github.com/Masa331">Masa331</a></p>
-  </header>
+          <h2>Menu</h2>
+          <ul>
+            <li><a href="http://masa331.github.io">Home</a></li>
+            <li><a class="twitter-follow-button" href="https://twitter.com/DonatP" data-show-count="false">Follow @DonatP</a></li>
+            <li><a class="github-button" href="https://github.com/Masa331" aria-label="Follow @Masa331 on GitHub">Follow @Masa331</a></li>
+          </ul>
+        </div>
 
+        <div class="col-sm-9">
+          <h1 id="basic-cookies-security-in-rack">Basic cookies security in rack</h1>
 
-<div class="wrapper">
+          <p>I run my own Task &amp; Time tracking app <a href="https://suptasks.com">SupTasks</a>. It’s build on tiny ruby web framework <a href="http://roda.jeremyevans.net/">Roda</a> which itself is build on rack. I was curious how sessions and cookies are handled in rack and in general so i’v been investigating it a bit lately.</p>
 
-  <nav>
-  <ul>
-    
-        <li class='tag-h2'>
-          <a href="/2015/10/28/basic-cookie-security.html">
-            Basic cookies security in rack
-          </a>
-        </li>
-    
-        <li class='tag-h2'>
-          <a href="/2015/10/23/suptasks-intro.html">
-            SupTasks: Intro
-          </a>
-        </li>
-    
-        <li class='tag-h2'>
-          <a href="/2015/09/01/csv-database-faster.html">
-            Make your CSV database faster
-          </a>
-        </li>
-    
-        <li class='tag-h2'>
-          <a href="/2015/08/21/terminate_postgres_connections.html">
-            Terminate PG connection
-          </a>
-        </li>
-    
-        <li class='tag-h2'>
-          <a href="/2015/08/13/php-vs-ruby.html">
-            PHP vs. Ruby XML-RPC call
-          </a>
-        </li>
-    
-        <li class='tag-h2'>
-          <a href="/2015/08/11/redis-basic.html">
-            Basic Redis commands
-          </a>
-        </li>
-    
-        <li class='tag-h2'>
-          <a href="/2015/08/08/end-ruby-commands-with-colon.html">
-            Use semicolon in IRB
-          </a>
-        </li>
-    
-        <li class='tag-h2'>
-          <a href="/2015/07/26/ruby-enumerator.html">
-            What is Enumerator?
-          </a>
-        </li>
-    
-        <li class='tag-h2'>
-          <a href="/2015/07/22/how-many-symbols.html">
-            How many symbols?
-          </a>
-        </li>
-    
-        <li class='tag-h2'>
-          <a href="/2015/07/21/keyboard-shortcuts.html">
-            Keyboard shortcuts
-          </a>
-        </li>
-    
-        <li class='tag-h2'>
-          <a href="/2015/07/17/configuring-xterm-fonts.html">
-            Configuring XTerm fonts
-          </a>
-        </li>
-    
-        <li class='tag-h2'>
-          <a href="/2015/07/17/hello-world.html">
-            Hello world!
-          </a>
-        </li>
-    
-  </ul>
-</nav>
+          <p>Rack offers 3 built in session storage mechanisms. <a href="https://github.com/rack/rack/blob/master/lib/rack/session/cookie.rb">Cookie</a>, <a href="https://github.com/rack/rack/blob/master/lib/rack/session/memcache.rb">Memcache</a> and <a href="https://github.com/rack/rack/blob/master/lib/rack/session/pool.rb">Pool</a></p>
 
+          <p>All of them use cookies to store session_id but after that they differ in where other parts of session are stored.</p>
 
-  <section>
-    <h1 id="basic-cookies-security-in-rack">Basic cookies security in rack</h1>
-
-<p>I run my own Task &amp; Time tracking app <a href="https://suptasks.com">SupTasks</a>. It’s build on tiny ruby web framework <a href="http://roda.jeremyevans.net/">Roda</a> which itself is build on rack. I was curious how sessions and cookies are handled in rack and in general so i’v been investigating it a bit lately.</p>
-
-<p>Rack offers 3 built in session storage mechanisms. <a href="https://github.com/rack/rack/blob/master/lib/rack/session/cookie.rb">Cookie</a>, <a href="https://github.com/rack/rack/blob/master/lib/rack/session/memcache.rb">Memcache</a> and <a href="https://github.com/rack/rack/blob/master/lib/rack/session/pool.rb">Pool</a></p>
-
-<p>All of them use cookies to store session_id but after that they differ in where other parts of session are stored.</p>
-
-<p>Most of us will use <code>Cookie</code> and it might be like this:</p>
+          <p>Most of us will use <code>Cookie</code> and it might be like this:</p>
 
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">use</span> <span class="no">Rack</span><span class="o">::</span><span class="no">Session</span><span class="o">::</span><span class="no">Cookie</span></code></pre></div>
 
-<p>What’s actually stored in cookie is base64 encoded marshalled hash:</p>
+          <p>What’s actually stored in cookie is base64 encoded marshalled hash:</p>
 
-<p><img src="https://masa331.github.io/assets/images/cookie1.png" alt="base64 marshalled hash" /></p>
+          <p><img src="https://masa331.github.io/assets/images/cookie1.png" alt="base64 marshalled hash" /></p>
 
-<p>Let’s ‘decrypt’ it:</p>
+          <p>Let’s ‘decrypt’ it:</p>
 
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="nb">require</span> <span class="s1">&#39;base64&#39;</span>
+          <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="nb">require</span> <span class="s1">&#39;base64&#39;</span>
 
 <span class="no">Marshal</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="no">Base64</span><span class="o">.</span><span class="n">decode64</span><span class="p">(</span><span class="s1">&#39;BAh7CEkiD3Nlc3Npb25faWQGOgZFVEkiRWNjODdkMzEwMWZjNWY5ZWE3MDliMTgwNTg5NWQzNGFlMDU1ZTM4MGM0MzIwMmI4MDVjZjhlODcwOTk5ZGMyNTUGOwBGSSIPdXNlcl9lbWFpbAY7AEZJIhhzdXB0YXNrczFAZ21haWwuY29tBjsAVEkiDnVzZXJfbmFtZQY7AEZJIhJQcmVteXNsIERvbmF0BjsAVA==&#39;</span><span class="p">))</span>
 
@@ -129,11 +76,11 @@
  <span class="s2">&quot;user_email&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;suptasks1@gmail.com&quot;</span><span class="p">,</span>
  <span class="s2">&quot;user_name&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;Premysl Donat&quot;</span><span class="p">}</span></code></pre></div>
 
-<p>Wow! These are my credentials!</p>
+          <p>Wow! These are my credentials!</p>
 
-<p>Ok, let’s try something. I know my friend also has an account on SupTasks. And i know his e-mail:</p>
+          <p>Ok, let’s try something. I know my friend also has an account on SupTasks. And i know his e-mail:</p>
 
-<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="nb">require</span> <span class="s1">&#39;base64&#39;</span>
+          <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="nb">require</span> <span class="s1">&#39;base64&#39;</span>
 
 <span class="no">Base64</span><span class="o">.</span><span class="n">encode64</span><span class="p">(</span><span class="no">Marshal</span><span class="o">.</span><span class="n">dump</span><span class="p">({</span><span class="s2">&quot;session_id&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;c8ce1c99d9d33a9999fdc03e296777405f5e2d1f42a26eec4091fb96bcd738aa&quot;</span><span class="p">,</span>
  <span class="s2">&quot;user_email&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;notme341@gmail.com&quot;</span><span class="p">,</span>
@@ -141,60 +88,44 @@
 
 <span class="o">=&gt;</span> <span class="s2">&quot;BAh7CEkiD3Nlc3Npb25faWQGOgZFVEkiRWM4Y2UxYzk5ZDlkMzNhOTk5OWZkYzAzZTI5Njc3NzQwNWY1ZTJkMWY0MmEyNmVlYzQwOTFmYjk2YmNkNzM4YWEGOwBUSSIPdXNlcl9lbWFpbAY7AFRJIhdub3RtZTM0MUBnbWFpbC5jb20GOwBUSSIOdXNlcl9uYW1lBjsAVEkiE1JvbWFuIFBvc3RvbGthBjsAVA==&quot;</span></code></pre></div>
 
-<p>If i replace cookie with this string i should be logged in as ‘notme341@gmail.com’:</p>
+          <p>If i replace cookie with this string i should be logged in as ‘notme341@gmail.com’:</p>
 
-<p><img src="https://masa331.github.io/assets/images/cookie2.png" alt="setting up a crafted cookie" /></p>
+          <p><img src="https://masa331.github.io/assets/images/cookie2.png" alt="setting up a crafted cookie" /></p>
 
-<p>And voilà, after page reload, it works:</p>
+          <p>And voilà, after page reload, it works:</p>
 
-<p><img src="https://masa331.github.io/assets/images/cookie3.png" alt="logged in as different user" /></p>
+          <p><img src="https://masa331.github.io/assets/images/cookie3.png" alt="logged in as different user" /></p>
 
-<h2 id="how-to-protect">How to protect</h2>
+          <h2 id="how-to-protect">How to protect</h2>
 
-<p>Luckily, there is a simple fix for this:</p>
+          <p>Luckily, there is a simple fix for this:</p>
 
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">use</span> <span class="no">Rack</span><span class="o">::</span><span class="no">Session</span><span class="o">::</span><span class="no">Cookie</span><span class="p">,</span> <span class="p">{</span> <span class="ss">secret</span><span class="p">:</span> <span class="s1">&#39;some_long_random_secret&#39;</span> <span class="p">}</span></code></pre></div>
 
-<p>Now the cookie looks like this:</p>
+          <p>Now the cookie looks like this:</p>
 
-<p><img src="https://masa331.github.io/assets/images/cookie4.png" alt="base64 marshalled hash with appended digest" /></p>
+          <p><img src="https://masa331.github.io/assets/images/cookie4.png" alt="base64 marshalled hash with appended digest" /></p>
 
-<p>This new cookie has two parts - first is our base64 encoded marshalled hash and second is it’s SHA1 digest created with our new secret. Everytime session is loaded back from cookie, rack takes the first part and creates new digest from it. Then it’s compared to the one stored in second part of cookie. If they match it means that noone manipulated with the cookie. If someone did, our new digest would be different from the saved one.</p>
+          <p>This new cookie has two parts - first is our base64 encoded marshalled hash and second is it’s SHA1 digest created with our new secret. Everytime session is loaded back from cookie, rack takes the first part and creates new digest from it. Then it’s compared to the one stored in second part of cookie. If they match it means that noone manipulated with the cookie. If someone did, our new digest would be different from the saved one.</p>
 
-<p>The most important thing now is to <strong>save the secret somewhere safe</strong>, so nobody can read it. Otherwise attacker could easily create digest which would match the rack check. You can keep your secret in server environment or load it from some yaml file but <strong>never keep it in your version control</strong>.</p>
+          <p>The most important thing now is to <strong>save the secret somewhere safe</strong>, so nobody can read it. Otherwise attacker could easily create digest which would match the rack check. You can keep your secret in server environment or load it from some yaml file but <strong>never keep it in your version control</strong>.</p>
 
-<p>By the way in future versions of Rack it won’t even be possible to use cookie session without secret. :)</p>
+          <p>By the way in future versions of Rack it won’t even be possible to use cookie session without secret. :)</p>
+          <div id="disqus_thread"></div>
+          <script type="text/javascript">
+            /* * * CONFIGURATION VARIABLES * * */
+  var disqus_shortname = 'masa331';
 
-<p>Have a good one</p>
-
-
-    <div class="signature">
-      
-      <span>Premysl Donat</span>
-      <span class='pull-right'>28 October 2015</span>
-    </div>
-  </section>
-
-  
-
-  <div id="disqus_thread"></div>
-  <script type="text/javascript">
-    /* * * CONFIGURATION VARIABLES * * */
-    var disqus_shortname = 'masa331';
-
-    /* * * DON'T EDIT BELOW THIS LINE * * */
-    (function() {
-      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-  </script>
-  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-  
-
-      <footer>
-    </footer>
+/* * * DON'T EDIT BELOW THIS LINE * * */
+(function() {
+  var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+          </script>
+          <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+        </div>
+      </div>
     </div>
   </body>
 </html>
-

@@ -3,87 +3,89 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title> Are you getting production error page in development? |  Masa331 blog</title>
+    <title>What i'm working on right now | Masa331 blog</title>
 
-    <link rel="stylesheet" href="/assets/stylesheets/styles.css">
-    <link rel="stylesheet" href="/assets/stylesheets/pygment_trac.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://masa331.github.io/assets/stylesheets/bootstrap-grid.css">
+    <link rel="stylesheet" href="http://masa331.github.io/assets/stylesheets/styles.css">
+    <link rel="stylesheet" href="http://masa331.github.io/assets/stylesheets/pygment_trac.css">
+
+    <script>
+      window.twttr = (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0],
+          t = window.twttr || {};
+        if (d.getElementById(id)) return t;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://platform.twitter.com/widgets.js";
+        fjs.parentNode.insertBefore(js, fjs);
+
+        t._e = [];
+        t.ready = function(f) {
+          t._e.push(f);
+        };
+
+        return t;
+      }(document, "script", "twitter-wjs"));
+    </script>
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
     <meta name="viewport" content="width=device-width">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
   </head>
+
   <body>
-    <div class="wrapper">
-      <header>
-        <h1><a href="http://masa331.github.io">Masa331 blogging</a></h1>
-        <img src="http://masa331.github.io/assets/images/my-picture.png" alt="my-photo" />
-        <p>Hi, i'm Premysl Donat and this is my blog about IT and my life in generall. I work at <a href="http://uol.cz">UOL</a> and in my free time.. well, look at my Github.</p>
-        <p>Have a good one!</p>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3">
+          <h1><a href="http://masa331.github.io">Masa331 blogging</a></h1>
+          <img src="http://masa331.github.io/assets/images/my-picture.png" alt="my-photo" />
+          <p>Hi, i'm Premysl Donat and this is my blog about IT and my life in generall. I work at <a href="http://uol.cz">UOL</a> and in my free time.. well, look at my <a href="https://github.com/Masa331">Github</a>.</p>
+          <p>Have a good one!</p>
 
-        <h2>Menu</h2>
-        <ul>
-          <li><a href="http://masa331.github.io">Home</a></li>
-        </ul>
-
-        <div class="social-icons">
-          <a href="https://github.com/Masa331"><i class="fa fa-github-square"></i></a>
-          <a href="https://twitter.com/DonatP"><i class="fa fa-twitter-square"></i></a>
+          <h2>Menu</h2>
+          <ul>
+            <li><a href="http://masa331.github.io">Home</a></li>
+            <li><a class="twitter-follow-button" href="https://twitter.com/DonatP" data-show-count="false">Follow @DonatP</a></li>
+            <li><a class="github-button" href="https://github.com/Masa331" aria-label="Follow @Masa331 on GitHub">Follow @Masa331</a></li>
+          </ul>
         </div>
 
-        <hr />
-      </header>
+        <div class="col-sm-9">
+          <h1>What i'm working on right now</h1>
+
+          <p>Quite a lot is happening now and i don't have much spare time to write anything. It feels abandoned here and it makes me sad. So here is a short update on what i'm up to lately in case anyone cares.</p>
+
+          <h2>Elm</h2>
+
+          <p>This year i attended <a href="https://devel.cz">Devel2016</a> conference in Czech Republic which is a one day conference dedicated to developers of all kinds. It was very nice event overall but for me best talk was from Richard Feldman - The Capability Trap. It was about current state of frontend web development, it's problems, and one radical solution - <a href="elm-lang.org">Elm</a> - a static, functional language compiled into JS.</p>
+
+          <p>It took me some time, but finally during the summer i started seriously looking at it. The reason was that i wanted to get better at frontend development but without touching JS - stupid, i know.</p>
+
+          <p>Well, coming from Ruby background everything in Elm was pretty new to me. However, i didn't give up and i have to say it really rocks! <b>The biggest win in Elm is simply the thing that once you compile it, it just works</b>. Really. I don't thing anybody can fully appreciate this until he tries himself but it's really a super powerful. The confidence that your code won't break in production is such a relief. And also, the compiler is super friendly which means that even if you start digging in core of your app then you won't forget on anything. It's almost like the compiler is leading the way and telling you what to do to finish the refactorings and you are just some labourer working in code editor.</p>
+
+          <p>Ok, so Elm is pretty much the thing i do right now in my spare time. And to be specific, this is the side project i was talking about:</p>
+          <a href="https://masa331.github.io/bootstrap-form-dragnclick/">Bootstrap form drag and click</a>
+          <br>
+          <a href="https://github.com/Masa331/bootstrap-form-dragnclick">And here is the code</a>
+          <br>
+          <p>Hope you like it. Please leave some reply if you do or RT or star on github.. you know. Oh, and try Elm. It's really cool!</p>
 
 
-<section>
-  <h1>What i'm working on right now</h1>
 
-  <p>Quite a lot is happening now and i don't have much spare time to write anything. It feels abandoned here and it makes me sad. So here is a short update on what i'm up to lately in case anyone cares.</p>
+          <div id="disqus_thread"></div>
+          <script type="text/javascript">
+            /* * * CONFIGURATION VARIABLES * * */
+  var disqus_shortname = 'masa331';
 
-  <h2>Elm</h2>
-
-  <p>This year i attended <a href="https://devel.cz">Devel2016</a> conference in Czech Republic which is a one day conference dedicated to developers of all kinds. It was very nice event overall but for me best talk was from Richard Feldman - The Capability Trap. It was about current state of frontend web development, it's problems, and one radical solution - <a href="elm-lang.org">Elm</a> - a static, functional language compiled into JS.</p>
-
-  <p>It took me some time, but finally during the summer i started seriously looking at it. The reason was that i wanted to get better at frontend development but without touching JS - stupid, i know.</p>
-
-  <p>Well, coming from Ruby background everything in Elm was pretty new to me. However, i didn't give up and i have to say it really rocks! <b>The biggest win in Elm is simply the thing that once you compile it, it just works</b>. Really. I don't thing anybody can fully appreciate this until he tries himself but it's really a super powerful. The confidence that your code won't break in production is such a relief. And also, the compiler is super friendly which means that even if you start digging in core of your app then you won't forget on anything. It's almost like the compiler is leading the way and telling you what to do to finish the refactorings and you are just some labourer working in code editor.</p>
-
-  <p>Ok, so Elm is pretty much the thing i do right now in my spare time. And to be specific, this is the side project i was talking about:</p>
-  <a href="https://masa331.github.io/bootstrap-form-dragnclick/">Bootstrap form drag and click</a>
-  <br>
-  <a href="https://github.com/Masa331/bootstrap-form-dragnclick">And here is the code</a>
-  <br>
-  <p>Hope you like it. Please leave some reply if you do or RT or star on github.. you know. Oh, and try Elm. It's really cool!</p>
-
-
-  
-    <div id="disqus_thread"></div>
-    <script type="text/javascript">
-      /* * * CONFIGURATION VARIABLES * * */
-      var disqus_shortname = 'masa331';
-
-      /* * * DON'T EDIT BELOW THIS LINE * * */
-      (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-      })();
-    </script>
-    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-  
-</section>
-
+/* * * DON'T EDIT BELOW THIS LINE * * */
+(function() {
+  var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+          </script>
+          <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+        </div>
+      </div>
     </div>
-    <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-      ga('create', 'UA-76614059-1', 'auto');
-      ga('send', 'pageview');
-
-    </script>
   </body>
 </html>
-

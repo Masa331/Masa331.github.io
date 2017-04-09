@@ -3,61 +3,75 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title> Setup and deploy Roda app from scratch |  Masa331 blog</title>
+    <title>Setup and deploy Roda app from scratch | Masa331 blog</title>
 
-    <link rel="stylesheet" href="/assets/stylesheets/styles.css">
-    <link rel="stylesheet" href="/assets/stylesheets/pygment_trac.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://masa331.github.io/assets/stylesheets/bootstrap-grid.css">
+    <link rel="stylesheet" href="http://masa331.github.io/assets/stylesheets/styles.css">
+    <link rel="stylesheet" href="http://masa331.github.io/assets/stylesheets/pygment_trac.css">
+
+    <script>
+      window.twttr = (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0],
+          t = window.twttr || {};
+        if (d.getElementById(id)) return t;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://platform.twitter.com/widgets.js";
+        fjs.parentNode.insertBefore(js, fjs);
+
+        t._e = [];
+        t.ready = function(f) {
+          t._e.push(f);
+        };
+
+        return t;
+      }(document, "script", "twitter-wjs"));
+    </script>
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
     <meta name="viewport" content="width=device-width">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
   </head>
+
   <body>
-    <div class="wrapper">
-      <header>
-        <h1><a href="http://masa331.github.io">Masa331 blogging</a></h1>
-        <img src="http://masa331.github.io/assets/images/my-picture.png" alt="my-photo" />
-        <p>Hi, i'm Premysl Donat and this is my blog about IT and my life in generall. I work at <a href="http://uol.cz">UOL</a> and in my free time.. well, look at my <a href="https://github.com/Masa331">Github</a>.</p>
-        <p>Have a good one!</p>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3">
+          <h1><a href="http://masa331.github.io">Masa331 blogging</a></h1>
+          <img src="http://masa331.github.io/assets/images/my-picture.png" alt="my-photo" />
+          <p>Hi, i'm Premysl Donat and this is my blog about IT and my life in generall. I work at <a href="http://uol.cz">UOL</a> and in my free time.. well, look at my <a href="https://github.com/Masa331">Github</a>.</p>
+          <p>Have a good one!</p>
 
-        <h2>Menu</h2>
-        <ul>
-          <li><a href="http://masa331.github.io">Home</a></li>
-        </ul>
-
-        <div class="social-icons">
-          <a href="https://github.com/Masa331"><i class="fa fa-github-square"></i></a>
-          <a href="https://twitter.com/DonatP"><i class="fa fa-twitter-square"></i></a>
+          <h2>Menu</h2>
+          <ul>
+            <li><a href="http://masa331.github.io">Home</a></li>
+            <li><a class="twitter-follow-button" href="https://twitter.com/DonatP" data-show-count="false">Follow @DonatP</a></li>
+            <li><a class="github-button" href="https://github.com/Masa331" aria-label="Follow @Masa331 on GitHub">Follow @Masa331</a></li>
+          </ul>
         </div>
 
-        <hr />
-      </header>
+        <div class="col-sm-9">
+          <h1 id="setup-and-deploy-roda-app-from-scratch">Setup and deploy Roda app from scratch</h1>
 
+          <p>I’v decided to migrate my projects exclusivelly to AWS. It’s been a great experience so far. Before i was using some local hosting provider which was good but it can’t beat the AWS’s ease of use and endless posibilities.</p>
 
-<section>
-  <h1 id="setup-and-deploy-roda-app-from-scratch">Setup and deploy Roda app from scratch</h1>
+          <p>Here in this post i’m gonna describe how to deploy simple Roda app on new EC2 instance from scratch.</p>
 
-<p>I’v decided to migrate my projects exclusivelly to AWS. It’s been a great experience so far. Before i was using some local hosting provider which was good but it can’t beat the AWS’s ease of use and endless posibilities.</p>
+          <p>My stack:</p>
 
-<p>Here in this post i’m gonna describe how to deploy simple Roda app on new EC2 instance from scratch.</p>
+          <ul>
+            <li>Ubuntu 14.04 basic EC2 image</li>
+            <li>Ruby 2.3</li>
+            <li>Roda application framework</li>
+            <li>SQLite3</li>
+            <li>Nginx as a web server</li>
+            <li>Puma as an application server</li>
+            <li>Capistrano for deployment</li>
+            <li>HTTPS</li>
+          </ul>
 
-<p>My stack:</p>
+          <h2 id="setting-up-the-server">1) Setting up the server</h2>
 
-<ul>
-  <li>Ubuntu 14.04 basic EC2 image</li>
-  <li>Ruby 2.3</li>
-  <li>Roda application framework</li>
-  <li>SQLite3</li>
-  <li>Nginx as a web server</li>
-  <li>Puma as an application server</li>
-  <li>Capistrano for deployment</li>
-  <li>HTTPS</li>
-</ul>
-
-<h2 id="setting-up-the-server">1) Setting up the server</h2>
-
-<p>This part of the setup is pretty easy and involves just installation of basic packages we are gonna need:</p>
+          <p>This part of the setup is pretty easy and involves just installation of basic packages we are gonna need:</p>
 
 <pre><code>$ sudo apt-get update
 $ sudo apt-get upgrade
@@ -82,11 +96,11 @@ $ sudo apt-get install make g++ gcc libssl-dev
 $ sudo apt-get install htop
 </code></pre>
 
-<h2 id="configurign-nginx">2) Configurign nginx</h2>
+          <h2 id="configurign-nginx">2) Configurign nginx</h2>
 
-<p>Nginx on this box won’t serve anything other than this one app. So because of this i’m not using it’s base setup with sites-enabled and sites-available directories. I configure the server right inside the nginx.conf file.</p>
+          <p>Nginx on this box won’t serve anything other than this one app. So because of this i’m not using it’s base setup with sites-enabled and sites-available directories. I configure the server right inside the nginx.conf file.</p>
 
-<p>This is how the server block in my <code>nginx.conf</code> file looks like:</p>
+          <p>This is how the server block in my <code>nginx.conf</code> file looks like:</p>
 
 <pre><code>##
 # Virtual Host Configs
@@ -137,31 +151,31 @@ server {
 }
 </code></pre>
 
-<p>Also my nginx.conf file is missing these 2 lines because as i said, i configure everything in nginx.conf:</p>
+          <p>Also my nginx.conf file is missing these 2 lines because as i said, i configure everything in nginx.conf:</p>
 
 <pre><code>include /etc/nginx/conf.d/*.conf;
 include /etc/nginx/sites-enabled/*;
 </code></pre>
 
-<h1 id="deploy-with-capistrano">3) Deploy with Capistrano</h1>
-<p>I’ll deploy into /var/www directory. Capistrano and my deploy user needs to be able to create subdirectiories:</p>
+          <h1 id="deploy-with-capistrano">3) Deploy with Capistrano</h1>
+          <p>I’ll deploy into /var/www directory. Capistrano and my deploy user needs to be able to create subdirectiories:</p>
 
 <pre><code>$ sudo chown ubuntu:ubuntu /var/www/
 </code></pre>
 
-<p>In order to fetch new versions of your app from remote repository(Gtihub in my case) you need to generate ssh key and upload it to Github.</p>
+          <p>In order to fetch new versions of your app from remote repository(Gtihub in my case) you need to generate ssh key and upload it to Github.</p>
 
 <pre><code>$ ssh-keygen -t rsa -b 4096
 </code></pre>
 
-<p>Then we can prepare Capistrano config files:</p>
+          <p>Then we can prepare Capistrano config files:</p>
 
 <pre><code>$ cap install
 </code></pre>
 
-<p>this will create necessary <code>Capfile</code> and <code>config/deploy.rb</code> and <code>config/deploy/production.rb</code> which you need to manually customize:</p>
+          <p>this will create necessary <code>Capfile</code> and <code>config/deploy.rb</code> and <code>config/deploy/production.rb</code> which you need to manually customize:</p>
 
-<p>My Capfile:</p>
+          <p>My Capfile:</p>
 
 <pre><code>require 'capistrano/setup'
 require 'capistrano/deploy'
@@ -171,9 +185,9 @@ require 'capistrano/bundler'
 Dir.glob('lib/capistrano/tasks/*.rake').each { |r| import r }
 </code></pre>
 
-<p>This is enough for our Roda app now. Additionally to ‘capistrano’ gem you only need ‘capistrano-puma’ and ‘capistrano-bundler’ in your Gemfile.</p>
+          <p>This is enough for our Roda app now. Additionally to ‘capistrano’ gem you only need ‘capistrano-puma’ and ‘capistrano-bundler’ in your Gemfile.</p>
 
-<p>config/deploy.rb:</p>
+          <p>config/deploy.rb:</p>
 
 <pre><code>set :application, 'suptasks'
 set :repo_url, 'git@github.com:Masa331/suptasks.git'
@@ -188,7 +202,7 @@ namespace :deploy do
 end
 </code></pre>
 
-<p>and config/deploy/production.rb:</p>
+          <p>and config/deploy/production.rb:</p>
 
 <pre><code>server '52.58.103.140', user: 'ubuntu', roles: %w{web app db}
 set :ssh_options, {
@@ -196,61 +210,51 @@ set :ssh_options, {
 }
 </code></pre>
 
-<p>Now before deploy you need to upload all linked files and directories you listed in <code>config/deploy.rb</code>.</p>
+          <p>Now before deploy you need to upload all linked files and directories you listed in <code>config/deploy.rb</code>.</p>
 
-<p>When you’r done you can do <code>cap production deploy</code> and your app should be up and running.</p>
+          <p>When you’r done you can do <code>cap production deploy</code> and your app should be up and running.</p>
 
-<p>This was pretty much everything to set up  my small app in production :)</p>
+          <p>This was pretty much everything to set up  my small app in production :)</p>
 
-<h2 id="problems-troubleshooting">Problems troubleshooting</h2>
-<p>If you encounter any problem during deploy i suggest you to try to ssh into the box and try to fire up the exact command Capistrano failed on. Often there can be problems with deploy user permissions etc.</p>
+          <h2 id="problems-troubleshooting">Problems troubleshooting</h2>
+          <p>If you encounter any problem during deploy i suggest you to try to ssh into the box and try to fire up the exact command Capistrano failed on. Often there can be problems with deploy user permissions etc.</p>
 
-<p>When the deploy doens’t fail but the app isn’t running either you can check nginx log files and you migth find some clues there:</p>
+          <p>When the deploy doens’t fail but the app isn’t running either you can check nginx log files and you migth find some clues there:</p>
 
-<ul>
-  <li><code>/var/log/nginx/access.log</code></li>
-  <li><code>/var/log/nginx/error.log</code></li>
-</ul>
+          <ul>
+            <li><code>/var/log/nginx/access.log</code></li>
+            <li><code>/var/log/nginx/error.log</code></li>
+          </ul>
 
-<p>SSL certificate problems will be logged there for example.</p>
+          <p>SSL certificate problems will be logged there for example.</p>
 
-<p>I also had a few problems with starting Puma. It was due to missing linked files but the biggest problem is that the deploy won’t fail when Puma doesn’t start properly. However when this happens and you suspect Puma i suggest ssh into the box, cd inside the app root and try to start puma manually the same way the Capistrano tries it but strip off the <code>--daemon</code> parameter. When you do this the Puma should fail with some error message explaining the problem.</p>
+          <p>I also had a few problems with starting Puma. It was due to missing linked files but the biggest problem is that the deploy won’t fail when Puma doesn’t start properly. However when this happens and you suspect Puma i suggest ssh into the box, cd inside the app root and try to start puma manually the same way the Capistrano tries it but strip off the <code>--daemon</code> parameter. When you do this the Puma should fail with some error message explaining the problem.</p>
 
-<p>In the time of writing the command was:</p>
+          <p>In the time of writing the command was:</p>
 
 <pre><code>$ /usr/bin/env bundle exec puma -C /var/www/suptasks/shared/puma.rb
 </code></pre>
 
 
 
-  
-    <div id="disqus_thread"></div>
-    <script type="text/javascript">
-      /* * * CONFIGURATION VARIABLES * * */
-      var disqus_shortname = 'masa331';
 
-      /* * * DON'T EDIT BELOW THIS LINE * * */
-      (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-      })();
-    </script>
-    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-  
-</section>
+          <div id="disqus_thread"></div>
+          <script type="text/javascript">
+            /* * * CONFIGURATION VARIABLES * * */
+  var disqus_shortname = 'masa331';
 
+/* * * DON'T EDIT BELOW THIS LINE * * */
+(function() {
+  var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+          </script>
+          <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+        </div>
+
+      </div>
     </div>
-    <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-      ga('create', 'UA-76614059-1', 'auto');
-      ga('send', 'pageview');
-
-    </script>
   </body>
 </html>
-
