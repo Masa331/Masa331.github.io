@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Pozor na RSpec &lt; 3.1 a jeho around filter - 10.2.2015(repost) | Masa331 blog</title>
+
+    <link rel="stylesheet" href="http://masa331.github.io/assets/stylesheets/bootstrap-grid.css">
+    <link rel="stylesheet" href="http://masa331.github.io/assets/stylesheets/styles.css">
+    <link rel="stylesheet" href="http://masa331.github.io/assets/stylesheets/pygment_trac.css">
+
+    <script>
+      window.twttr = (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0],
+          t = window.twttr || {};
+        if (d.getElementById(id)) return t;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://platform.twitter.com/widgets.js";
+        fjs.parentNode.insertBefore(js, fjs);
+
+        t._e = [];
+        t.ready = function(f) {
+          t._e.push(f);
+        };
+
+        return t;
+      }(document, "script", "twitter-wjs"));
+    </script>
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    <meta name="viewport" content="width=device-width">
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3">
+          <h1><a href="http://masa331.github.io">Masa331 blogging</a></h1>
+          <img src="http://masa331.github.io/assets/images/my-picture.png" alt="my-photo" />
+          <p>Hi, i'm Premysl Donat and this is my blog about IT and my life in generall. I work at <a href="http://uol.cz">UOL</a> and in my free time.. well, look at my <a href="https://github.com/Masa331">Github</a>.</p>
+          <p>Have a good one!</p>
+
+          <h2>Menu</h2>
+          <ul>
+            <li><a href="http://masa331.github.io">Home</a></li>
+            <li><a class="twitter-follow-button" href="https://twitter.com/DonatP" data-show-count="false">Follow @DonatP</a></li>
+            <li><a class="github-button" href="https://github.com/Masa331" aria-label="Follow @Masa331 on GitHub">Follow @Masa331</a></li>
+          </ul>
+        </div>
+
+        <div class="col-sm-9">
+          <i>Toto je repost mého článku z 7.1.2015 na Bonobo Blogu zde: <a href="https://blog.bonobo.cz/2015/02/10/rspec-around-filter/">https://blog.bonobo.cz/2015/02/10/rspec-around-filter/</a>.  </i>
+
+          <h2>Pozor na RSpec &lt; 3.1 a jeho around filter - 10.2.2015(repost)</h2>
+
+          <p>TDD zná asi každý. Na následující situaci Vám ukážu, proč by se neměla přeskakovat jeho první fáze - fail-test, a proč byste měli upgradovat RSpec na verzi > 3.1.</p>
+
+          <p>Potřebovali jsme do aplikace přidat odeslání interního e-mailu. Práce tak na deset minut. Abych kvůli tomu nemusel vytvářet samostatný test-case, přilepil jsem jeden expect do již existujícího testu. Po spuštění testu jsem byl velice překvapený, když všechno v pořádku prošlo.</p>
+
+          <p>Po chvíli jsem přišel na to, že je úplně jedno, jaké expecty do testu dám, vždy projdou. Pak jsem objevil zajímavou věc. Kolem daného testu se používal následující RSpec around hook:</p>
+
+          <pre><code>
+around { some_code }
+          </code></pre>
+
+          <p>Ten když jsem zakomentoval, tak test začal správně failovat. Z dokumentace jsem následně zjistil, že around hook používám špatně. Around hook totiž funguje na jiném principu, než before a after hooky. Bohužel to mě při prvotní implementaci testu vůbec nenapadlo. Hook jako hook, myslel jsem, že se daný kód prostě provede před i po testu. To ale neplatí. V around hooku musíte totiž test case explicitně spustit.</p>
+
+          <p>Správné použití:</p>
+
+          <pre><code>
+around do |example|
+  some_code
+  example.run
+  some_code
+end
+          </code></pre>
+
+          <p>Pokud použijete around hook jako v prvním případě, tak se test vůbec nespustí, i když hlásí, že přošel na zelenou.</p>
+          <p>Naštěstí od verze RSpecu > 3.1 toto špatné použití RSpec detekuje a nespuštěné testy hlásí jako pending i s důvodem. Takže u všech Vašich aplikací doporučuji RSpec aktualizovat nebo minimálně ručně zkontrolovat.</p>
+          <p>Jinak tenhle příklad krásně ukazuje důležitost první fáze TDD, tedy napsání fail testu. Pokud bych rovnou udělal funkcionalitu a test až později, vůbec bych nemusel přijít na to, že něco nefunguje, protože přeskočený test by mi stále hlásil success.</p>
+
+          <div id="disqus_thread"></div>
+          <script type="text/javascript">
+            /* * * CONFIGURATION VARIABLES * * */
+  var disqus_shortname = 'masa331';
+
+/* * * DON'T EDIT BELOW THIS LINE * * */
+(function() {
+  var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+          </script>
+          <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

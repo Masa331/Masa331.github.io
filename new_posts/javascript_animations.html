@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Vypněte jQuery animace a zrychlíte své testy | Masa331 blog</title>
+
+    <link rel="stylesheet" href="http://masa331.github.io/assets/stylesheets/bootstrap-grid.css">
+    <link rel="stylesheet" href="http://masa331.github.io/assets/stylesheets/styles.css">
+    <link rel="stylesheet" href="http://masa331.github.io/assets/stylesheets/pygment_trac.css">
+
+    <script>
+      window.twttr = (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0],
+          t = window.twttr || {};
+        if (d.getElementById(id)) return t;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://platform.twitter.com/widgets.js";
+        fjs.parentNode.insertBefore(js, fjs);
+
+        t._e = [];
+        t.ready = function(f) {
+          t._e.push(f);
+        };
+
+        return t;
+      }(document, "script", "twitter-wjs"));
+    </script>
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    <meta name="viewport" content="width=device-width">
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3">
+          <h1><a href="http://masa331.github.io">Masa331 blogging</a></h1>
+          <img src="http://masa331.github.io/assets/images/my-picture.png" alt="my-photo" />
+          <p>Hi, i'm Premysl Donat and this is my blog about IT and my life in generall. I work at <a href="http://uol.cz">UOL</a> and in my free time.. well, look at my <a href="https://github.com/Masa331">Github</a>.</p>
+          <p>Have a good one!</p>
+
+          <h2>Menu</h2>
+          <ul>
+            <li><a href="http://masa331.github.io">Home</a></li>
+            <li><a class="twitter-follow-button" href="https://twitter.com/DonatP" data-show-count="false">Follow @DonatP</a></li>
+            <li><a class="github-button" href="https://github.com/Masa331" aria-label="Follow @Masa331 on GitHub">Follow @Masa331</a></li>
+          </ul>
+        </div>
+
+        <div class="col-sm-9">
+          <i>Toto je repost našeho společného článku s Danem Hromadou z 28.3.2015 na Bonobo Blogu zde: <a href="https://blog.bonobo.cz/2015/03/28/javascript_animations/">https://blog.bonobo.cz/2015/03/28/javascript_animations/</a>.  </i>
+
+          <h2>Vypněte jQuery animace a zrychlíte své testy</h2>
+
+          <p>jQuery animace mohou zbytečně zpomalovat Vaše feature testy i o několik sekund. Někdy je kvůli nim potřeba i měnit jejich strukturu, přidávat něpěkné věci jako sleep, volit jiné metody pro hledání elementů na stránce a podobně. Naštěstí jQuery má pro tuto situaci jednoduché vestavěné řešení. Všechny její animace jdou vypnout.</p>
+
+          <pre><code>
+&lt;%= '$.fx.off = true;' %&gt;
+          </code></pre>
+
+          <p>Použít to můžete například následovně vložením do application layoutu.</p>
+
+          <pre><code>
+&lt;%= javascript_tag '$.fx.off = true;' if Rails.env.test? %&gt;
+          </code></pre>
+
+          <p>A pokud byste chtěli nějaké sofistikovanější řešení, než podmínky na prostředí, můžete použít třeba rack middleware.</p>
+
+          <p>A oficiální dokumentace je tady http://api.jquery.com/jQuery.fx.off/</p>
+
+          <div id="disqus_thread"></div>
+          <script type="text/javascript">
+            /* * * CONFIGURATION VARIABLES * * */
+  var disqus_shortname = 'masa331';
+
+/* * * DON'T EDIT BELOW THIS LINE * * */
+(function() {
+  var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+          </script>
+          <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
