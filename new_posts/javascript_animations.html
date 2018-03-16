@@ -7,7 +7,9 @@
 
     <link rel="stylesheet" href="http://masa331.github.io/assets/stylesheets/pygment_trac.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="http://masa331.github.io/assets/javascripts/twitter-widget.js"></script>
+    <link rel="stylesheet" href="/assets/stylesheets/styles.css">
+
+    <script async defer src="http://masa331.github.io/assets/javascripts/twitter-widget.js"></script>
     <script async defer src="https://buttons.github.io/buttons.js"></script>
 
     <meta name="viewport" content="width=device-width">
@@ -15,25 +17,13 @@
 
   <body>
     <div class="container">
-      <div class="row mt-3">
-        <div class="col-sm-4">
-          <p>Hi, i'm Premysl Donat and this is a place where i share things i find interesting.</p>
-
-          <p>This is my picture, click on it to go to homepage:</p>
-          <a href="index.html">
-            <img src="http://masa331.github.io/assets/images/my-picture.png" alt="Premysl Donat at Balaton lake" class="img-fluid" />
-          </a>
-          <br />
-          <br />
-          <p>I'm a web developer and <s>i work at <a href="http://uol.cz">UOL</a></s>. I also have a tiny company named <a href="imagineanything.cz">Imagine Anything</a> under which i run few side projects. Imagine has a beautiful logo so you better check it out!</p>
-
-          <p>I release <b>all</b> of my code under MIT license and it's freely available at <a href="https://github.com/Masa331">Github</a>.</p>
-
-          <p>Have a good one, Premek</p>
-          <a class="twitter-follow-button" href="https://twitter.com/DonatP" data-size="large" data-show-count="false">Follow @DonatP</a>
-          <a class="github-button" href="https://github.com/Masa331" data-size="large" aria-label="Follow @Masa331 on GitHub">Follow @Masa331</a>
+      <nav class="d-flex pt-3 pb-3 mb-3">
+        <div class="mr-auto lead">
+          <a href="http://masa331.github.io/" class="logo">Přemysl Donát</a>
         </div>
+      </nav>
 
+      <div class="row mb-3">
         <div class="col-sm-8">
           <i>Toto je repost našeho společného článku s Danem Hromadou z 28.3.2015 na Bonobo Blogu zde: <a href="https://blog.bonobo.cz/2015/03/28/javascript_animations/">https://blog.bonobo.cz/2015/03/28/javascript_animations/</a>.  </i>
 
@@ -56,21 +46,33 @@
           <p>A oficiální dokumentace je tady http://api.jquery.com/jQuery.fx.off/</p>
 
           <div id="disqus_thread"></div>
-          <script type="text/javascript">
-            /* * * CONFIGURATION VARIABLES * * */
-  var disqus_shortname = 'masa331';
-
-/* * * DON'T EDIT BELOW THIS LINE * * */
-(function() {
-  var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-})();
-          </script>
+          <script async defer src="http://masa331.github.io/assets/javascripts/disqus-widget.js"></script>
           <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
 
         </div>
+
+        <div class="col-sm-4">
+          <h2>About me</h2>
+
+          <p>Hi, i'm Premysl Donat and this is a place where i share things i find interesting.</p>
+
+          <p>This is my picture:</p>
+            <img src="http://masa331.github.io/assets/images/my-picture.png" alt="Premysl Donat at Balaton lake" class="img-fluid" />
+          <br />
+          <br />
+          <p>I'm a web developer and <s>i work at <a href="http://uol.cz">UOL</a></s>. I also have a tiny company named <a href="imagineanything.cz">Imagine Anything</a> under which i run few side projects. Imagine has a beautiful logo so you better check it out!</p>
+
+          <p>I release <b>all</b> of my code under MIT license and it's freely available at <a href="https://github.com/Masa331">Github</a>.</p>
+
+          <p>Have a good one, Premek</p>
+          <a class="twitter-follow-button" href="https://twitter.com/DonatP" data-size="large" data-show-count="false">Follow @DonatP</a>
+          <a class="github-button" href="https://github.com/Masa331" data-size="large" aria-label="Follow @Masa331 on GitHub">Follow @Masa331</a>
+        </div>
       </div>
+
+      <footer class="pt-2 pb-2">
+        <span class="text-muted">Přemysl Donát © 2018</span>
+      </footer>
     </div>
   </body>
 </html>
