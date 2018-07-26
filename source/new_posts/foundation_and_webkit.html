@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Vyřešeno: Foundation reveal + capybara-webkit | Masa331 blog</title>
+
+    <link rel="stylesheet" href="http://masa331.github.io/assets/stylesheets/pygment_trac.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/stylesheets/styles.css">
+
+    <script async defer src="http://masa331.github.io/assets/javascripts/twitter-widget.js"></script>
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    <meta name="viewport" content="width=device-width">
+  </head>
+
+  <body>
+    <div class="container">
+      <nav class="d-flex pt-3 pb-3 mb-3">
+        <div class="mr-auto lead">
+          <a href="http://masa331.github.io/" class="logo">Přemysl Donát</a>
+        </div>
+      </nav>
+
+      <div class="row mb-3">
+        <div class="col-sm-8">
+          <i>Toto je repost našeho společného článku s Danem Hromadou z 27.3.2015 na Bonobo Blogu zde: <a href="https://blog.bonobo.cz/2015/03/27/foundation_and_webkit/">https://blog.bonobo.cz/2015/03/27/foundation_and_webkit/</a>.  </i>
+
+          <h2>Vyřešeno: Foundation reveal + capybara-webkit</h2>
+
+          <p>V naší účetní aplikaci Bonobo používáme CSS framework Foundation 5. Na problém jsme narazili ve chvíli, kdy jsme potřebovali otestovat stránku s komponentou Reveal Modal. V prohlížeči modální okno fungovalo správně, ale ve feature testech se nám jej nedařilo zavřít. Testy padaly na chybě Capybara::Webkit::ClickFailed protože stále otevřené okno překrývalo prvky stránky, se kterými potřeboval test dále pracovat. Problém tedy musel být v použitém driveru capybara-webkit (1.x).</p>
+
+          <h2>V Seleniu to funguje</h2>
+
+          <p>Zjistili jsme, že Selenium oproti cabybara-webkit tímto problémem netrpí. Selenium je ale oproti capybara-webkit mnohem pomalejší a tak jsme se rozhodli strávit hodiny hledáním řešení, abychom ušetřili sekundy automatického testování.</p>
+
+          <h2>Foundation $namespace</h2>
+
+          <p>Když se na problém podíváme z hlediska JavaScriptu (vždycky je problém na straně JS), ukáže se, že funkce pro zavírání modálního okna (Foundation.libs.reveal.close) nejprve najde otevřená okna a následně je zavře. Selektor pro otevřená okna vypadá nějak takto</p>
+
+          <pre><code>
+[data-{prefix-}reveal].open
+          </code></pre>
+
+          <p>kde prefix je Foundation namespace, který je možné globálně nastavit pomocí Sass proměnné.</p>
+
+          <p>Jak se dostane hodnota ze Sass proměnné do JavaScriptu? Foundation tuto hodnotu předává pomocí elementu meta.foundation-data-attribute-namespace a jeho css property font-family. Na to jsme přišli tak, že selektor pro otevřená okna v testech vypadal takto [data-Arial-reveal].open</p>
+
+          <h2>Capybara-webkit namespace přepisuje</h2>
+
+          <p>Důvodem, proč capybara-webkit vídí u metatagu font-family Arial je, že sama tento font globálně nastavuje všem prvkům na stránce. To je také důvod, proč testy nevidí font ikonky (např. FontAwesome) a nedokáží na ně klikat (viz issue #494).</p>
+
+          <h2>Řešení</h2>
+
+          <p>Problém můžete obejít nastavením namespacu přímo v JavaScriptu ještě dříve, než Foundation inicializujete:</p>
+
+          <pre><code>
+Foundation.global.namespace = '';
+$(document).foundation();
+          </code></pre>
+
+          <p>Ručně nastavený namespace už totiž Foundation nepřepíše.</p>
+          <p>Pokud byste se chtěli podívat na diskuzi okolo této issue na capybara-webkit github, tak dvě relevantní vlákna jsou zde: #736 a #728.</p>
+
+          <div id="disqus_thread"></div>
+          <script async defer src="http://masa331.github.io/assets/javascripts/disqus-widget.js"></script>
+          <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+        </div>
+
+        INSERT sidebar.html
+      </div>
+
+      <footer class="pt-2 pb-2">
+        <span class="text-muted">Přemysl Donát © 2018</span>
+      </footer>
+    </div>
+  </body>
+</html>

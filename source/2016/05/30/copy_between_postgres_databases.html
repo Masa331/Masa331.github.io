@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Copy data between 2 postgres dbs | Masa331 blog</title>
+
+    <link rel="stylesheet" href="http://masa331.github.io/assets/stylesheets/pygment_trac.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/stylesheets/styles.css">
+
+    <script async defer src="http://masa331.github.io/assets/javascripts/twitter-widget.js"></script>
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    <meta name="viewport" content="width=device-width">
+  </head>
+
+  <body>
+    <div class="container">
+      <nav class="d-flex pt-3 pb-3 mb-3">
+        <div class="mr-auto lead">
+          <a href="http://masa331.github.io/" class="logo">Přemysl Donát</a>
+        </div>
+      </nav>
+
+      <div class="row mb-3">
+        <div class="col-sm-8">
+          <h1 id="copy-data-between-2-postgres-dbs">Copy data between 2 postgres dbs</h1>
+
+<pre><code># turns on/off tuples only =&gt; means no printing of headers/footers etc, just rows
+psql=# \t
+# turns on/off aligned output =&gt; basically pretty tables or not
+psql=# \a
+# sets output to some file. Turn off with another "\o"
+psql=# \o FILE
+
+# Load dump into currently connected database. Delimiter can be omitted if it's defaut one but i don't know which one is it and dump is delimited with '|'
+\COPY table_name (columns) FROM dump_file DELIMITER '|';
+
+</code></pre>
+
+          <p><a href="https://wiki.postgresql.org/wiki/COPY">psql copy docu</a></p>
+
+          <p><a href="https://www.postgresql.org/docs/current/static/sql-copy.html">postgres sql copy docu</a></p>
+
+          <div id="disqus_thread"></div>
+          <script async defer src="http://masa331.github.io/assets/javascripts/disqus-widget.js"></script>
+          <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+        </div>
+
+        INSERT sidebar.html
+      </div>
+
+      <footer class="pt-2 pb-2">
+        <span class="text-muted">Přemysl Donát © 2018</span>
+      </footer>
+    </div>
+  </body>
+</html>

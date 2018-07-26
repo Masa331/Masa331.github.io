@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Abbrev from ruby standard lib | Masa331 blog</title>
+
+    <link rel="stylesheet" href="http://masa331.github.io/assets/stylesheets/pygment_trac.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/stylesheets/styles.css">
+
+    <script async defer src="http://masa331.github.io/assets/javascripts/twitter-widget.js"></script>
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    <meta name="viewport" content="width=device-width">
+  </head>
+
+  <body>
+    <div class="container">
+      <nav class="d-flex pt-3 pb-3 mb-3">
+        <div class="mr-auto lead">
+          <a href="http://masa331.github.io/" class="logo">Přemysl Donát</a>
+        </div>
+      </nav>
+
+      <div class="row mb-3">
+        <div class="col-sm-8">
+          <h1 id="abbrev-from-ruby-standard-lib">Abbrev from ruby standard lib</h1>
+
+          <p>Did you know about Ruby’s standard lib <a href="http://ruby-doc.org/stdlib-2.3.0/libdoc/abbrev/rdoc/Abbrev.html">Abbrev</a>? No? Well then let’s take a look!</p>
+
+          <h2 id="what-abbrev-does">What Abbrev does</h2>
+
+          <p>For each string in an array <code>Abbrev</code> gives you all possible uniq abbreviations:</p>
+
+          <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="nb">require</span> <span class="s1">&#39;abbrev&#39;</span>
+
+<span class="o">[</span><span class="s1">&#39;table&#39;</span><span class="p">,</span> <span class="s1">&#39;wall&#39;</span><span class="o">].</span><span class="n">abbrev</span>
+<span class="o">=&gt;</span> <span class="p">{</span><span class="s2">&quot;table&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;table&quot;</span><span class="p">,</span> <span class="s2">&quot;tabl&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;table&quot;</span><span class="p">,</span> <span class="s2">&quot;tab&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;table&quot;</span><span class="p">,</span> <span class="s2">&quot;ta&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;table&quot;</span><span class="p">,</span> <span class="s2">&quot;t&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;table&quot;</span><span class="p">,</span> <span class="s2">&quot;wall&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;wall&quot;</span><span class="p">,</span> <span class="s2">&quot;wal&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;wall&quot;</span><span class="p">,</span> <span class="s2">&quot;wa&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;wall&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;wall&quot;</span><span class="p">}</span></code></pre></div>
+
+          <p>The <a href="https://github.com/ruby/ruby/blob/trunk/lib/abbrev.rb">Implementation</a> is really simple and gives you 2 possibilities how to get your abbreviations. Either by <code>Abbrev::abbrev(words, pattern = nil)</code> or by calling <code>#abbrev</code> directly on any <code>Array</code>.</p>
+
+          <h2 id="whats-it-good-for">What’s it good for?</h2>
+
+          <p>I think CLI’s could use it. For example with Git’s cli you can just call shortest possible abbreviation instead of original full command. And it saves a lot of keystrokes.</p>
+
+          <p>I can’t find any other valid case yet. But for some reason i really like the library. So i was just playing a bit for now and created this gem <a href="https://github.com/Masa331/abbreviated_methods">AbbreviatedMethods</a>. With it you can call all your’s objects methods by their’s shortest possible abbreviations:</p>
+
+          <script type="text/javascript" src="https://asciinema.org/a/35311.js" id="asciicast-35311" async=""></script>
+
+          <p>I don’t think it’s really useful in production but definitelly interesting thing to play with. Have fun!</p>
+
+          <p>P.S.: If you find any use-case please let me know</p>
+
+          <div id="disqus_thread"></div>
+          <script async defer src="http://masa331.github.io/assets/javascripts/disqus-widget.js"></script>
+          <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+        </div>
+
+        INSERT sidebar.html
+      </div>
+
+      <footer class="pt-2 pb-2">
+        <span class="text-muted">Přemysl Donát © 2018</span>
+      </footer>
+    </div>
+  </body>
+</html>

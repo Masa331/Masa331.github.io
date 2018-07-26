@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Validace XML pomoci Nokogiri | Masa331 blog</title>
+
+    <link rel="stylesheet" href="http://masa331.github.io/assets/stylesheets/pygment_trac.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/stylesheets/styles.css">
+
+    <script async defer src="http://masa331.github.io/assets/javascripts/twitter-widget.js"></script>
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    <meta name="viewport" content="width=device-width">
+  </head>
+
+  <body>
+    <div class="container">
+      <nav class="d-flex pt-3 pb-3 mb-3">
+        <div class="mr-auto lead">
+          <a href="http://masa331.github.io/" class="logo">Přemysl Donát</a>
+        </div>
+      </nav>
+
+      <div class="row mb-3">
+        <div class="col-sm-8">
+          <i>Toto je repost mého článku z 4.3.2017 na UOL Devs Blogu zde: <a href="https://medium.com/blog-uoldevs-cz/validace-xml-pomoci-nokogiri-1446dbad437e">https://medium.com/blog-uoldevs-cz/validace-xml-pomoci-nokogiri-1446dbad437e</a>.  </i>
+
+          <h2>Validace XML pomoci Nokogiri</h2>
+
+          <p>Pokud v Ruby generujete XML, tak je dost možné, že pracujete s Nokogiri. S tím není problém generovat i složitější dokumenty. Jak ale otestujete, že se XML vygenerovalo správně? Jedna z možností je porovnat XML oproti nějaké fixture. To je jednoduché a rychlé. Se složitějšími dokumenty to už tak použitelné ale není. Přitom pokud máte k dispozici XSD schéma, tak s Nokogiri jde struktura hlídat velice jednoduše.</p>
+
+          <p>Jako spousta ostatních, i my řešímě EET. Tržby se evidují odesláním XML zprávy na SOAP API. Ministerstvo nám strukturu zprávy specifikovalo pomocí XSD souboru. Pojďme se podívát, jak ho můžeme použít v testech k ověření, že naše zpráva bude mít vždy správnou strukturu.</p>
+
+          <p>Pro generování zpráv máme následující třídu:</p>
+
+          <script src="https://gist.github.com/Masa331/4974bfa363cdb325bb8433301d452a3d.js"></script>
+
+          <p>Vygenerované XML můsí odpovídat struktuře Z <a href="http://www.etrzby.cz/assets/cs/prilohy/EETXMLSchema.xsd">XSD schéma</a>. S Nokogiri to můžeme do testu úplně jednoduše vložit takto:</p>
+
+          <script src="https://gist.github.com/Masa331/6642dd80eb06548c94ffb64aae753dc1.js"></script>
+
+          <p>Protože knihovna nejspíš není ještě úplně odladěná, tak výsledkem testu je pak fail s vypsáním konkrétních chyb:</p>
+
+          <img src="http://masa331.github.io/assets/images/xsd_errors.png"/>
+
+          <p>Takže teď přesně víme, co a kde musíme upravit, aby byla zpráva v pořádku. Mnohem lepší, než porovnávání oproti fixture. :)</p>
+
+          <h2>RSpec matcher</h2>
+
+          <p>No a nakonec si můžeme pro RSpec ještě nadefinovat speciální matcher, který zpřehlední testy a validační chyby vypíše hezky červeně jako jiné faily:</p>
+
+          <script src="https://gist.github.com/Masa331/d1150981df5dc9714fbad3317bbf2705.js"></script>
+
+          <p>a výstup:</p>
+
+          <img src="http://masa331.github.io/assets/images/xsd_errors_rspec_matcher.png"/>
+
+          <div id="disqus_thread"></div>
+          <script async defer src="http://masa331.github.io/assets/javascripts/disqus-widget.js"></script>
+          <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+        </div>
+
+        INSERT sidebar.html
+      </div>
+
+      <footer class="pt-2 pb-2">
+        <span class="text-muted">Přemysl Donát © 2018</span>
+      </footer>
+    </div>
+  </body>
+</html>

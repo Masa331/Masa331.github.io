@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>With semicolons in IRB or PRY no result printing happens | Masa331 blog</title>
+
+    <link rel="stylesheet" href="http://masa331.github.io/assets/stylesheets/pygment_trac.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/stylesheets/styles.css">
+
+    <script async defer src="http://masa331.github.io/assets/javascripts/twitter-widget.js"></script>
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    <meta name="viewport" content="width=device-width">
+  </head>
+
+  <body>
+    <div class="container">
+      <nav class="d-flex pt-3 pb-3 mb-3">
+        <div class="mr-auto lead">
+          <a href="http://masa331.github.io/" class="logo">Přemysl Donát</a>
+        </div>
+      </nav>
+
+      <div class="row mb-3">
+        <div class="col-sm-8">
+          <h1 id="with-semicolons-in-irb-or-pry-no-result-printing-happens">With semicolons in IRB or PRY no result printing happens</h1>
+
+          <p>Semicolons aren’t needed to end statements in Ruby. That’s same with IRB or PRY. So i’v never tried it.</p>
+
+          <p>One day i accidentally wrote semicolon at the end of my PRY statement. What happend?:</p>
+
+          <noscript><pre>400: Invalid request
+</pre></noscript>
+          <script src="https://gist.github.com/2c7eaef08b3039579de1.js"> </script>
+
+          <p>Noticed how nothing was printed after second line? Normally you would get another <code>=&gt; "Fred"</code> line. With semicolon at the end no printing happens.</p>
+
+          <h2 id="when-its-actually-usefull">When it’s actually usefull?</h2>
+
+          <p>I work on a Rails project which uses PostgreSQL a lot. Sometimes when debugging i fire custom SQLs through ActiveRecord like this:</p>
+
+<pre><code>conn = ActiveRecord::Base.connection
+conn.execute('select 1;')
+</code></pre>
+
+          <p>The thing is when i assign connection into conn variable whole screen gets littered with connection info:</p>
+
+          <p><img src="https://masa331.github.io/assets/images/connection_angry_face.png" alt="ActiveRecord connection" /></p>
+
+          <p>With semicolon at the end nothing like this happens and i don’t lose my context. :)</p>
+
+          <p><strong>Neat!</strong></p>
+
+          <div id="disqus_thread"></div>
+          <script async defer src="http://masa331.github.io/assets/javascripts/disqus-widget.js"></script>
+          <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+        </div>
+
+        INSERT sidebar.html
+      </div>
+
+      <footer class="pt-2 pb-2">
+        <span class="text-muted">Přemysl Donát © 2018</span>
+      </footer>
+    </div>
+  </body>
+</html>

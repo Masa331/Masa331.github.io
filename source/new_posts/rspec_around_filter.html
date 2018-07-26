@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Pozor na RSpec &lt; 3.1 a jeho around filter - 10.2.2015(repost) | Masa331 blog</title>
+
+    <link rel="stylesheet" href="http://masa331.github.io/assets/stylesheets/pygment_trac.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/stylesheets/styles.css">
+
+    <script async defer src="http://masa331.github.io/assets/javascripts/twitter-widget.js"></script>
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    <meta name="viewport" content="width=device-width">
+  </head>
+
+  <body>
+    <div class="container">
+      <nav class="d-flex pt-3 pb-3 mb-3">
+        <div class="mr-auto lead">
+          <a href="http://masa331.github.io/" class="logo">Přemysl Donát</a>
+        </div>
+      </nav>
+
+      <div class="row mb-3">
+        <div class="col-sm-8">
+          <i>Toto je repost mého článku z 7.1.2015 na Bonobo Blogu zde: <a href="https://blog.bonobo.cz/2015/02/10/rspec-around-filter/">https://blog.bonobo.cz/2015/02/10/rspec-around-filter/</a>.  </i>
+
+          <h2>Pozor na RSpec &lt; 3.1 a jeho around filter - 10.2.2015(repost)</h2>
+
+          <p>TDD zná asi každý. Na následující situaci Vám ukážu, proč by se neměla přeskakovat jeho první fáze - fail-test, a proč byste měli upgradovat RSpec na verzi > 3.1.</p>
+
+          <p>Potřebovali jsme do aplikace přidat odeslání interního e-mailu. Práce tak na deset minut. Abych kvůli tomu nemusel vytvářet samostatný test-case, přilepil jsem jeden expect do již existujícího testu. Po spuštění testu jsem byl velice překvapený, když všechno v pořádku prošlo.</p>
+
+          <p>Po chvíli jsem přišel na to, že je úplně jedno, jaké expecty do testu dám, vždy projdou. Pak jsem objevil zajímavou věc. Kolem daného testu se používal následující RSpec around hook:</p>
+
+          <pre><code>
+around { some_code }
+          </code></pre>
+
+          <p>Ten když jsem zakomentoval, tak test začal správně failovat. Z dokumentace jsem následně zjistil, že around hook používám špatně. Around hook totiž funguje na jiném principu, než before a after hooky. Bohužel to mě při prvotní implementaci testu vůbec nenapadlo. Hook jako hook, myslel jsem, že se daný kód prostě provede před i po testu. To ale neplatí. V around hooku musíte totiž test case explicitně spustit.</p>
+
+          <p>Správné použití:</p>
+
+          <pre><code>
+around do |example|
+  some_code
+  example.run
+  some_code
+end
+          </code></pre>
+
+          <p>Pokud použijete around hook jako v prvním případě, tak se test vůbec nespustí, i když hlásí, že přošel na zelenou.</p>
+          <p>Naštěstí od verze RSpecu > 3.1 toto špatné použití RSpec detekuje a nespuštěné testy hlásí jako pending i s důvodem. Takže u všech Vašich aplikací doporučuji RSpec aktualizovat nebo minimálně ručně zkontrolovat.</p>
+          <p>Jinak tenhle příklad krásně ukazuje důležitost první fáze TDD, tedy napsání fail testu. Pokud bych rovnou udělal funkcionalitu a test až později, vůbec bych nemusel přijít na to, že něco nefunguje, protože přeskočený test by mi stále hlásil success.</p>
+
+          <div id="disqus_thread"></div>
+          <script async defer src="http://masa331.github.io/assets/javascripts/disqus-widget.js"></script>
+          <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+        </div>
+
+        INSERT sidebar.html
+      </div>
+
+      <footer class="pt-2 pb-2">
+        <span class="text-muted">Přemysl Donát © 2018</span>
+      </footer>
+    </div>
+  </body>
+</html>

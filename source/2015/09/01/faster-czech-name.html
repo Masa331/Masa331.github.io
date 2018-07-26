@@ -1,0 +1,141 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Gem using CSV database made faster | Masa331 blog</title>
+
+    <link rel="stylesheet" href="http://masa331.github.io/assets/stylesheets/pygment_trac.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/stylesheets/styles.css">
+
+    <script async defer src="http://masa331.github.io/assets/javascripts/twitter-widget.js"></script>
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    <meta name="viewport" content="width=device-width">
+  </head>
+
+  <body>
+    <div class="container">
+      <nav class="d-flex pt-3 pb-3 mb-3">
+        <div class="mr-auto lead">
+          <a href="http://masa331.github.io/" class="logo">Přemysl Donát</a>
+        </div>
+      </nav>
+
+      <div class="row mb-3">
+        <div class="col-sm-8">
+          <h1 id="gem-using-csv-database-made-faster">Gem using CSV database made faster</h1>
+
+          <h2 id="rationale">Rationale</h2>
+
+          <p>I’m author of <a href="https://github.com/Masa331/czech_name">Czech name</a> gem. Simply put it’s a database with more than 200k names. Names are stored in 4 CSV files, with the biggest having 100k items. Right now it’s terribly slow to get any name from it and it’s making the gem unusable.</p>
+
+          <p>So i was thinking how to make it faster…  These are some ideas with benchmarks:</p>
+
+          <h2 id="code">Code</h2>
+
+          <script src="https://gist.github.com/af4b8b0f8597d9f0bc43.js"> </script>
+
+          <h2 id="benchmarks">Benchmarks</h2>
+
+          <table>
+            <thead>
+              <tr>
+                <th>method</th>
+                <th>real</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Simple db, first name</td>
+                <td>(  0.000426)</td>
+              </tr>
+              <tr>
+                <td>Simple db, name in the middle</td>
+                <td>(  0.421385)</td>
+              </tr>
+              <tr>
+                <td>Simple db, last name</td>
+                <td>(  0.764998)</td>
+              </tr>
+              <tr>
+                <td>Hash db, first name</td>
+                <td>(  0.955345)</td>
+              </tr>
+              <tr>
+                <td>Hash db, name in the middle</td>
+                <td>(  0.000005)</td>
+              </tr>
+              <tr>
+                <td>Hash db, last name</td>
+                <td>(  0.000003)</td>
+              </tr>
+              <tr>
+                <td>Split db, first name in first part</td>
+                <td>(  0.000561)</td>
+              </tr>
+              <tr>
+                <td>Split db, last name in first part</td>
+                <td>(  0.435632)</td>
+              </tr>
+              <tr>
+                <td>Split db, first name in second part</td>
+                <td>(  0.819255)</td>
+              </tr>
+              <tr>
+                <td>Split db, last name in second part</td>
+                <td>(  0.835236)</td>
+              </tr>
+              <tr>
+                <td>Alphabet db, first name</td>
+                <td>(  0.000501)</td>
+              </tr>
+              <tr>
+                <td>Alphabet db, name in the middle</td>
+                <td>(  0.084445)</td>
+              </tr>
+              <tr>
+                <td>Alphabet db, last name</td>
+                <td>(  0.034563)</td>
+              </tr>
+              <tr>
+                <td>YAML db, first name</td>
+                <td>(  1.707125)</td>
+              </tr>
+              <tr>
+                <td>YAML db, last name</td>
+                <td>(  1.671748)</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h2 id="result">Result</h2>
+
+          <p>Important thing to know is that the names are ordered from most to least used. Ok! Let’s get started.</p>
+
+          <p>First of all <strong>Simple vs. Split</strong> database. Initially i thought that if i split names in two files it will get faster but that’s not true at all. <strong>The speed is same</strong>. What does it means? Well.. I guess the file is beeing read lazily? Nice! So it doesn’t matter how many files i have if i have to go through them all for the least used name. Also if i look at how long it takes to get middle name and last name, the speed is constant. Ok, that sounds logicall.</p>
+
+          <p><strong>Hash db</strong> is blazingly fast. Once it’s in memory it beats everything. But the first access is slow. Unfortunatelly i think most of the time users will search only one name so they won’t profit from subsequent cache at all.. :(</p>
+
+          <p><strong>YAML</strong> is slow. And, for such simple data structure, the readability isn’t better than CSV.</p>
+
+          <p><strong>Alphabet db</strong> has some nice access times mostly the same for each item. Way better than one big file and the code is really simple yet powerful. It comes with a price of dependency on ActiveSupport and dozen of separate files  but that’s not so bad. I know it isn’t anything big and i’v probably seen it somewhere before but honestly, i’m proud of it :)</p>
+
+          <p><strong>Do you know about some other way access time could be improved over one big file?</strong></p>
+
+          <div id="disqus_thread"></div>
+          <script async defer src="http://masa331.github.io/assets/javascripts/disqus-widget.js"></script>
+          <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+        </div>
+
+        INSERT sidebar.html
+      </div>
+
+      <footer class="pt-2 pb-2">
+        <span class="text-muted">Přemysl Donát © 2018</span>
+      </footer>
+    </div>
+  </body>
+</html>

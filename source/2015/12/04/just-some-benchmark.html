@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Just some string benchmark | Masa331 blog</title>
+
+    <link rel="stylesheet" href="http://masa331.github.io/assets/stylesheets/pygment_trac.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/stylesheets/styles.css">
+
+    <script async defer src="http://masa331.github.io/assets/javascripts/twitter-widget.js"></script>
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    <meta name="viewport" content="width=device-width">
+  </head>
+
+  <body>
+    <div class="container">
+      <nav class="d-flex pt-3 pb-3 mb-3">
+        <div class="mr-auto lead">
+          <a href="http://masa331.github.io/" class="logo">Přemysl Donát</a>
+        </div>
+      </nav>
+
+      <div class="row mb-3">
+        <div class="col-sm-8">
+          <h1 id="just-some-string-benchmark">Just some string benchmark</h1>
+
+          <p>Been thinking how <a href="http://ruby-doc.org/core-2.2.3/String.html#method-i-delete">#delete</a> <a href="http://ruby-doc.org/core-2.2.3/String.html#method-i-tr">#tr</a> <a href="http://ruby-doc.org/core-2.2.3/String.html#method-i-gsub">#gsub</a> methods are fast:</p>
+
+          <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="s1">&#39;some@email.com&#39;</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="s1">&#39;@.&#39;</span><span class="p">)</span>
+<span class="s1">&#39;some@email.com&#39;</span><span class="o">.</span><span class="n">tr</span><span class="p">(</span><span class="s1">&#39;@.&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+<span class="s1">&#39;some@email.com&#39;</span><span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="s1">&#39;@&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span></code></pre></div>
+
+          <h2 id="result">Result</h2>
+
+          <table>
+            <thead>
+              <tr>
+                <th>method</th>
+                <th>real</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>#delete</td>
+                <td>(0.008266)</td>
+              </tr>
+              <tr>
+                <td>#tr</td>
+                <td>(0.009554)</td>
+              </tr>
+              <tr>
+                <td>#gsub</td>
+                <td>(0.026041)</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p>The results will be different on other machine but it looks like <code>#delete</code> is fastest.</p>
+
+          <h2 id="code-used-for-benchmark">Code used for benchmark</h2>
+
+          <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="nb">require</span> <span class="s1">&#39;benchmark&#39;</span>
+
+<span class="no">Benchmark</span><span class="o">.</span><span class="n">bmbm</span> <span class="k">do</span> <span class="o">|</span><span class="n">x</span><span class="o">|</span>
+   <span class="n">x</span><span class="o">.</span><span class="n">report</span> <span class="p">{</span> <span class="mi">10000</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="s1">&#39;donat@gmail.com&#39;</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="s1">&#39;@.&#39;</span><span class="p">)</span> <span class="p">}</span> <span class="p">}</span>
+   <span class="n">x</span><span class="o">.</span><span class="n">report</span> <span class="p">{</span> <span class="mi">10000</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="s1">&#39;donat@gmail.com&#39;</span><span class="o">.</span><span class="n">tr</span><span class="p">(</span><span class="s1">&#39;@.&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="p">}</span> <span class="p">}</span>
+   <span class="n">x</span><span class="o">.</span><span class="n">report</span> <span class="p">{</span> <span class="mi">10000</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="s1">&#39;donat@gmail.com&#39;</span><span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="s1">&#39;@&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="p">}</span> <span class="p">}</span>
+<span class="k">end</span></code></pre></div>
+
+          <div id="disqus_thread"></div>
+          <script async defer src="http://masa331.github.io/assets/javascripts/disqus-widget.js"></script>
+          <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+        </div>
+
+        INSERT sidebar.html
+      </div>
+
+      <footer class="pt-2 pb-2">
+        <span class="text-muted">Přemysl Donát © 2018</span>
+      </footer>
+    </div>
+  </body>
+</html>

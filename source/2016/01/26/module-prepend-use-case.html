@@ -1,0 +1,163 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Module#prepend with practical example | Masa331 blog</title>
+
+    <link rel="stylesheet" href="http://masa331.github.io/assets/stylesheets/pygment_trac.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/stylesheets/styles.css">
+
+    <script async defer src="http://masa331.github.io/assets/javascripts/twitter-widget.js"></script>
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    <meta name="viewport" content="width=device-width">
+  </head>
+
+  <body>
+    <div class="container">
+      <nav class="d-flex pt-3 pb-3 mb-3">
+        <div class="mr-auto lead">
+          <a href="http://masa331.github.io/" class="logo">Přemysl Donát</a>
+        </div>
+      </nav>
+
+      <div class="row mb-3">
+        <div class="col-sm-8">
+          <h1 id="moduleprepend-with-practical-example">Module#prepend with practical example</h1>
+
+          <p><code>Module#prepend</code> is a feature added in Ruby 2.0. Until now i didn’t have an oportunity to try it. Turns out it’s pretty cool and useful!</p>
+
+          <h2 id="some-background-on-method-calling">Some background on method calling</h2>
+
+          <p>When you call a method, Ruby looks on the receiver’s ancestor chain from left to right and invokes method from the first member which implements it.</p>
+
+          <p>If you call <code>super</code> keyword inside a method Ruby invokes same method on next member which implements it. Unfortunately, there is no way how to call same method on previous member.</p>
+
+          <p>Now this is how ancestor chain might look in Ruby 2.0:</p>
+
+          <p><em>[object’s singleton class, <strong>prepended modules</strong>, object’s class itself, included modules, superclasses]</em></p>
+
+          <p>When you <code>prepend</code> a module it is actually inserted <strong>before</strong> the class itself in ancestor chain, not after as it’s with <code>include</code>. Thus when you define same method in the prepended module and the class and then you call it <strong>the method from prepended module is actually invoked</strong>.</p>
+
+          <p>Demonstration:
+            <script type="text/javascript" src="https://asciinema.org/a/34831.js" id="asciicast-34831" async=""></script></p>
+
+          <p>Before Ruby 2.0 this wouldn’t be possible.</p>
+
+          <h2 id="practical-example">Practical example</h2>
+
+          <p>I have few service classes which all have same structure. These classes serve as simple data modifiers. It’s something like this:</p>
+
+          <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">module</span> <span class="nn">Contact</span>
+  <span class="k">class</span> <span class="nc">PostalCodeNormalizer</span>
+    <span class="kp">attr_accessor</span> <span class="ss">:raw</span><span class="p">,</span> <span class="ss">:modified</span><span class="p">,</span> <span class="ss">:invalid</span>
+
+    <span class="k">def</span> <span class="nf">intialize</span><span class="p">(</span><span class="n">raw_contacts</span><span class="p">)</span>
+      <span class="vi">@raw</span> <span class="o">=</span> <span class="n">raw_contacts</span>
+      <span class="vi">@modified</span> <span class="o">=</span> <span class="o">[]</span>
+      <span class="vi">@errors</span> <span class="o">=</span> <span class="o">[]</span>
+    <span class="k">end</span>
+
+    <span class="k">def</span> <span class="nf">call</span>
+      <span class="n">raw</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">contact_info</span><span class="o">|</span>
+        <span class="k">if</span> <span class="n">contact_info</span><span class="o">[</span><span class="ss">:postal_code</span><span class="o">].</span><span class="n">blank?</span>
+          <span class="n">errors</span> <span class="o">&lt;&lt;</span> <span class="o">[</span><span class="n">contact_info</span><span class="p">,</span> <span class="s1">&#39;Postal code is missing!&#39;</span><span class="o">]</span>
+        <span class="k">else</span>
+          <span class="n">contact_info</span><span class="o">[</span><span class="ss">:postal_code</span><span class="o">].</span><span class="n">delete</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+
+          <span class="n">modified</span> <span class="o">&lt;&lt;</span> <span class="n">contact_info</span>
+        <span class="k">end</span>
+      <span class="k">end</span>
+
+      <span class="k">if</span> <span class="n">raw</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="p">(</span><span class="n">modified</span><span class="o">.</span><span class="n">size</span> <span class="o">+</span> <span class="n">errors</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+        <span class="o">[</span><span class="n">modified</span><span class="p">,</span> <span class="n">errors</span><span class="o">]</span>
+      <span class="k">else</span>
+        <span class="nb">fail</span> <span class="s2">&quot;sums aren&#39;t same&quot;</span>
+      <span class="k">end</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre></div>
+
+          <p>I have a bunch of these with different functions. I chain them as i need, collect the modified data and errors and do something with them. But the size checking code at the end of <code>#call</code> method is always the same.</p>
+
+          <p>With <code>Module#prepend</code> it can be very nicely refactored:</p>
+
+          <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">module</span> <span class="nn">Contact</span>
+  <span class="k">module</span> <span class="nn">BaseModifier</span>
+    <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+
+    <span class="k">def</span> <span class="nf">call</span>
+      <span class="k">super</span>
+
+      <span class="k">if</span> <span class="n">raw</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="p">(</span><span class="n">modified</span><span class="o">.</span><span class="n">size</span> <span class="o">+</span> <span class="n">errors</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+        <span class="o">[</span><span class="n">modified</span><span class="p">,</span> <span class="n">errors</span><span class="o">]</span>
+      <span class="k">else</span>
+        <span class="nb">fail</span> <span class="s2">&quot;sums aren&#39;t same&quot;</span>
+      <span class="k">end</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="k">class</span> <span class="nc">PostalCodeNormalizer</span>
+    <span class="n">prepend</span> <span class="no">BaseModifier</span>
+
+    <span class="k">def</span> <span class="nf">call</span>
+      <span class="n">raw</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">contact_info</span><span class="o">|</span>
+        <span class="k">if</span> <span class="n">contact_info</span><span class="o">[</span><span class="ss">:postal_code</span><span class="o">].</span><span class="n">blank?</span>
+          <span class="n">errors</span> <span class="o">&lt;&lt;</span> <span class="o">[</span><span class="n">contact_info</span><span class="p">,</span> <span class="s1">&#39;Postal code is missing!&#39;</span><span class="o">]</span>
+        <span class="k">else</span>
+          <span class="n">contact_info</span><span class="o">[</span><span class="ss">:postal_code</span><span class="o">].</span><span class="n">delete</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+
+          <span class="n">modified</span> <span class="o">&lt;&lt;</span> <span class="n">contact_info</span>
+        <span class="k">end</span>
+      <span class="k">end</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre></div>
+
+          <p>Before <code>Module#prepend</code> i would have to do something like this:</p>
+
+          <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">module</span> <span class="nn">Contact</span>
+  <span class="k">module</span> <span class="nn">BaseModifier</span>
+    <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+
+    <span class="k">def</span> <span class="nf">call</span>
+      <span class="n">do_call</span>
+      <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+    <span class="k">end</span>
+
+    <span class="k">def</span> <span class="nf">do_call</span>
+      <span class="nb">fail</span> <span class="s1">&#39;implement in subclass&#39;</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="k">class</span> <span class="nc">PostalCodeNormalizer</span>
+    <span class="kp">include</span> <span class="no">BaseModifier</span>
+
+    <span class="k">def</span> <span class="nf">do_call</span>
+      <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre></div>
+
+          <p>Or something like this:
+            <a href="https://hashrocket.com/blog/posts/module-prepend-a-super-story">Module.prepend: a super story</a></p>
+
+          <p>Have a good one!</p>
+
+          <div id="disqus_thread"></div>
+          <script async defer src="http://masa331.github.io/assets/javascripts/disqus-widget.js"></script>
+          <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+        </div>
+
+        INSERT sidebar.html
+      </div>
+
+      <footer class="pt-2 pb-2">
+        <span class="text-muted">Přemysl Donát © 2018</span>
+      </footer>
+    </div>
+  </body>
+</html>

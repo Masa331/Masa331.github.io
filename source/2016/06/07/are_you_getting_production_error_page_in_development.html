@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Are you getting production error page in development? | Masa331 blog</title>
+
+    <link rel="stylesheet" href="http://masa331.github.io/assets/stylesheets/pygment_trac.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/stylesheets/styles.css">
+
+    <script async defer src="http://masa331.github.io/assets/javascripts/twitter-widget.js"></script>
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    <meta name="viewport" content="width=device-width">
+  </head>
+
+  <body>
+    <div class="container">
+      <nav class="d-flex pt-3 pb-3 mb-3">
+        <div class="mr-auto lead">
+          <a href="http://masa331.github.io/" class="logo">Přemysl Donát</a>
+        </div>
+      </nav>
+
+      <div class="row mb-3">
+        <div class="col-sm-8">
+          <h1 id="are-you-getting-production-error-page-in-development">Are you getting production error page in development?</h1>
+
+          <p>I decided to internationalize one of my apps. Because i don’t remember the structure in which i should add view translations(the ones starting with dots, eg.: <code>t('.greeting')</code>) i wanted to take advantage of rails internationalize errors which always tell you in which structure you should add the new translation:</p>
+
+          <p><img src="https://masa331.github.io/assets/images/translation_error.png" alt="translation error" /></p>
+
+          <p>But instead of the one above i got this:</p>
+
+          <p><img src="https://masa331.github.io/assets/images/server_error.png" alt="server error" /></p>
+
+          <p>WTF?! This should be shown only in production.</p>
+
+          <p>Then i did the following:</p>
+
+          <ol>
+            <li>Quick check of environment config files. Nothing</li>
+            <li>Compared app config to other app behaving correctly. Nothign</li>
+            <li>Googled.. Nothing</li>
+            <li>Read Rails Guides. Nothing</li>
+          </ol>
+
+          <p>And spend around 40 minutes on these.. :(</p>
+
+          <p>Ok, maybe time to read the error backtrace? :D</p>
+
+          <p><img src="https://masa331.github.io/assets/images/backtrace.png" alt="backtrace" /></p>
+
+          <p>Oh god, really?!:</p>
+
+          <p><img src="https://masa331.github.io/assets/images/backtrace_detail.png" alt="backtrace detail" /></p>
+
+          <p>Right there on top of it all. It’s just i didn’t read it</p>
+
+          <p>After i decided to internationalize, i created <strong>empty</strong> yaml <code>config/locales/cs.yml</code> file. Turns out it takes down whole Rails :)</p>
+
+          <p>Lesson learned? <strong>Always read the fucking error message</strong>. If only this didn’t happen to me so many times already. And it isn’t just me. I wonder why we always take the more frustrating way of googling instead of step back, read the error message and think about it a bit.</p>
+
+          <div id="disqus_thread"></div>
+          <script async defer src="http://masa331.github.io/assets/javascripts/disqus-widget.js"></script>
+          <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+        </div>
+
+        INSERT sidebar.html
+      </div>
+
+      <footer class="pt-2 pb-2">
+        <span class="text-muted">Přemysl Donát © 2018</span>
+      </footer>
+    </div>
+  </body>
+</html>

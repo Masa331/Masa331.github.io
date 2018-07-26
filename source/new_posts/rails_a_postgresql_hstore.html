@@ -1,0 +1,259 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Rails a PostgreSQL hstore | Masa331 blog</title>
+
+    <link rel="stylesheet" href="http://masa331.github.io/assets/stylesheets/pygment_trac.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/stylesheets/styles.css">
+
+    <script async defer src="http://masa331.github.io/assets/javascripts/twitter-widget.js"></script>
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    <meta name="viewport" content="width=device-width">
+  </head>
+
+  <body>
+    <div class="container">
+      <nav class="d-flex pt-3 pb-3 mb-3">
+        <div class="mr-auto lead">
+          <a href="http://masa331.github.io/" class="logo">Přemysl Donát</a>
+        </div>
+      </nav>
+
+      <div class="row mb-3">
+        <div class="col-sm-8">
+          <i>Toto je repost mého článku z 7.1.2015 na Bonobo Blogu zde: <a href="https://blog.bonobo.cz/2015/01/07/rails-hstore/">https://blog.bonobo.cz/2015/01/07/rails-hstore/</a>.  </i>
+
+          <h1>Rails a PostgreSQL hstore</h1>
+
+          <p>Čas od času ve své aplikaci narazíte na model, ke kterému potřebujete uložit data, jejichž struktura se může s časem nebo model od modelu lišit. Například uživatelské preference. To se dost dobře nedá vyřešit nekonečným přidáváním sloupců do databáze, protože skončíte u obrovských tabulek s nekonzistentními daty.</p>
+
+          <p>V poslední době jsou populární různé NoSQL databáze, které s proměnlivou strukturou dat problém nemají. Nicméně přidat si do stacku další technologii bude většinou zbytečný overkill. A pokud používáte jako databázi PostgreSQL, tak to vůbec nepotřebujete, protože ta nabízí hned dva luxusní key-value datové typy, které přesně pro tyto potřeby můžete využít. My se podíváme na hstore a práci s ním v Ruby on Rails aplikacích.</p>
+
+          <h2>Hstore</h2>
+
+          <p>Hstore je relativně starý datový typ. V PostgreSQL se v podobě extension objevil již ve verzi 8.2. Od té doby solidně vyzrál a nyní je pro něj k dispozici přes 30 různých operátorů a funkcí. Abyste ho mohli používat, musíte v db extension explicitně zapnout. Často budete předtím potřebovat ve svém systému doinstalovat balíček <code>apt-get install postgresql-contrib</code>, který právě různé extensions obsahuje. Pro zapnutí většiny extensions, hstore nevyjímaje, budete také muset mít v databázi práva superusera.</p>
+
+          <p>Hstore interně ukládá data v binární podobě. Díky tomu a podpoře hash, b-tree, GIN a GIST indexů je velice rychlý. Bohužel momentálně je možné v hstore ukládat pouze jednoúrovňové struktury. Pokud potřebujete ukládat více-úrovňová data, tak Vám pomůže druhý key-value data typ JSON, na který se podíváme v některém z dalších článků.</p>
+
+          <h2>Rails a hstore</h2>
+
+          <p>Hstore je nativně v Railsech, resp. ActiveRecord podporován od verze 4.0. Je namapován na klasický Hash se string klíčy, takže můžete s daty ihned pohodlně pracovat.</p>
+
+          <p>Pro testování hstoru si ideálně vygenerujeme úplně prázdnou aplikaci:</p>
+
+          <pre><code>
+$ rails new hstore_app --database=postgresql
+          </code></pre>
+
+          <p>Aplikaci máme. Teď je potřeba v db zapnout hstore extension, jinak by nám později migrace modelu spadla na neznámém datovém typu. ActiveRecord PostgreSQL adaptér podporuje i zapínání a vypínání extensions, takže se vůbec nemusíme dotknout SQL.</p>
+
+          <pre><code>
+$ rails g migration EnableHstoreExtension
+          </code></pre>
+
+          <p>Do migrace přidáme jediný řádek, a to <code>enable_extension :hstore</code>.</p>
+
+          <pre><code>
+class EnableHstoreExtension &lt; ActiveRecord::Migration
+   def change
+      enable_extension :hstore
+   end
+end
+          </code></pre>
+
+          <p>Pomocí <code>$ rake db:migrate</code> zmigrujeme a hstore extension je zapnutá. Klidně si zkuste <code>$ rake db:rollback</code>. I u metody <code>enable_extension</code> Rails vědí, jak jí správně vrátit.</p>
+
+          <p>Teď samotný model.</p>
+
+          <pre><code>
+$ rails g model User name:string preferences:hstore
+          </code></pre>
+
+          <p>Jak vidíte, i generátory podporují hstore atributy. Tento příkaz nám mimo jiné vytvoří následující migraci:</p>
+
+          <pre><code>
+class CreateUsers &lt; ActiveRecord::Migration
+  def change
+    create_table :users do |t|
+      t.string :name
+      t.hstore :preferences
+      t.timestamps
+    end
+    add_index :users, :preferences, using: :gin
+  end
+end
+          </code></pre>
+
+          <p>Jediné, co jsme přidali manuálně je <code>add_index</code>, i ten jde zadat do generátoru nicméně my chceme speciálně typ GIN, což už přes generátor vybrat nejde. Teď nám nic nebrání migraci projet a máme připravený model i s tabulkou. Stejně jako minule, všechno se dá krásně rollbacknout.</p>
+
+          <p>Teď si zapneme Rails konzoli a vytvoříme nějaká testovací data.</p>
+
+          <pre><code>
+irb(main):001:0>  User.create(name: 'Tomáš', preferences: { language: 'cs', newsletter: true })
+irb(main):002:0>  User.create(name: 'Martina', preferences: { language: 'cs', newsletter: true, app_theme: 'moon' })
+irb(main):003:0>  User.create(name: 'Patrik', preferences: { language: 'en', newsletter: true, app_theme: 'moon' })
+          </code></pre>
+
+
+          <p>Asi tak tři záznamy nám zatím budou stačit :)</p>
+
+          <h2>Queries</h2>
+
+          <p>Co nás bude zajímat asi nejvíc jsou queries. Pro ilustraci tady uvedu dvě.</p>
+
+          <p>Nejčastěji nás bude zajímat, kdo všechno má vůbec určitou preferenci nastavenou: Všechny uživatele, kteří mají “app_theme” nastaveno získáme následovně:</p>
+
+          <pre><code>
+irb(main):001:0> User.where("preferences ? :preference", preference: 'app_theme')
+irb(main):002:0> => User Load (0.8ms)  SELECT "users".* FROM "users"  WHERE (preferences ? 'app_theme')
+irb(main):003:0> => [#<User id: 9, name: "Patrik", preferences: {"language"=>"en", "app_theme"=>"moon", "newsletter"=>"true"}, created_at: "2014-12-17 19:52:43", updated_at: "2014-12-17 19:52:43">,
+#<User id: 11, name: "Martina", preferences: {"language"=>"cs", "app_theme"=>"moon", "newsletter"=>"true"}, created_at: "2014-12-17 19:52:57", updated_at: "2014-12-17 19:52:57">]
+          </code></pre>
+
+          <p>To nám správně vrátí Martinu a Patrika, protože jen oni mají preferenci “app_theme” nastavenou.</p>
+
+          <p>Konkrétnější pak můžeme být s operátorem ->, který pro určitý klíč vrátí hodnotu. Takže pokud bychom chtěli všechny uživatele, kteří si nastavili řeč na angličtinu, tak můžeme udělat:</p>
+
+          <pre><code>
+irb(main):001:0> User.where("preferences -> 'language' = ?", 'en')
+irb(main):002:0> => User Load (1.3ms)  SELECT "users".* FROM "users"  WHERE (preferences -> 'language' = 'en')
+irb(main):003:0> => [#<User id: 9, name: "Patrik", preferences: {"language"=>"en", "app_theme"=>"moon", "newsletter"=>"true"}, created_at: "2014-12-17 19:52:43", updated_at: "2014-12-17 19:52:43">]
+          </code></pre>
+
+          <p>A tady jsme správně dostali zpátky jen Patrika, protože ostatní si jako řeč nastavili češtinu.</p>
+
+          <p>Jak jsem již zmiňoval, operátorů pro práci s hstorem je celá kupa. Všechny je zde vypisovat nemá cenu. K tomu doporučuji pročíst dokumentaci. Indexy jsou podporovány u <code>@>, ?, ?&, ?|</code>.</p>
+
+          <pre><code>
+irb(main):001:0> User.where("preferences -> 'language' = ?", 'en')
+irb(main):002:0> => User Load (1.3ms)  SELECT "users".* FROM "users"  WHERE (preferences -> 'language' = 'en')
+irb(main):003:0> => [#<User id: 9, name: "Patrik", preferences: {"language"=>"en", "app_theme"=>"moon", "newsletter"=>"true"}, created_at: "2014-12-17 19:52:43", updated_at: "2014-12-17 19:52:43">]
+          </code></pre>
+
+          <h2>store_accessor a validace</h2>
+
+          <p>Pro ještě pohodlnější práci s hstore nabízí Rails užitečné makro store_accessor, které vygeneruje settery a gettery ke zvoleným klíčům, takže potom můžete data jednoduše použít např. ve formuláři.</p>
+
+          <pre><code>
+class User &lt; ActiveRecord::Base
+  store_accessor :preferences, :language, :theme
+end
+          </code></pre>
+
+          <pre><code>
+irb(main):001:0> user = User.create(name: ‘Fred’, language: ‘cs’)
+irb(main):002:0> user.language
+irb(main):003:0> => 'cs'
+irb(main):005:0> user.language = 'en'
+irb(main):006:0> user.language
+irb(main):007:0> => 'en'
+          </code></pre>
+
+          <p>A jakmile máte gettery a settery, můžete jednotlivé hodnoty validovat klasickými přes klasické Rails validace.</p>
+
+          <pre><code>
+class User &lt; ActiveRecord::Base
+  store_accessor :preferences, :language, :theme, :newsletter
+
+  validates :language,
+    presence: true
+end
+          </code></pre>
+
+          <pre><code>
+irb(main):001:0> user = User.new(language: nil)
+irb(main):002:0> user.valid?
+irb(main):003:0> => false
+irb(main):004:0> user.errors
+irb(main):005:0> => #<ActiveModel::Errors:0x000000036e4878 @base=#<User id: nil, name: nil, preferences: {"language"=>nil}, created_at: nil, updated_at: nil>, @messages={:language=>["can't be blank"]}>
+          </code></pre>
+
+          <h2>Defaultní hodnoty</h2>
+
+          <p>Defaultní hodnoty hstore atributu můžete nastavit přímo v databázi. Vše jde zase pohodlně přímo v migraci. Žádné přímé SQL.</p>
+
+          <p>Celá migrace i s not-null constraint pak vypadá takto:</p>
+
+          <pre><code>
+class CreateUsers &lt; ActiveRecord::Migration
+  def change
+    create_table :users do |t|
+       t.string :name
+       t.hstore :preferences, default: { language: 'cs' }, null: false
+       t.timestamps
+     end
+  end
+
+   add_index :users, :preferences, using: :gin
+ end
+          </code></pre>
+
+          <p>Ukázka z konzole:</p>
+
+          <pre><code>
+irb(main):001:0> user = User.new
+irb(main):002:0> user.language
+irb(main):003:0> => 'cs'
+          </code></pre>
+
+          <h2>Pár tipů nakonec aneb na co si dát pozor</h2>
+
+          <p>Kombinace PostgreSQL hstore a Railsu je production-ready. Nicméně je pár věcí, na které je potřeba si dát pozor protože by Vás mohli v průběhu implementace překvapit.</p>
+
+          <h3>Hodnoty se v databázi převedou na stringy</h3>
+
+          <p>Vše co do hstore uložíte se při zápisu převede na string. To může být matoucí zejména u <code>true</code> a <code>false</code> hodnot. Jakmile totiž takovou hodnotu uložíte a Rails model znovu načtete, tak dostanete zpátky string “true” nebo “false”.</p>
+
+          <p>Na string ale hodnoty převádí až Postgres sám, což znamená, že do doby, než data uložíte a znovu načtete, tak v hashi reprezentujícím atribut máte stále totožné hodnoty, jako jste do něj přiradili. Tedy u true a false budete mít do uložení a znovunačtení pořád true a false. Tato nekonzistence by alespoň částečně měla být vyřešena v Rails 4.2, kdy se při nastavování hodnot přes settery bude na string převádět okamžitě.</p>
+
+          <pre><code>
+irb(main):001:0> user = User.new
+irb(main):002:0> user.newsletter = true
+irb(main):003:0> user.newsletter
+irb(main):004:0> => true
+irb(main):005:0> user.save
+irb(main):006:0> user.reload.newsletter
+irb(main):007:0> => 'true'
+          </code></pre>
+
+          <h3>Hodnoty se uloží jen při nastavení přes settery</h3>
+
+          <p>Pokud změníte v hstoru nějakou hodnotu jinak než přes setter ze store_accessor, tak následující #save hodnotu neuloží. Je to proto, že Rails nemají možnost zjistit, zda se hodnota v namapovaném hashi změnila nebo ne a tedy neví, zda mají atribut opravdu uložit. Je nutné hodnoty nastavovat přes setter, nebo pokud víte, že se hodnota změní, tak před tím explicitně zavolat metodu z ActiveModel::Dirty #{attribute_name}_will_change!, což atribut označí k uložení. I toto by mělo být v Rails 4.2 vyřešeno. Hstore atributy se budou stejně jako serializované atributy ukládat pro jistotu vždy.</p>
+
+          <pre><code>
+irb(main):001:0> user = User.new(language: 'cs')
+irb(main):002:0> user.preferences['language'] = 'en'
+irb(main):003:0> user.save
+irb(main):004:0> user.language
+irb(main):005:0> => 'en'
+irb(main):006:0> user.reload.language
+irb(main):007:0> => 'cs'
+          </code></pre>
+
+          <h3>Rozdíly mezi Rails 4.0 a 4.1</h3>
+
+          <p>V Rails 4.0 byl hstore namapován na HashWithIndiferrentAccess, takže jste mohli k hodnotám přistupovat přes string i symbol klíče. Od Rails 4.1 je ale hstore namapován na klasický Hash se string klíčy, takže se symboly už adresovat nemůžete.</p>
+
+          <h3>hstore s Rails &lt; 4.0</h3>
+
+          <p>Podpora hstoru byla do Railsů přidána až ve verzi 4.0. Pokud ale máte aplikaci s nižší verzí, můžete pro podporu hstoru použít gem activerecord-postgres-hstore.</p>
+
+          <div id="disqus_thread"></div>
+          <script async defer src="http://masa331.github.io/assets/javascripts/disqus-widget.js"></script>
+          <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+        </div>
+
+        INSERT sidebar.html
+      </div>
+
+      <footer class="pt-2 pb-2">
+        <span class="text-muted">Přemysl Donát © 2018</span>
+      </footer>
+    </div>
+  </body>
+</html>

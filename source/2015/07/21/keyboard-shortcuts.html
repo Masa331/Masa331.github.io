@@ -1,0 +1,96 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Define keyboard shortcuts | Masa331 blog</title>
+
+    <link rel="stylesheet" href="http://masa331.github.io/assets/stylesheets/pygment_trac.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/stylesheets/styles.css">
+
+    <script async defer src="http://masa331.github.io/assets/javascripts/twitter-widget.js"></script>
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    <meta name="viewport" content="width=device-width">
+  </head>
+
+  <body>
+    <div class="container">
+      <nav class="d-flex pt-3 pb-3 mb-3">
+        <div class="mr-auto lead">
+          <a href="http://masa331.github.io/" class="logo">Přemysl Donát</a>
+        </div>
+      </nav>
+
+      <div class="row mb-3">
+        <div class="col-sm-8">
+          <h1 id="define-keyboard-shortcuts">Define keyboard shortcuts</h1>
+
+          <p>Defining keyboard shortutcs in linux can be tricky. At least for me.</p>
+
+          <h2 id="xbindkeys">Xbindkeys</h2>
+
+          <ol>
+            <li>Install ‘xbindkeys’. For me it’s <code>pacman -S xbindkeys</code></li>
+            <li>Create sample configuration file with <code>xbindkeys -d &gt; ~/.xbindkeysrc</code></li>
+            <li>Inspect it. The syntax is really simple. It consist of two line units</li>
+          </ol>
+
+          <p>Examples of volume control:</p>
+
+<pre><code>"amixer set Master toggle"
+  m:0x0 + c:121
+
+"amixer set Master 5%+"
+  m:0x0 + c:123
+
+"amixer set Master 5%-"
+  m:0x0 + c:122
+</code></pre>
+
+          <p>To-be-called <strong>command is on first line</strong>. Invoking <strong>key combination on second line</strong>.</p>
+
+          <p>To get the right keycodes(the weird <code>m:0x0 + c:121</code>) use <code>xbindkeys -k</code> from terminal.</p>
+
+          <p>White window pops up and when you press some key combination proper codes are printed to terminal.</p>
+
+          <p>You can either use cryptic codes like me or nice readable ones. The nice readable ones weren’t working for me.</p>
+
+          <p>Shortcuts will work after reboot.</p>
+
+          <h2 id="if-you-have-lxde-and-openboxlike-there-is-better-windows-manager-right">If you have lxde and openbox(like there is better windows manager right..)</h2>
+
+          <p>Then you can define keyboard shortcuts in openbox config.</p>
+
+          <ol>
+            <li>Open <code>~/.config/openbox/lxde-rc.xml</code></li>
+            <li>Grep for ‘Keyboard’. There are multiple types of shortcuts</li>
+            <li>It’s relatively easy to grasp</li>
+            <li>Most easy way is to copy existing commands and substitue your actions and shortcuts</li>
+            <li>Again they should be active after reboot</li>
+          </ol>
+
+          <p>Well actually openbox got a good documentation where you can read it all:</p>
+
+          <p><a href="http://openbox.org/wiki/Help:Bindings">http://openbox.org/wiki/Help:Bindings</a></p>
+
+          <p>and</p>
+
+          <p><a href="http://openbox.org/wiki/Help:Actions">http://openbox.org/wiki/Help:Actions</a></p>
+
+          <div id="disqus_thread"></div>
+          <script async defer src="http://masa331.github.io/assets/javascripts/disqus-widget.js"></script>
+          <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+        </div>
+
+        INSERT sidebar.html
+      </div>
+
+      <footer class="pt-2 pb-2">
+        <span class="text-muted">Přemysl Donát © 2018</span>
+      </footer>
+    </div>
+  </body>
+</html>

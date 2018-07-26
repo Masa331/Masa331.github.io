@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Introducing HashFlatten | Masa331 blog</title>
+
+    <link rel="stylesheet" href="/assets/stylesheets/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/stylesheets/styles.css">
+
+    <script async defer src="http://masa331.github.io/assets/javascripts/twitter-widget.js"></script>
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    <meta name="viewport" content="width=device-width">
+  </head>
+
+  <body>
+    <div class="container">
+      <nav class="d-flex pt-3 pb-3 mb-3">
+        <div class="mr-auto lead">
+          <a href="http://masa331.github.io/" class="logo">Přemysl Donát</a>
+        </div>
+      </nav>
+
+      <div class="row mb-3">
+        <div class="col-sm-8">
+          <h2>Introducing HashFlatten</h2>
+
+          <p><a href="https://rubygems.org/gems/hash_flatten">HashFlatten gem</a> provides a <code>Hash#squish_levels</code> method which takes values from all sub hashes and stores them in the top level under key which is constructed as concatenation of all sub level keys. So from this: <code>{ a: { b: 'c' } }</code> you get this: <code>{ 'a.b' =&gt; 'c' }</code>. It also has a method for reverse operation.</p>
+
+          <p>I extracted it into a gem because i already use it for two things:</p>
+          <ul>
+            <li>dumping Rails localizations into CSV for external translators</li>
+            <li>printing XML(transformed to hash) structure in a two column table</li>
+          </ul>
+
+          <p>The code itself is about 30 LOC and is pretty simple:</p>
+          <script src="https://gist.github.com/Masa331/cad76007fb8066f2ecf58c69f5470779.js"></script>
+
+          <p>I made it as a Ruby Refinement because i wanted to see how it works and how is it useful. So far so good :)</p>
+
+          <p>Look inside <a href="https://github.com/Masa331/hash_flatten/blob/master/README.md">README</a> how to use it or copy the code above directly.</p>
+
+          <p>If you copy and modify it i suggest to always test for two sneaky cases:</p>
+          <ul>
+            <li>values from multiple levels deep aren't lost</li>
+            <li>values aren't overwritten by others starting with same structure when stretching it back</li>
+          </ul>
+          <p>I didn't notice these bugs immediately and found out pretty late. But they are now properly tested of course :)</p>
+
+          <p>Please let me know if you find this useful or have any suggestion with the code. Thanks, Přemek</p>
+
+          <a class="twitter-share-button"
+            href="https://twitter.com/intent/tweet?text=%22How%20to%20flatten%20Hash%20%20to%20be%20only%20one%20level%20deep%22%20via%20%40DonatP&url=http://masa331.github.io/new_posts/introducing_hash_flatten.html"
+            data-size="large">
+            Tweet</a>
+        </div>
+
+        INSERT sidebar.html
+      </div>
+
+      <footer class="pt-2 pb-2">
+        <span class="text-muted">Přemysl Donát © 2018</span>
+      </footer>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>How many symbols can you do? | Masa331 blog</title>
+
+    <link rel="stylesheet" href="http://masa331.github.io/assets/stylesheets/pygment_trac.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/stylesheets/styles.css">
+
+    <script async defer src="http://masa331.github.io/assets/javascripts/twitter-widget.js"></script>
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    <meta name="viewport" content="width=device-width">
+  </head>
+
+  <body>
+    <div class="container">
+      <nav class="d-flex pt-3 pb-3 mb-3">
+        <div class="mr-auto lead">
+          <a href="http://masa331.github.io/" class="logo">Přemysl Donát</a>
+        </div>
+      </nav>
+
+      <div class="row mb-3">
+        <div class="col-sm-8">
+          <h1 id="how-many-symbols-can-you-do">How many symbols can you do?</h1>
+
+          <p>So i’v been reading through Ruby 2.2 release notes and notice the new GC which also collects symbols.</p>
+
+          <p>This is long time known problem in Rails world. Prior to Ruby 2.2 symbols weren’t garbage collected. So if you did somewhere create symbols from request params your app was vulnerable to DoS attacks. Google it if you want to know more.</p>
+
+          <p>I found one of my app vulnerable… :) so i wanted to try it of course. I wanted to see how does it look if your server crashes because of that.</p>
+
+          <p>It didn’t work out for some reason. I created simple script which was doing requests with different param from which symbols were created. But the server was just fine. I guess the request-response cycle is really slow or something.</p>
+
+          <p>Well… it got me thinking. Do i really need to test it on Rails app? No! So i created simple ruby script:</p>
+
+          <noscript><pre>400: Invalid request
+</pre></noscript>
+          <script src="https://gist.github.com/9da2e21c708a5fe2512b.js"> </script>
+
+          <p>Of course you have to run this on Ruby &lt; 2.2.</p>
+
+          <p>After some time i realized it is really crappy metric because it depends on other processes using memory.</p>
+
+          <p>But it was really fun with this excersise. Learned a few things…</p>
+
+          <p>Note that at the end as your computer depletes all the memory and starts swapping the death by creating new symbols is really really slow. You can watch that in htop.</p>
+
+          <p><strong>But still… i can do about 27 000 000 symbols. What about you?</strong></p>
+
+          <div id="disqus_thread"></div>
+          <script async defer src="http://masa331.github.io/assets/javascripts/disqus-widget.js"></script>
+          <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+        </div>
+
+        INSERT sidebar.html
+      </div>
+
+      <footer class="pt-2 pb-2">
+        <span class="text-muted">Přemysl Donát © 2018</span>
+      </footer>
+    </div>
+  </body>
+</html>
