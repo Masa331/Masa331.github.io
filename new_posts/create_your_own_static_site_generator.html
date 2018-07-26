@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Create your own static site generator | Masa331 blog</title>
+
+    <link rel="stylesheet" href="/assets/stylesheets/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/stylesheets/styles.css">
+
+    <script async defer src="http://masa331.github.io/assets/javascripts/twitter-widget.js"></script>
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    <meta name="viewport" content="width=device-width">
+  </head>
+
+  <body>
+    <div class="container">
+      <nav class="d-flex pt-3 pb-3 mb-3">
+        <div class="mr-auto lead">
+          <a href="http://masa331.github.io/" class="logo">Přemysl Donát</a>
+        </div>
+      </nav>
+
+      <div class="row mb-3">
+        <div class="col-sm-8">
+          <h2>Create your own static site generator</h2>
+
+          <p>Hi everybody!</p>
+
+          <p>Why would you want to create your own static site generator? Because then you won't have a hard time remembering how it works!</p>
+
+          <p>I used to use Jekyll for this small blog but it was a pain for me because i always forgot how it works. And everytime i wanted to use something fancy i had to google it and spent a lot of time just to find how to do some basic thing. So after few posts i migrated to plain HTML and CSS. I'm a web developer so i'm comfortable with these. The only thing i would miss were partials. With plain HTML and CSS one small change in sidebar means manual changes in all blog pages.</p>
+
+          <p>Well, let's see how hard could it be to write my own static site generator:</p>
+
+          <script src="https://gist.github.com/Masa331/8c337ca59e4dc341b7aae675cea57bb2.js"></script>
+
+          <p>Turns out it takes only 19 lines in Ruby. How it works? It takes all files by some glob matcher, finds lines with "𐌉NSERT &lt;partial_path&gt;" keyword in them and substitutes them with content from file in partial_path. Then it takes the modified content and outputs it in some other directory. And that's all!</p>
+
+          <p>Do you need something else? Custom variables support? 10 more lines. Automatic transformation of &lt; and &gt into &amp;lt and &amp;gt; for html code snippets? 5 more lines. The thing is, it's totally up to you and it's actually quite easy.</p>
+
+          <p>And other pros?</p>
+          <ul>
+            <li>No more remembering of yet another API</li>
+            <li>No need to update anything</li>
+            <li>No dependencies</li>
+          </ul>
+
+          <p>Which language is best for such thing? Well, the one you are most proficient with. Ruby, JS, Perl, Python, Bash... your choice. And that's yet another advantage.</p>
+
+          <p>Ok, that's all for now because to be happy, i just want partials from my own personal static site generator.</p>
+
+          <p>Have a good one, Přemek</p>
+        </div>
+
+<div class="col-sm-4">
+  <h2>About me</h2>
+
+  <p>Hi, i'm Přemysl Donát and this is a place where i share things i find interesting.</p>
+
+  <p>This is my picture:</p>
+  <img src="http://masa331.github.io/assets/images/my-picture.png" alt="Premysl Donat at Balaton lake" class="img-fluid" />
+  <br />
+  <br />
+  <p>I'm a web developer and <s>i work at <a href="http://uol.cz">UOL</a></s>. I also have a tiny company named <a href="imagineanything.cz">Imagine Anything</a> under which i run few side projects. Imagine has a beautiful logo so you better check it out!</p>
+
+  <p>Have a good one, Přemek</p>
+  <a class="twitter-follow-button" href="https://twitter.com/DonatP" data-size="large" data-show-count="false">Follow @DonatP</a>
+  <a class="github-button" href="https://github.com/Masa331" data-size="large" aria-label="Follow @Masa331 on GitHub">Follow @Masa331</a>
+</div>
+      </div>
+
+<footer class="pt-2 pb-2">
+  <span class="text-muted">Přemysl Donát © 2018</span>
+</footer>
+    </div>
+  </body>
+</html>
