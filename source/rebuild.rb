@@ -3,10 +3,10 @@
 files_to_process = Dir.glob('**/*.html')
 
 # notebook
-target_directory = '/home/masa331/code/html_js/masa331.github.io'
+# target_directory = '/home/masa331/code/html_js/masa331.github.io'
 
 # pc
-# target_directory = '/root/code/html/Masa331.github.io'
+target_directory = '/root/code/html/Masa331.github.io'
 
 files_to_process.each do |file|
   content = File.read(file)
