@@ -11,8 +11,8 @@ def top(title)
       <meta http-equiv="X-UA-Compatible" content="chrome=1">
       <title>#{title}</title>
 
-      <link rel="stylesheet" href="assets/stylesheets/bootstrap.min.css">
-      <link rel="stylesheet" href="assets/stylesheets/styles.css">
+      <link rel="stylesheet" href="/assets/stylesheets/bootstrap.min.css">
+      <link rel="stylesheet" href="/assets/stylesheets/styles.css">
 
       <meta name="viewport" content="width=device-width">
     </head>
