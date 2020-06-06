@@ -43,6 +43,14 @@ bottom = <<~BOTTOM
 </html>
 BOTTOM
 
+# RSS feed
+rss = "<?xml version='1.0' encoding='UTF-8' ?>\n"
+rss << '<rss version="2.0">'
+rss << '<channel>'
+rss << '<title>Masa331 blog</title>'
+rss << '<link>http://masa331.github.io/</link>'
+rss << "<description>Premysl Donat's blog</description>"
+
 files_to_process.each do |file|
   content = File.read(file)
   title = content.lines.first.strip
@@ -51,4 +59,15 @@ files_to_process.each do |file|
   modified = top(title) + content + bottom
 
   File.open(target_directory + '/' + file, 'wb') { |f| f.write modified }
+
+  rss_title = title.gsub(' | Masa331 blog', '').gsub('&', 'and').delete('<>').strip
+  rss << '<item>'
+  rss << "<title>#{rss_title}</title>"
+  rss << "<description>#{rss_title}</description>"
+  rss << "<link>http://masa331.github.io/new_posts/#{file}</link>"
+  rss << '</item>'
 end
+
+rss << '</channel>'
+rss << '</rss>'
+File.open('../rss.xml', 'wb') { _1.write rss }
