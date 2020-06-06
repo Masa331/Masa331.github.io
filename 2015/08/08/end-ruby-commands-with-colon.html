@@ -5,91 +5,49 @@
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <title>With semicolons in IRB or PRY no result printing happens | Masa331 blog</title>
 
-    <link rel="stylesheet" href="http://masa331.github.io/assets/stylesheets/pygment_trac.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="/assets/stylesheets/styles.css">
-
-    <script async defer src="http://masa331.github.io/assets/javascripts/twitter-widget.js"></script>
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <link rel="stylesheet" href="assets/stylesheets/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/stylesheets/styles.css">
 
     <meta name="viewport" content="width=device-width">
   </head>
 
   <body>
     <div class="container">
-      <nav class="d-flex pt-3 pb-3 mb-3">
-        <div class="mr-auto lead">
-          <a href="http://masa331.github.io/" class="logo">Přemysl Donát</a>
-        </div>
-      </nav>
-
       <div class="row mb-3">
-        <div class="col-sm-8">
-          <h1 id="with-semicolons-in-irb-or-pry-no-result-printing-happens">With semicolons in IRB or PRY no result printing happens</h1>
+        <div class="col-sm-8 m-auto">
+<h1 id="with-semicolons-in-irb-or-pry-no-result-printing-happens">With semicolons in IRB or PRY no result printing happens</h1>
 
-          <p>Semicolons aren’t needed to end statements in Ruby. That’s same with IRB or PRY. So i’v never tried it.</p>
+<p>Semicolons aren’t needed to end statements in Ruby. That’s same with IRB or PRY. So i’v never tried it.</p>
 
-          <p>One day i accidentally wrote semicolon at the end of my PRY statement. What happend?:</p>
+<p>One day i accidentally wrote semicolon at the end of my PRY statement. What happend?:</p>
 
-          <noscript><pre>400: Invalid request
+<noscript><pre>400: Invalid request
 </pre></noscript>
-          <script src="https://gist.github.com/2c7eaef08b3039579de1.js"> </script>
+<script src="https://gist.github.com/2c7eaef08b3039579de1.js"> </script>
 
-          <p>Noticed how nothing was printed after second line? Normally you would get another <code>=&gt; "Fred"</code> line. With semicolon at the end no printing happens.</p>
+<p>Noticed how nothing was printed after second line? Normally you would get another <code>=&gt; "Fred"</code> line. With semicolon at the end no printing happens.</p>
 
-          <h2 id="when-its-actually-usefull">When it’s actually usefull?</h2>
+<h2 id="when-its-actually-usefull">When it’s actually usefull?</h2>
 
-          <p>I work on a Rails project which uses PostgreSQL a lot. Sometimes when debugging i fire custom SQLs through ActiveRecord like this:</p>
+<p>I work on a Rails project which uses PostgreSQL a lot. Sometimes when debugging i fire custom SQLs through ActiveRecord like this:</p>
 
 <pre><code>conn = ActiveRecord::Base.connection
 conn.execute('select 1;')
 </code></pre>
 
-          <p>The thing is when i assign connection into conn variable whole screen gets littered with connection info:</p>
+<p>The thing is when i assign connection into conn variable whole screen gets littered with connection info:</p>
 
-          <p><img src="https://masa331.github.io/assets/images/connection_angry_face.png" alt="ActiveRecord connection" /></p>
+<p><img src="https://masa331.github.io/assets/images/connection_angry_face.png" alt="ActiveRecord connection" /></p>
 
-          <p>With semicolon at the end nothing like this happens and i don’t lose my context. :)</p>
+<p>With semicolon at the end nothing like this happens and i don’t lose my context. :)</p>
 
-          <p><strong>Neat!</strong></p>
-
-          <div id="disqus_thread"></div>
-          <script async defer src="http://masa331.github.io/assets/javascripts/disqus-widget.js"></script>
-          <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-
+<p><strong>Neat!</strong></p>
         </div>
-
-<div class="col-sm-4">
-  <h2>About me</h2>
-
-  <p>Hi, i'm Přemysl Donát and this is my place.</p>
-
-  <p>This is my picture:</p>
-  <img src="http://masa331.github.io/assets/images/my-picture.png" alt="Premysl Donat at Balaton lake" class="img-fluid" />
-  <br />
-  <br />
-  <p>I'm a web developer. I like Ruby the most but i'm fine with other technology also. After all, it's just technology.</p>
-
-  <p>I work at <a href="http://topmonks.com">topmonks.com</a>. I also have my own tiny company <a href="http://imagineanything.cz">Imagine Anything</a>.</p>
-
-  <p>One of my side projects is <a href="https://damedata.cz">DameData.cz</a>. It's a web app which helps you to easily connect your business with accounting(czech market only right now). Check it out:</p>
-
-  <a href="https://damedata.cz">
-    <img src="http://masa331.github.io/assets/images/logo_v2.png" alt="DameData.cz logo" class="img-fluid" />
-  </a>
-
-  <br />
-  <br />
-
-  <p>Have a good one, Přemek</p>
-  <a class="twitter-follow-button" href="https://twitter.com/DonatP" data-size="large" data-show-count="false">Follow @DonatP</a>
-  <a class="github-button" href="https://github.com/Masa331" data-size="large" aria-label="Follow @Masa331 on GitHub">Follow @Masa331</a>
-</div>
       </div>
 
-      <footer class="pt-2 pb-2">
-        <span class="text-muted">Přemysl Donát © 2018</span>
-      </footer>
+      <nav class="mt-3 mb-3">
+        <b><a href="/blog-posts.html">back to blog posts index</a></b> or <b><a href="/index.html">back to homepage</a></b>
+      </nav>
     </div>
   </body>
 </html>

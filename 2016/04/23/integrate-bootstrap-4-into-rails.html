@@ -5,40 +5,30 @@
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <title>How to integrate Bootstrap 4 into Rails | Masa331 blog</title>
 
-    <link rel="stylesheet" href="http://masa331.github.io/assets/stylesheets/pygment_trac.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="/assets/stylesheets/styles.css">
-
-    <script async defer src="http://masa331.github.io/assets/javascripts/twitter-widget.js"></script>
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <link rel="stylesheet" href="assets/stylesheets/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/stylesheets/styles.css">
 
     <meta name="viewport" content="width=device-width">
   </head>
 
   <body>
     <div class="container">
-      <nav class="d-flex pt-3 pb-3 mb-3">
-        <div class="mr-auto lead">
-          <a href="http://masa331.github.io/" class="logo">Přemysl Donát</a>
-        </div>
-      </nav>
-
       <div class="row mb-3">
-        <div class="col-sm-8">
-          <p>Did you know that Twitter Bootstrap 4 will be in Sass and not LESS anymore? That means we can directly use it inside Rails projects with official <a href="https://rubygems.org/gems/bootstrap">bootstrap</a> gem.</p>
+        <div class="col-sm-8 m-auto">
+<p>Did you know that Twitter Bootstrap 4 will be in Sass and not LESS anymore? That means we can directly use it inside Rails projects with official <a href="https://rubygems.org/gems/bootstrap">bootstrap</a> gem.</p>
 
-          <p>No need to use <a href="https://github.com/twbs/bootstrap-sass">bootstrap-sass</a> or even LESS version <a href="https://github.com/seyhunak/twitter-bootstrap-rails">twitter-bootstrap-rails</a>.</p>
+<p>No need to use <a href="https://github.com/twbs/bootstrap-sass">bootstrap-sass</a> or even LESS version <a href="https://github.com/seyhunak/twitter-bootstrap-rails">twitter-bootstrap-rails</a>.</p>
 
-          <h1 id="how-to-integrate-into-rails">How to integrate Bootstrap 4 into Rails</h1>
+<h1 id="how-to-integrate-into-rails">How to integrate Bootstrap 4 into Rails</h1>
 
-          <p>It’s super easy. Barely needs a post but anyways:</p>
+<p>It’s super easy. Barely needs a post but anyways:</p>
 
-          <p>Gemfile:</p>
+<p>Gemfile:</p>
 
 <pre><code>gem 'bootstrap', '&gt;=4.0.0.alpha3'
 </code></pre>
 
-          <p>application.css.scss:</p>
+<p>application.css.scss:</p>
 
 <pre><code>/*
  * This is a manifest file that'll be compiled into application.css, which will include all the files
@@ -57,47 +47,15 @@
 @import "my_styles";
 </code></pre>
 
-          <p>Note that we don’t use Sprockets requires anymore, just normal Sass imports. But practically it’s similar. <code>variables.css.scss</code> and <code>my_styles.css.scss</code> are just another files in same folder as <code>application.css.scss</code>.</p>
+<p>Note that we don’t use Sprockets requires anymore, just normal Sass imports. But practically it’s similar. <code>variables.css.scss</code> and <code>my_styles.css.scss</code> are just another files in same folder as <code>application.css.scss</code>.</p>
 
-          <p>And that’s really all! :) Now head to the <a href="http://v4-alpha.getbootstrap.com/">Bootstrap 4 docs</a> to see what other things are new in Bootstrap.</p>
-
-          <div id="disqus_thread"></div>
-          <script async defer src="http://masa331.github.io/assets/javascripts/disqus-widget.js"></script>
-          <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-
+<p>And that’s really all! :) Now head to the <a href="http://v4-alpha.getbootstrap.com/">Bootstrap 4 docs</a> to see what other things are new in Bootstrap.</p>
         </div>
-
-<div class="col-sm-4">
-  <h2>About me</h2>
-
-  <p>Hi, i'm Přemysl Donát and this is my place.</p>
-
-  <p>This is my picture:</p>
-  <img src="http://masa331.github.io/assets/images/my-picture.png" alt="Premysl Donat at Balaton lake" class="img-fluid" />
-  <br />
-  <br />
-  <p>I'm a web developer. I like Ruby the most but i'm fine with other technology also. After all, it's just technology.</p>
-
-  <p>I work at <a href="http://topmonks.com">topmonks.com</a>. I also have my own tiny company <a href="http://imagineanything.cz">Imagine Anything</a>.</p>
-
-  <p>One of my side projects is <a href="https://damedata.cz">DameData.cz</a>. It's a web app which helps you to easily connect your business with accounting(czech market only right now). Check it out:</p>
-
-  <a href="https://damedata.cz">
-    <img src="http://masa331.github.io/assets/images/logo_v2.png" alt="DameData.cz logo" class="img-fluid" />
-  </a>
-
-  <br />
-  <br />
-
-  <p>Have a good one, Přemek</p>
-  <a class="twitter-follow-button" href="https://twitter.com/DonatP" data-size="large" data-show-count="false">Follow @DonatP</a>
-  <a class="github-button" href="https://github.com/Masa331" data-size="large" aria-label="Follow @Masa331 on GitHub">Follow @Masa331</a>
-</div>
       </div>
 
-      <footer class="pt-2 pb-2">
-        <span class="text-muted">Přemysl Donát © 2018</span>
-      </footer>
+      <nav class="mt-3 mb-3">
+        <b><a href="/blog-posts.html">back to blog posts index</a></b> or <b><a href="/index.html">back to homepage</a></b>
+      </nav>
     </div>
   </body>
 </html>

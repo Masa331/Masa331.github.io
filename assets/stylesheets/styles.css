@@ -4,29 +4,5 @@ html {
 
 body {
   height: 100%;
-}
-
-.container {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-nav {
-  border-bottom: 1px solid black;
-}
-
-footer {
-  border-top: 1px solid black;
-}
-
-.logo {
-  color: black;
-}
-.logo:hover {
-  text-decoration: none;
-  color: black;
-}
-.logo:visited {
-  color: black;
+  font-weight: 300;
 }

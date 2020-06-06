@@ -5,83 +5,41 @@
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <title>Vypněte jQuery animace a zrychlíte své testy | Masa331 blog</title>
 
-    <link rel="stylesheet" href="http://masa331.github.io/assets/stylesheets/pygment_trac.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="/assets/stylesheets/styles.css">
-
-    <script async defer src="http://masa331.github.io/assets/javascripts/twitter-widget.js"></script>
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <link rel="stylesheet" href="assets/stylesheets/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/stylesheets/styles.css">
 
     <meta name="viewport" content="width=device-width">
   </head>
 
   <body>
     <div class="container">
-      <nav class="d-flex pt-3 pb-3 mb-3">
-        <div class="mr-auto lead">
-          <a href="http://masa331.github.io/" class="logo">Přemysl Donát</a>
-        </div>
-      </nav>
-
       <div class="row mb-3">
-        <div class="col-sm-8">
-          <i>Toto je repost našeho společného článku s Danem Hromadou z 28.3.2015 na Bonobo Blogu zde: <a href="https://blog.bonobo.cz/2015/03/28/javascript_animations/">https://blog.bonobo.cz/2015/03/28/javascript_animations/</a>.  </i>
+        <div class="col-sm-8 m-auto">
+<i>Toto je repost našeho společného článku s Danem Hromadou z 28.3.2015 na Bonobo Blogu zde: <a href="https://blog.bonobo.cz/2015/03/28/javascript_animations/">https://blog.bonobo.cz/2015/03/28/javascript_animations/</a>.  </i>
 
-          <h2>Vypněte jQuery animace a zrychlíte své testy</h2>
+<h2>Vypněte jQuery animace a zrychlíte své testy</h2>
 
-          <p>jQuery animace mohou zbytečně zpomalovat Vaše feature testy i o několik sekund. Někdy je kvůli nim potřeba i měnit jejich strukturu, přidávat něpěkné věci jako sleep, volit jiné metody pro hledání elementů na stránce a podobně. Naštěstí jQuery má pro tuto situaci jednoduché vestavěné řešení. Všechny její animace jdou vypnout.</p>
+<p>jQuery animace mohou zbytečně zpomalovat Vaše feature testy i o několik sekund. Někdy je kvůli nim potřeba i měnit jejich strukturu, přidávat něpěkné věci jako sleep, volit jiné metody pro hledání elementů na stránce a podobně. Naštěstí jQuery má pro tuto situaci jednoduché vestavěné řešení. Všechny její animace jdou vypnout.</p>
 
-          <pre><code>
+<pre><code>
 &lt;%= '$.fx.off = true;' %&gt;
-          </code></pre>
+</code></pre>
 
-          <p>Použít to můžete například následovně vložením do application layoutu.</p>
+<p>Použít to můžete například následovně vložením do application layoutu.</p>
 
-          <pre><code>
+<pre><code>
 &lt;%= javascript_tag '$.fx.off = true;' if Rails.env.test? %&gt;
-          </code></pre>
+</code></pre>
 
-          <p>A pokud byste chtěli nějaké sofistikovanější řešení, než podmínky na prostředí, můžete použít třeba rack middleware.</p>
+<p>A pokud byste chtěli nějaké sofistikovanější řešení, než podmínky na prostředí, můžete použít třeba rack middleware.</p>
 
-          <p>A oficiální dokumentace je tady http://api.jquery.com/jQuery.fx.off/</p>
-
-          <div id="disqus_thread"></div>
-          <script async defer src="http://masa331.github.io/assets/javascripts/disqus-widget.js"></script>
-          <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-
+<p>A oficiální dokumentace je tady http://api.jquery.com/jQuery.fx.off/</p>
         </div>
-
-<div class="col-sm-4">
-  <h2>About me</h2>
-
-  <p>Hi, i'm Přemysl Donát and this is my place.</p>
-
-  <p>This is my picture:</p>
-  <img src="http://masa331.github.io/assets/images/my-picture.png" alt="Premysl Donat at Balaton lake" class="img-fluid" />
-  <br />
-  <br />
-  <p>I'm a web developer. I like Ruby the most but i'm fine with other technology also. After all, it's just technology.</p>
-
-  <p>I work at <a href="http://topmonks.com">topmonks.com</a>. I also have my own tiny company <a href="http://imagineanything.cz">Imagine Anything</a>.</p>
-
-  <p>One of my side projects is <a href="https://damedata.cz">DameData.cz</a>. It's a web app which helps you to easily connect your business with accounting(czech market only right now). Check it out:</p>
-
-  <a href="https://damedata.cz">
-    <img src="http://masa331.github.io/assets/images/logo_v2.png" alt="DameData.cz logo" class="img-fluid" />
-  </a>
-
-  <br />
-  <br />
-
-  <p>Have a good one, Přemek</p>
-  <a class="twitter-follow-button" href="https://twitter.com/DonatP" data-size="large" data-show-count="false">Follow @DonatP</a>
-  <a class="github-button" href="https://github.com/Masa331" data-size="large" aria-label="Follow @Masa331 on GitHub">Follow @Masa331</a>
-</div>
       </div>
 
-      <footer class="pt-2 pb-2">
-        <span class="text-muted">Přemysl Donát © 2018</span>
-      </footer>
+      <nav class="mt-3 mb-3">
+        <b><a href="/blog-posts.html">back to blog posts index</a></b> or <b><a href="/index.html">back to homepage</a></b>
+      </nav>
     </div>
   </body>
 </html>

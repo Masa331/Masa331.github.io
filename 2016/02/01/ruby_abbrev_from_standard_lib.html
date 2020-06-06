@@ -5,90 +5,48 @@
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <title>Abbrev from ruby standard lib | Masa331 blog</title>
 
-    <link rel="stylesheet" href="http://masa331.github.io/assets/stylesheets/pygment_trac.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="/assets/stylesheets/styles.css">
-
-    <script async defer src="http://masa331.github.io/assets/javascripts/twitter-widget.js"></script>
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <link rel="stylesheet" href="assets/stylesheets/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/stylesheets/styles.css">
 
     <meta name="viewport" content="width=device-width">
   </head>
 
   <body>
     <div class="container">
-      <nav class="d-flex pt-3 pb-3 mb-3">
-        <div class="mr-auto lead">
-          <a href="http://masa331.github.io/" class="logo">Přemysl Donát</a>
-        </div>
-      </nav>
-
       <div class="row mb-3">
-        <div class="col-sm-8">
-          <h1 id="abbrev-from-ruby-standard-lib">Abbrev from ruby standard lib</h1>
+        <div class="col-sm-8 m-auto">
+<h1 id="abbrev-from-ruby-standard-lib">Abbrev from ruby standard lib</h1>
 
-          <p>Did you know about Ruby’s standard lib <a href="http://ruby-doc.org/stdlib-2.3.0/libdoc/abbrev/rdoc/Abbrev.html">Abbrev</a>? No? Well then let’s take a look!</p>
+<p>Did you know about Ruby’s standard lib <a href="http://ruby-doc.org/stdlib-2.3.0/libdoc/abbrev/rdoc/Abbrev.html">Abbrev</a>? No? Well then let’s take a look!</p>
 
-          <h2 id="what-abbrev-does">What Abbrev does</h2>
+<h2 id="what-abbrev-does">What Abbrev does</h2>
 
-          <p>For each string in an array <code>Abbrev</code> gives you all possible uniq abbreviations:</p>
+<p>For each string in an array <code>Abbrev</code> gives you all possible uniq abbreviations:</p>
 
-          <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="nb">require</span> <span class="s1">&#39;abbrev&#39;</span>
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="nb">require</span> <span class="s1">&#39;abbrev&#39;</span>
 
 <span class="o">[</span><span class="s1">&#39;table&#39;</span><span class="p">,</span> <span class="s1">&#39;wall&#39;</span><span class="o">].</span><span class="n">abbrev</span>
 <span class="o">=&gt;</span> <span class="p">{</span><span class="s2">&quot;table&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;table&quot;</span><span class="p">,</span> <span class="s2">&quot;tabl&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;table&quot;</span><span class="p">,</span> <span class="s2">&quot;tab&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;table&quot;</span><span class="p">,</span> <span class="s2">&quot;ta&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;table&quot;</span><span class="p">,</span> <span class="s2">&quot;t&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;table&quot;</span><span class="p">,</span> <span class="s2">&quot;wall&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;wall&quot;</span><span class="p">,</span> <span class="s2">&quot;wal&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;wall&quot;</span><span class="p">,</span> <span class="s2">&quot;wa&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;wall&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="o">=&gt;</span><span class="s2">&quot;wall&quot;</span><span class="p">}</span></code></pre></div>
 
-          <p>The <a href="https://github.com/ruby/ruby/blob/trunk/lib/abbrev.rb">Implementation</a> is really simple and gives you 2 possibilities how to get your abbreviations. Either by <code>Abbrev::abbrev(words, pattern = nil)</code> or by calling <code>#abbrev</code> directly on any <code>Array</code>.</p>
+  <p>The <a href="https://github.com/ruby/ruby/blob/trunk/lib/abbrev.rb">Implementation</a> is really simple and gives you 2 possibilities how to get your abbreviations. Either by <code>Abbrev::abbrev(words, pattern = nil)</code> or by calling <code>#abbrev</code> directly on any <code>Array</code>.</p>
 
-          <h2 id="whats-it-good-for">What’s it good for?</h2>
+  <h2 id="whats-it-good-for">What’s it good for?</h2>
 
-          <p>I think CLI’s could use it. For example with Git’s cli you can just call shortest possible abbreviation instead of original full command. And it saves a lot of keystrokes.</p>
+  <p>I think CLI’s could use it. For example with Git’s cli you can just call shortest possible abbreviation instead of original full command. And it saves a lot of keystrokes.</p>
 
-          <p>I can’t find any other valid case yet. But for some reason i really like the library. So i was just playing a bit for now and created this gem <a href="https://github.com/Masa331/abbreviated_methods">AbbreviatedMethods</a>. With it you can call all your’s objects methods by their’s shortest possible abbreviations:</p>
+  <p>I can’t find any other valid case yet. But for some reason i really like the library. So i was just playing a bit for now and created this gem <a href="https://github.com/Masa331/abbreviated_methods">AbbreviatedMethods</a>. With it you can call all your’s objects methods by their’s shortest possible abbreviations:</p>
 
-          <script type="text/javascript" src="https://asciinema.org/a/35311.js" id="asciicast-35311" async=""></script>
+  <script type="text/javascript" src="https://asciinema.org/a/35311.js" id="asciicast-35311" async=""></script>
 
-          <p>I don’t think it’s really useful in production but definitelly interesting thing to play with. Have fun!</p>
+  <p>I don’t think it’s really useful in production but definitelly interesting thing to play with. Have fun!</p>
 
-          <p>P.S.: If you find any use-case please let me know</p>
-
-          <div id="disqus_thread"></div>
-          <script async defer src="http://masa331.github.io/assets/javascripts/disqus-widget.js"></script>
-          <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-
+  <p>P.S.: If you find any use-case please let me know</p>
         </div>
-
-<div class="col-sm-4">
-  <h2>About me</h2>
-
-  <p>Hi, i'm Přemysl Donát and this is my place.</p>
-
-  <p>This is my picture:</p>
-  <img src="http://masa331.github.io/assets/images/my-picture.png" alt="Premysl Donat at Balaton lake" class="img-fluid" />
-  <br />
-  <br />
-  <p>I'm a web developer. I like Ruby the most but i'm fine with other technology also. After all, it's just technology.</p>
-
-  <p>I work at <a href="http://topmonks.com">topmonks.com</a>. I also have my own tiny company <a href="http://imagineanything.cz">Imagine Anything</a>.</p>
-
-  <p>One of my side projects is <a href="https://damedata.cz">DameData.cz</a>. It's a web app which helps you to easily connect your business with accounting(czech market only right now). Check it out:</p>
-
-  <a href="https://damedata.cz">
-    <img src="http://masa331.github.io/assets/images/logo_v2.png" alt="DameData.cz logo" class="img-fluid" />
-  </a>
-
-  <br />
-  <br />
-
-  <p>Have a good one, Přemek</p>
-  <a class="twitter-follow-button" href="https://twitter.com/DonatP" data-size="large" data-show-count="false">Follow @DonatP</a>
-  <a class="github-button" href="https://github.com/Masa331" data-size="large" aria-label="Follow @Masa331 on GitHub">Follow @Masa331</a>
-</div>
       </div>
 
-      <footer class="pt-2 pb-2">
-        <span class="text-muted">Přemysl Donát © 2018</span>
-      </footer>
+      <nav class="mt-3 mb-3">
+        <b><a href="/blog-posts.html">back to blog posts index</a></b> or <b><a href="/index.html">back to homepage</a></b>
+      </nav>
     </div>
   </body>
 </html>
