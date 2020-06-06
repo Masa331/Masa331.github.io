@@ -33,12 +33,11 @@ files_to_process =
 target_directory = '/root/code/html/Masa331.github.io'
 
 bottom = <<~BOTTOM
+          <nav class="mt-3 mb-3">
+            <b><a href="/blog-posts.html">back to blog posts index</a></b> or <b><a href="/index.html">back to homepage</a></b>
+          </nav>
         </div>
       </div>
-
-      <nav class="mt-3 mb-3">
-        <b><a href="/blog-posts.html">back to blog posts index</a></b> or <b><a href="/index.html">back to homepage</a></b>
-      </nav>
     </div>
   </body>
 </html>
