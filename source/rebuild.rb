@@ -11,8 +11,7 @@ def top(title)
       <meta http-equiv="X-UA-Compatible" content="chrome=1">
       <title>#{title}</title>
 
-      <link rel="stylesheet" href="/assets/stylesheets/bootstrap.min.css">
-      <link rel="stylesheet" href="/assets/stylesheets/styles.css">
+      <link rel="stylesheet" href="https://masa331.github.io/assets/stylesheets/bootstrap.min.css">
 
       <meta name="viewport" content="width=device-width">
     </head>
@@ -20,7 +19,7 @@ def top(title)
     <body>
       <div class="container">
         <div class="row mb-3">
-          <div class="col-sm-8 m-auto">
+          <div class="col-sm-12 col-md-6 m-auto">
   TOP
 end
 
