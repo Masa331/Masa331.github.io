@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>XML Fiddler - a tool for quick XML exploration | Masa331 blog</title>
+
+    <link rel="stylesheet" href="https://masa331.github.io/assets/stylesheets/bootstrap.min.css">
+
+    <meta name="viewport" content="width=device-width">
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="row mb-3">
+        <div class="col-sm-12 col-md-6 m-auto">
+<h1>XML Fiddler - a tool for quick XML exploration</h1>
+
+<p>Part of my work in our <a href="#">accounting company</a> is to transfer data from our client's systems to our own. Most commonly i get some XML, need to check it's structure and data, and maybe change it a bit. These aren't big data but it's still too big to check as plaintext.</p>
+
+<p>Previously i did this mostly in combination of Firefox, vim, and custom Ruby scripts with which i then modify the files.</p>
+
+<p>The modifications are ok in Ruby, it's extremely easy to do with Nokogiri. However, when viewing the document i need to be able to do the following:</p>
+<ul>
+  <li>mass collapse or expand selected subnodes</li>
+  <li>extract data from some xpath</li>
+  <li>copy node's xpaths so i don't have to copy it manually</li>
+</ul>
+
+<p>That's why i created XML Fiddler. It is simple SPA in which it is possible to load XML and do just the things above. It has been sitting online and doing it's job for me for some time now but maybe it could come in handy for someone else too.</p>
+          <nav class="mt-3 mb-3">
+            <b><a href="/index.html">back to homepage</a></b>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

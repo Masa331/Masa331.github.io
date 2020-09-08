@@ -29,7 +29,7 @@ files_to_process =
   Dir.glob('2017/**/*.html') +
   Dir.glob('new_posts/**/*.html')
 
-target_directory = '/root/code/html/Masa331.github.io'
+target_directory = Dir.pwd.gsub('/source', '')
 
 bottom = <<~BOTTOM
           <nav class="mt-3 mb-3">
