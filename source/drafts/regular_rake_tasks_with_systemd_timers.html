@@ -1,0 +1,120 @@
+Regular rake tasks with Systemd timers | Masa331 blog
+
+<h1>Regular Rake tasks with systemd timers</h1>
+
+<p>Sooner or later you will run into a situation in which you need to run some server task regularly. I often need this for some maintenance or data synchronization.</p>
+
+<p>For Rails apps there are multiple ways how to do this - ActiveJob, cron and gems like <a href="https://github.com/rykian/clockwork">clockwork</a> or <a href="https://www.ruby-toolbox.com/categories/scheduling">others</a>. However, if you run <a href="https://en.wikipedia.org/wiki/Systemd#Adoption">Linux with systemd</a>, you might not need these. In such case you can use systemd's own feature called timers. Let's look at some basics.</p>
+
+<h2>The code</h2>
+
+<p>We need three separate files. First, the <b><u>Rake task</u></b>:</p>
+
+<pre>
+# /var/www/my_rails_app/current/lib/tasks/some_task.rake
+namespace :some_group do
+  desc 'Does some regular thing'
+
+  task do_it: :environment do
+    Rails.log('running some regular code')
+    # ..some other code..
+  end
+end
+</pre>
+
+<p>Then we need <b><u>systemd service unit</u></b>. This is group of directives in .INI syntax placed in a file with <code>.service</code> suffix in <code>/etc/systemd/system/</code> directory. Below is a very basic example but it can be adjusted to a great extent.
+
+<pre>
+# /etc/systemd/system/my_task.service
+[Unit]
+Description=Do some regular thing
+
+[Service]
+# This directive lets you setup needed environment variables
+#   they can be separaed by space
+Environment="RAILS_ENV=production"
+
+# This has to be set to our Rails app root otherwise Rails
+#   wouldn't find the Rake task
+WorkingDirectory=/root/code/ruby/taxbox
+
+# The command to start the Rake task itself with absolute path
+ExecStart=/root/code/ruby/taxbox/bin/rails some_group:do_it
+
+# User under which the command will run. Root if not specified
+User=fred
+</pre>
+
+<p>Next we need <b><u>timer unit</u></b>. This is another type of systemd's units which is used for scheduling something to run at specific time events:</p>
+
+<pre>
+# /etc/systemd/system/my_task.timer
+[Unit]
+Description=Run my regular task every day
+
+[Timer]
+# When the task should run. It has neat aliases like 'daily'
+#   but also powerful syntax like cron
+OnCalendar=daily
+</pre>
+
+<h2>The commands</h2>
+
+<p>We have the code, but how to get it moving? For that we will use systemd's command line utility <code>systemctl</code>.</p>
+
+<p>To start the service, type <code>systemctl start my_task.service</code> in your terminal. You won't see any output as it will run the service in separate process. This way you can start the service manually as often as you want.</p>
+
+<p>Now in order to run our service automatically we need to start the timer. For that, type <code>systemctl start my_task.timer</code>. Now the timer is running and it will invoke our service as configured. But we need to do one more thing. If we want our timer to run after we reboot the machine we have to <b>enable it</b>: <code>systemctl enable my_task.timer</code>. This way systemd will take care of starting the timer after reboots.</p>
+
+<p>In order to check what state the timer(or other systemd unit) is in, run <code>systemctl status my_task.timer</code>. You should see output like this:</p>
+
+pic
+<img>
+
+<p>Notice how the next run time is shown also.</p>
+
+<h3>When something doesn't work</h3>
+
+<p>As it is with any software you might run into some problems even with systemd services. Often it will be just bad configuration which can be solved fairly easily. systemd will give you hints about what's wrong.</p>
+
+<p>When debugging, ensure especially that:</p>
+
+<ul>
+  <li>the Rake task runs ok when manually invoked</li>
+  <li>you prepared the environment our Rake task needs through service directives properly</li>
+  <li>the service runs ok when invoked manually with <code>systemctl start my_task.service</code></li>
+  <li>the timer is active and/or enabled(check with <code>systemctl status my_task.timer</code>)</li>
+</ul>
+
+<p>Then there are logs you can check of course. systemd will log it's events, errors and also standard output into system journal by default. To query these logs use command line utility <code>journalctl</code>.</p>
+
+<p>Also when you make changes in existing unit files in <code>/etc/systemd/system/</code>, you have to let it know to systemd via <code>systemctl daemon-reload</code>.</p>
+
+<h3>Environment and configuration</h3>
+
+Providing environment variables through <code>Environment</code> directive is straighforward. But there are also other options like <code>EnvironmentFile</code> which you might point to your dotenv file in Rails root. This directive and other possibilities are described nicely <a href="https://www.man7.org/linux/man-pages/man5/systemd.exec.5.html#ENVIRONMENT">here</a>.
+
+You will also probably need to deal with security. The very first start is to run the process under some other user than root as in example. But then the services can be restricted in a lot of different ways through many other directives. LINK
+
+For the timer interval configuration consult <a href="https://www.man7.org/linux/man-pages/man7/systemd.time.7.html#CALENDAR_EVENTS">this</a>. Also timers don't have to run only on calendar events but also as <a href="https://www.man7.org/linux/man-pages/man5/systemd.timer.5.html#OPTIONS">monotonic timers</a>.
+
+<h3>Logging and exceptions</h3>
+
+<p>By default the service will log standard output and error to system journal. But it that can be changed for example with <code>StandardOutput=append:/root/code/ruby/taxbox/log/production.log</code> and <code>StandardError=append:/root/code/ruby/taxbox/log/production.log</code>. another useful directive migth be <code>SyslogIdentifier=taxbox_recurring_tasks</code>, which sets label showed in journal(normally it would be name of the executed command which is 'rails'.</p>
+
+<p>Beware with application exceptions. Maybe you only catch and log app exceptions with some king of Rack middleware meaning it won't work in Rake task. That might be the case if you use <a href="https://github.com/smartinez87/exception_notification">exception_notification</a>. If that's the case you have to prepare a mechanism to log exception somehow differently.</p>
+
+<h2>In conclusion and resources</h2>
+
+<p>I like two things about systemd timers. First, if i run systemd Linux, the timers are simply there and i don't need to install and learn anything else. second, when i work services and units and timers i get more familiar with systemd itself. Definitelly a benefit since my whole system depends on it.</p>
+
+<p>A couple of useful resources:</p>
+
+<ol>
+  <li>other great tutorial for systemd timers: <a href="https://opensource.com/article/20/7/systemd-timers">https://opensource.com/article/20/7/systemd-timers</a></li>
+  <li>systemd project homepage: <a href="https://systemd.io/">https://systemd.io/</a></li>
+  <li>systemd man pages: <a href="https://www.man7.org/linux/man-pages/man1/systemd.1.html">https://www.man7.org/linux/man-pages/man1/systemd.1.html</a></li>
+  <li>list of all systemd unit directives<a href="https://www.man7.org/linux/man-pages/man7/systemd.directives.7.html">https://www.man7.org/linux/man-pages/man7/systemd.directives.7.html</a></li>
+  <li>systemd command line cheat sheet: <a href="https://access.redhat.com/sites/default/files/attachments/12052018_systemd_6.pdf">https://access.redhat.com/sites/default/files/attachments/12052018_systemd_6.pdf</a></li>
+  <li>journalctl command tutorial: <a href="https://linuxhandbook.com/journalctl-command/">https://linuxhandbook.com/journalctl-command/</a></li>
+</ol>
