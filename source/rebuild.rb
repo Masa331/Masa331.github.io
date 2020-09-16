@@ -19,7 +19,7 @@ def top(title)
     <body>
       <div class="container">
         <div class="row mb-3">
-          <div class="col-sm-12 col-md-6 m-auto">
+          <div class="col-sm-12 col-xl-7 m-auto">
   TOP
 end
 
