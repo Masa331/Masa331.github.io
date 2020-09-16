@@ -13,6 +13,12 @@ def top(title)
       <title>#{title}</title>
 
       <link rel="stylesheet" href="https://masa331.github.io/assets/stylesheets/bootstrap.min.css">
+      <style>
+pre {
+  padding: 1rem;
+  background-color: #f8f9fa;
+}
+      </style>
     </head>
 
     <body>

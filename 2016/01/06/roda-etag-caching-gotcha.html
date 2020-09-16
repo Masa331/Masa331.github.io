@@ -1,18 +1,24 @@
-<!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>ETag caching gotcha in Roda + Nginx | Masa331 blog</title>
+  <!doctype html>
+  <html>
+    <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="chrome=1">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>ETag caching gotcha in Roda + Nginx | Masa331 blog</title>
 
-    <link rel="stylesheet" href="https://masa331.github.io/assets/stylesheets/bootstrap.min.css">
-  </head>
+      <link rel="stylesheet" href="https://masa331.github.io/assets/stylesheets/bootstrap.min.css">
+      <style>
+pre {
+  padding: 1rem;
+  background-color: #f8f9fa;
+}
+      </style>
+    </head>
 
-  <body>
-    <div class="container">
-      <div class="row mb-3">
-        <div class="col-sm-12 col-xl-7 m-auto">
+    <body>
+      <div class="container">
+        <div class="row mb-3">
+          <div class="col-sm-12 col-xl-7 m-auto">
 <h1 id="etag-caching-gotcha-in-roda--nginx">ETag caching gotcha in Roda + Nginx</h1>
 
 <p>I’v been playing with ETag caching recently on one of my apps and found weird problem - in development pages were properly cashed but in production they weren’t:</p>
