@@ -16,6 +16,8 @@
 
 <h1>Regular Rake tasks with systemd timers</h1>
 
+<p><small>16.9.2020 by Premysl Donat</small></p>
+
 <p>Sooner or later you will run into a situation in which you need to run some server task regularly. I often need this for some maintenance or data synchronization.</p>
 
 <p>For Rails apps there are multiple ways how to do this - ActiveJob, cron, gems like <a href="https://github.com/rykian/clockwork">clockwork</a> or <a href="https://www.ruby-toolbox.com/categories/scheduling">others</a>. However, if you run on <a href="https://en.wikipedia.org/wiki/Systemd#Adoption">Linux with systemd</a>, you might not need these. In such case you can use systemd's own feature called timers. Let's look at some basics.</p>
@@ -84,7 +86,7 @@ OnCalendar=daily
 
 <p>In order to check what state the timer(or other systemd unit) is in, run <code>systemctl status my_task.timer</code>. You should see output like this:</p>
 
-<img src="/assets/images/systemctl_status.png" alt="terminal output of systemctl status my_task.timer">
+<img src="/assets/images/systemctl_status.png" class="img-fluid" alt="terminal output of systemctl status my_task.timer">
 
 <p>Notice how the next run time is also showed.</p>
 
