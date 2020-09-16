@@ -9,11 +9,10 @@ def top(title)
     <head>
       <meta charset="utf-8">
       <meta http-equiv="X-UA-Compatible" content="chrome=1">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
       <title>#{title}</title>
 
       <link rel="stylesheet" href="https://masa331.github.io/assets/stylesheets/bootstrap.min.css">
-
-      <meta name="viewport" content="width=device-width">
     </head>
 
     <body>
