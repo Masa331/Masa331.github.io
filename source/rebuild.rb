@@ -48,7 +48,7 @@ files_to_process =
   Dir.glob('2017/**/*.html') +
   Dir.glob('new_posts/**/*.html')
 drafts =
-  Dir.glob('drafts/**/*.html')
+  Dir.glob('drafts/*.html')
 target_directory = Dir.pwd.gsub('/source', '')
 
 # Regular posts build
