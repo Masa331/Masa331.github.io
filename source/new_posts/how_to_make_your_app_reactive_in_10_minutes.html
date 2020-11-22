@@ -1,0 +1,48 @@
+Web app reacitivy in 10 minutes | Masa331 blog
+
+<h1>Web app reactivity in 10 minutes</h1>
+
+<p><small>22.11.2020 by Premysl Donat</small></p>
+
+<p>So you want to make your server side rendered web app reactive, eh? Want it to feel like native app, no page reloads, "more modern" maybe? Let's see how hard is that.</p>
+
+<h2>Installation</h2>
+
+<p>Grab and install <a href="https://github.com/turbolinks/turbolinks#installation">Turbolinks</a>. Following is an excerpt for install inside Rails app but Turbolinks can enchance any stack. For install in other stacks follow theirs docs.</p>
+
+<ol>
+  <li>Add the <code>turbolinks</code> gem, version 5, to your Gemfile: <code>gem 'turbolinks', '~&gt; 5.2.0'</code></li>
+  <li>Run <code>bundle install</code></li>
+  <li>Add <code>//= require turbolinks</code> to your JavaScript manifest file (usually found at <code>app/assets/javascripts/application.js</code>).</li>
+</ol>
+
+<p>Now there are no visible page reloads and <b>we are only one step away from the full experience</b>, which is to have the browser preserve the same scroll location. Add the following code somewhere after the included Turbolinks: </p>
+
+<pre>
+Turbolinks.scroll = {};
+
+document.addEventListener("turbolinks:load", ()=&gt; {
+  const elements = document.querySelectorAll("[data-turbolinks-scroll]");
+
+  elements.forEach(function(element){
+    element.addEventListener("click", ()=&gt; {
+      Turbolinks.scroll['top'] = document.scrollingElement.scrollTop;
+    });
+
+    element.addEventListener("submit", ()=&gt; {
+      Turbolinks.scroll['top'] = document.scrollingElement.scrollTop;
+    });
+  });
+
+  if (Turbolinks.scroll['top']) {
+    document.scrollingElement.scrollTo(0, Turbolinks.scroll['top']);
+  }
+
+  Turbolinks.scroll = {};
+});
+</pre>
+<p><i>Full credit for this snippet goes to <a href="https://gist.github.com/sedadkosovac/661d0fd369069cad010f164b3fcd8c20#file-turbolinks_scroll_persistence-js">Sedad Kosovac</a>. I googled this and didn't change a thing in it. Hell this article is his <a href="https://medium.com/@kosovacsedad/how-to-turbolinks-5-scroll-position-persistence-6e4435a60b2e">article</a> only rewritten.</i></p>
+
+<p>Then on any link or button you want your page to preserve position just add an HTML data attribute `data-turbolinks-scroll = "false"` and that's it. <b>Really, that is all</b>. Look:</p>
+
+<img src="/assets/images/reactivity.gif" alt="reactivity presentation"/>
